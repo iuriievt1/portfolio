@@ -1,0 +1,1 @@
+export const TMDB_READ_TOKEN = process.env.NEXT_PUBLIC_TMDB_READ_TOKEN

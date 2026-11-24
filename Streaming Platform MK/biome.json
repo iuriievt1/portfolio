@@ -1,0 +1,146 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
+
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+
+	"files": {
+		"ignoreUnknown": true,
+		"includes": [
+			"**",
+			"!node_modules",
+			"!.next",
+			"!dist",
+			"!build",
+			"!.expo",
+			"!ios",
+			"!android",
+			"!mocks",
+			"!packages/app/features/home/hero",
+			"!packages/app/features/home/rails",
+			"!packages/app/features/home/media",
+			"!**/next-env.d.ts",
+			"!**/public/vendor"
+		]
+	},
+
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab",
+		"indentWidth": 2,
+		"lineWidth": 120,
+		"lineEnding": "lf"
+	},
+
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"complexity": {
+				"useSimplifiedLogicExpression": "off",
+				"noExcessiveCognitiveComplexity": "off"
+			},
+			"correctness": {
+				"noUnusedVariables": "warn",
+				"noUnusedImports": "warn",
+				"useExhaustiveDependencies": "warn",
+				"noUnusedFunctionParameters": "warn",
+				"noUnreachable": "warn",
+				"useHookAtTopLevel": "off"
+			},
+			"a11y": {
+				"noSvgWithoutTitle": "off",
+				"useValidAnchor": "warn",
+				"useAnchorContent": "warn",
+				"useButtonType": "warn",
+				"noStaticElementInteractions": "off"
+			},
+			"style": {
+				"useConst": "warn",
+				"useBlockStatements": "off",
+				"useCollapsedElseIf": "off",
+				"useCollapsedIf": "off",
+				"noNegationElse": "off",
+				"noNestedTernary": "off",
+				"noUselessElse": "warn",
+				"useNumericSeparators": "off",
+				"noParameterAssign": "warn",
+				"noNonNullAssertion": "warn"
+			},
+			"suspicious": {
+				"noExplicitAny": "warn",
+				"noConsole": "warn",
+				"noArrayIndexKey": "warn"
+			},
+			"nursery": {
+				"useSortedClasses": {
+					"level": "warn",
+					"fix": "safe",
+					"options": {
+						"attributes": ["className", "class"],
+						"functions": ["cn", "cx", "clsx", "tw", "twMerge", "cva"]
+					}
+				}
+			}
+		},
+		"domains": {
+			"react": "recommended"
+		}
+	},
+
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single",
+			"jsxQuoteStyle": "single",
+			"trailingCommas": "all",
+			"semicolons": "asNeeded",
+			"arrowParentheses": "always"
+		}
+	},
+
+	"json": {
+		"parser": {
+			"allowComments": true,
+			"allowTrailingCommas": false
+		},
+		"formatter": {
+			"indentStyle": "tab",
+			"indentWidth": 2
+		}
+	},
+
+	"overrides": [
+		{
+			"includes": ["**/*.css"],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noUnknownAtRules": "off",
+						"noEmptyBlock": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": ["scripts/**"],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noConsole": "off"
+					}
+				}
+			}
+		}
+	],
+
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
+	}
+}

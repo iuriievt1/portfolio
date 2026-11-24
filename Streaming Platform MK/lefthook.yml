@@ -1,0 +1,23 @@
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      glob: "*.{ts,tsx,js,jsx,json,css}"
+      run: pnpm biome check --write --no-errors-on-unmatched --diagnostic-level=error --staged
+      stage_fixed: true
+    pinned-versions:
+      glob: "**/package.json"
+      run: bash scripts/check-pinned-versions.sh
+    typecheck:
+      glob: "*.{ts,tsx}"
+      # NX_DAEMON=false + --output-style=stream: avoids NX pseudo-terminal crash (SIGABRT) in non-interactive hooks
+      run: NX_DAEMON=false pnpm nx affected -t typecheck --base=HEAD~1 --head=HEAD --output-style=stream
+
+pre-push:
+  parallel: true
+  commands:
+    pinned-versions:
+      run: bash scripts/check-pinned-versions.sh
+    affected-build:
+      # NX_DAEMON=false + --output-style=stream: avoids NX pseudo-terminal crash (SIGABRT) in non-interactive hooks
+      run: NX_DAEMON=false pnpm nx affected -t build --base=origin/main --head=HEAD --output-style=stream

@@ -1,0 +1,27 @@
+{
+	"name": "next-app",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "apps/next",
+	"projectType": "application",
+	"targets": {
+		"dev": {
+			"command": "next dev --turbopack",
+			"options": { "cwd": "apps/next" }
+		},
+		"build": {
+			"command": "next build",
+			"options": { "cwd": "apps/next" },
+			"cache": true,
+			"dependsOn": ["^typecheck"],
+			"outputs": ["{projectRoot}/.next"]
+		},
+		"lint": {
+			"command": "biome check apps/next",
+			"options": { "cwd": "{workspaceRoot}" }
+		},
+		"typecheck": {
+			"command": "tsc --noEmit -p tsconfig.json",
+			"options": { "cwd": "apps/next" }
+		}
+	}
+}

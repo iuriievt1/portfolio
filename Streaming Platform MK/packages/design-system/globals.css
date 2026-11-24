@@ -1,0 +1,43 @@
+:root {
+	--page-bg: 5 12 29;
+	--appbar: 5 12 29;
+	--surface: 10 12 16;
+	--surface-2: 14 17 23;
+	--surface-3: 18 22 30;
+	--live-card-gradient: linear-gradient(180deg, #373646 0%, #262637 100%);
+	--foreground: 255 255 255;
+	--muted: 160 170 185;
+	--muted-2: 120 130 145;
+	--border: 255 255 255;
+	--border-alpha: 0.1;
+	--primary: 239 68 68;
+	--accent: 34 197 94;
+	--rail-arrow: 63 172 255;
+	--rail-arrow-bg: 5 12 29;
+	--overlay: 0 0 0;
+	--overlay-soft: 0.35;
+	--overlay-strong: 0.7;
+	--badge-age-bg: 109 40 217;
+	--page-pad-sm: 28px;
+	--page-pad-lg: 48px;
+	--page-pad-xl: 72px;
+	--page-pad-3xl: 101px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+	display: none;
+}
+.no-scrollbar {
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	overscroll-behavior-x: contain;
+}
+
+@keyframes heroProgress {
+	from {
+		width: 0%;
+	}
+	to {
+		width: 100%;
+	}
+}

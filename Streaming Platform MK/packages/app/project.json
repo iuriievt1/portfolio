@@ -1,0 +1,16 @@
+{
+	"name": "app",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "packages/app",
+	"projectType": "library",
+	"targets": {
+		"lint": {
+			"command": "biome check packages/app",
+			"options": { "cwd": "{workspaceRoot}" }
+		},
+		"typecheck": {
+			"command": "tsc --noEmit -p tsconfig.web.json",
+			"options": { "cwd": "packages/app" }
+		}
+	}
+}

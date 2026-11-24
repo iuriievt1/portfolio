@@ -1,0 +1,25 @@
+# OSX
+.DS_Store
+
+# node.js
+node_modules/
+npm-debug.log
+
+# testing
+/coverage
+
+# Monorepo
+.nx/
+.next/
+dist/
+.turbo/
+
+# Environment files
+.env
+.env.local
+.env*.local
+
+
+next-env.d.ts
+*.tsbuildinfo
+.vercel

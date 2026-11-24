@@ -1,0 +1,51 @@
+export const en = {
+	// Hero
+	'hero.watchNow': 'Watch Now',
+	'hero.watchLive': 'Watch Live',
+	'hero.moreInfo': 'More Info',
+	'hero.startedAt': 'Started at',
+	'hero.addToWatchlist': 'Add to watchlist',
+	// Search
+	'search.title': 'Search',
+	'search.placeholder': 'Search movies & shows...',
+	'search.searching': 'Searching...',
+	'search.noResults': 'No results found for "{query}"',
+	// Settings
+	'settings.title': 'Settings',
+	'settings.playback': 'Playback',
+	'settings.autoplay': 'Autoplay',
+	'settings.autoplayDesc': 'Automatically play next episode',
+	'settings.defaultSubtitles': 'Default Subtitles',
+	'settings.subtitlesDesc': 'Show subtitles when available',
+	'settings.hdr': 'HDR',
+	'settings.hdrDesc': 'Use HDR when available',
+	'settings.general': 'General',
+	'settings.notifications': 'Notifications',
+	'settings.notificationsDesc': 'Push notifications for new content',
+	'settings.version': 'MK.io Demo v0.1.0',
+	// Title Detail
+	'title.placeholder': 'Title {id}',
+	'title.related': 'Related',
+	'title.relatedPlaceholder': 'Related content will appear here.',
+	'title.play': 'Play',
+	'title.back': 'Back',
+	// Genre
+	'genre.viewAll': 'View all',
+	'genre.notFound': 'Genre not found',
+	'genre.noContent': 'No content available for "{id}".',
+	// Browse
+	'browse.eyebrow': 'View all',
+	'browse.notFound': 'Content not available',
+	'browse.noContent': 'This rail has no content to browse.',
+	// Errors
+	'error.generic': 'Something went wrong',
+	'error.genericMessage': "We couldn't load this page. Please try again.",
+	'error.tryAgain': 'Try Again',
+	'error.goHome': 'Go Home',
+	'error.notFound': 'Page Not Found',
+	'error.notFoundMessage': "The page you're looking for doesn't exist or has been moved.",
+	'error.goBack': 'Go Back',
+	'error.connection': 'Connection Error',
+	'error.connectionMessage': 'Unable to reach the server. Please check your connection and try again.',
+	'error.reload': 'Reload',
+} as const

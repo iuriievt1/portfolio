@@ -1,0 +1,89 @@
+WEBVTT
+
+00:00:01.000 --> 00:00:04.000
+[Mock subtitle] The video is starting...
+
+00:00:05.000 --> 00:00:08.000
+[Mock subtitle] This is a test subtitle overlay.
+
+00:00:09.000 --> 00:00:13.000
+[Mock subtitle] Subtitles are working correctly!
+
+00:00:14.000 --> 00:00:18.000
+[Mock subtitle] When a real stream has subtitles,
+they will appear here automatically.
+
+00:00:20.000 --> 00:00:24.000
+[Mock subtitle] You can toggle them on and off
+using the CC button.
+
+00:00:26.000 --> 00:00:30.000
+[Mock subtitle] The subtitle text will follow
+the video timing precisely.
+
+00:00:32.000 --> 00:00:36.000
+[Mock subtitle] Quality, audio, and speed menus
+are also wired to the SDK.
+
+00:00:38.000 --> 00:00:42.000
+[Mock subtitle] This mock loops every 60 seconds
+for testing purposes.
+
+00:00:44.000 --> 00:00:48.000
+[Mock subtitle] Try seeking to different times
+to test subtitle sync.
+
+00:00:50.000 --> 00:00:54.000
+[Mock subtitle] End of mock subtitle cycle.
+
+00:01:01.000 --> 00:01:04.000
+[Mock subtitle] The video is still playing...
+
+00:01:05.000 --> 00:01:08.000
+[Mock subtitle] Subtitles continue to work.
+
+00:01:10.000 --> 00:01:14.000
+[Mock subtitle] This proves the cue enter/exit
+events fire correctly.
+
+00:01:16.000 --> 00:01:20.000
+[Mock subtitle] Seek ahead to verify sync.
+
+00:01:22.000 --> 00:01:26.000
+[Mock subtitle] Everything looks good!
+
+00:02:00.000 --> 00:02:04.000
+[Mock subtitle] Two minutes in, still going.
+
+00:02:30.000 --> 00:02:34.000
+[Mock subtitle] Halfway through a long scene...
+
+00:03:00.000 --> 00:03:04.000
+[Mock subtitle] Three minutes.
+
+00:04:00.000 --> 00:04:04.000
+[Mock subtitle] Four minutes mark.
+
+00:05:00.000 --> 00:05:04.000
+[Mock subtitle] Five minutes of playback.
+
+00:10:00.000 --> 00:10:04.000
+[Mock subtitle] Ten minutes in.
+
+00:15:00.000 --> 00:15:04.000
+[Mock subtitle] Fifteen minutes.
+
+00:20:00.000 --> 00:20:04.000
+[Mock subtitle] Twenty minutes.
+
+00:30:00.000 --> 00:30:04.000
+[Mock subtitle] Thirty minutes.
+
+00:45:00.000 --> 00:45:04.000
+[Mock subtitle] Forty-five minutes.
+
+01:00:00.000 --> 01:00:04.000
+[Mock subtitle] One hour.
+
+01:30:00.000 --> 01:30:04.000
+[Mock subtitle] Ninety minutes.

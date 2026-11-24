@@ -1,0 +1,9 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"outDir": "./dist",
+		"moduleSuffixes": [".web", ""]
+	},
+	"include": ["**/*.ts", "**/*.tsx"],
+	"exclude": ["__tests__", "__mocks__", "**/*.test.ts", "**/*.test.tsx", "hooks/use-ota-updates.ts"]
+}

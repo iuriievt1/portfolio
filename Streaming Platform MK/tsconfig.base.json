@@ -1,0 +1,28 @@
+{
+	"compilerOptions": {
+		"strict": true,
+		"target": "ES2022",
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"jsx": "react-jsx",
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"paths": {
+			"@/*": ["./apps/next/src/*"],
+			"@pkg/app": ["./packages/app/index.ts"],
+			"@pkg/app/*": ["./packages/app/*"],
+			"@pkg/design-system": ["./packages/design-system/index.ts"],
+			"@pkg/design-system/*": ["./packages/design-system/*"],
+			"@pkg/utils": ["./packages/utils/index.ts"],
+			"@pkg/utils/*": ["./packages/utils/*"]
+		},
+		"baseUrl": "."
+	},
+	"exclude": ["node_modules", "**/node_modules", "dist", ".next", ".expo"],
+	"files": ["env.d.ts"]
+}

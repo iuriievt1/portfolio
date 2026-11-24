@@ -1,0 +1,29 @@
+{
+	"$schema": "https://unpkg.com/knip@5/schema.json",
+	"workspaces": {
+		".": {
+			"entry": ["tailwind.config.ts"],
+			"ignoreDependencies": ["lefthook"]
+		},
+		"apps/next": {
+			"entry": ["app/**/*.{ts,tsx}", "next.config.ts", "tailwind.config.ts", "postcss.config.mjs"],
+			"project": ["**/*.{ts,tsx}"],
+			"ignoreDependencies": ["autoprefixer", "postcss"]
+		},
+		"packages/design-system": {
+			"entry": ["index.ts", "tailwind-preset.ts", "**/*.web.tsx"],
+			"project": ["**/*.{ts,tsx}"]
+		},
+		"packages/app": {
+			"entry": ["index.ts", "**/*.web.tsx"],
+			"project": ["**/*.{ts,tsx}"],
+			"ignoreDependencies": ["@env"]
+		},
+		"packages/utils": {
+			"entry": ["index.ts"],
+			"project": ["**/*.{ts,tsx}"]
+		}
+	},
+	"ignore": ["_legacy/**", "**/*.d.ts", "__tests__/**", "jest.config.js", "lib/**"],
+	"ignoreDependencies": ["@biomejs/biome", "typescript"]
+}

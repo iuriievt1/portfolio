@@ -1,0 +1,94 @@
+{
+	"name": "media-kind-rn-tvos",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"build": "nx run-many -t build",
+		"lint": "biome check",
+		"lint:fix": "biome check --write",
+		"lint:fix:unsafe": "biome check --write --unsafe",
+		"format": "biome format --write",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"typecheck": "nx run-many -t typecheck",
+		"dev:next": "nx run next-app:dev",
+		"dev:relay": "pnpm --filter relay-server dev",
+		"dev:tizen": "pnpm --filter tizen-app dev",
+		"dev:all": "concurrently -k -n relay,next,mobile,tv,tizen -c blue,green,yellow,magenta,cyan \"pnpm dev:relay\" \"pnpm dev:next\" \"pnpm dev:mobile:android\" \"pnpm dev:tv:android\" \"pnpm dev:tizen\"",
+		"dev:all:ios": "concurrently -k -n relay,next,mobile,tv,tizen -c blue,green,yellow,magenta,cyan \"pnpm dev:relay\" \"pnpm dev:next\" \"pnpm dev:mobile:ios\" \"pnpm dev:tv:ios\" \"pnpm dev:tizen\"",
+		"dev:all:web": "concurrently -k -n relay,next,tizen -c blue,green,cyan \"pnpm dev:relay\" \"pnpm dev:next\" \"pnpm dev:tizen\"",
+		"e2e": "pnpm --filter e2e test",
+		"e2e:web": "pnpm --filter e2e test:web",
+		"e2e:visual": "pnpm --filter e2e test:visual",
+		"e2e:visual:update": "pnpm --filter e2e test:visual:update",
+		"e2e:ui": "pnpm --filter e2e test:ui",
+		"e2e:debug": "pnpm --filter e2e test:debug",
+		"e2e:demo": "pnpm --filter e2e demo",
+		"e2e:demo:desktop": "pnpm --filter e2e demo:desktop",
+		"e2e:demo:mobile": "pnpm --filter e2e demo:mobile",
+		"e2e:demo:tv": "pnpm --filter e2e demo:tv",
+		"e2e:demo:headed": "pnpm --filter e2e demo:headed",
+		"e2e:report": "pnpm --filter e2e report",
+		"build:next": "nx run next-app:build",
+		"start:next": "nx run next-app:start",
+		"clean": "rm -rf .nx .next dist node_modules/.cache apps/next/.next",
+		"health": "node scripts/check-deps.mjs && pnpm typecheck",
+		"health:deps": "node scripts/check-deps.mjs",
+		"check:tokens": "node scripts/check-tokens.mjs",
+		"check:exports": "node scripts/check-exports.mjs",
+		"health:versions": "bash scripts/check-pinned-versions.sh",
+		"preinstall": "node scripts/check-pinned-versions.mjs",
+		"prepare": "lefthook install"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.2.0",
+		"@biomejs/cli-darwin-arm64": "2.2.0",
+		"@biomejs/cli-darwin-x64": "2.2.0",
+		"@biomejs/cli-linux-arm64": "2.2.0",
+		"@biomejs/cli-linux-x64": "2.2.0",
+		"@commitlint/cli": "19.8.1",
+		"@commitlint/config-conventional": "19.8.1",
+		"@pkg/app": "workspace:*",
+		"@pkg/design-system": "workspace:*",
+		"@pkg/utils": "workspace:*",
+		"@srsholmes/vitest-react-native": "0.0.2",
+		"@testing-library/jest-dom": "6.9.1",
+		"@testing-library/react": "16.3.2",
+		"@testing-library/react-native": "13.3.3",
+		"@types/dompurify": "3.2.0",
+		"@vitejs/plugin-react": "4.7.0",
+		"concurrently": "9.2.1",
+		"jsdom": "28.1.0",
+		"knip": "5.85.0",
+		"lefthook": "2.1.1",
+		"nx": "21.6.10",
+		"react-test-renderer": "19.1.0",
+		"typescript": "5.8.3",
+		"vitest": "4.0.18"
+	},
+	"pnpm": {
+		"overrides": {
+			"react": "19.1.0",
+			"react-dom": "19.1.0",
+			"@types/react": "19.1.17"
+		},
+		"supportedArchitectures": {
+			"os": [
+				"linux",
+				"darwin",
+				"win32"
+			],
+			"cpu": [
+				"x64",
+				"arm64"
+			]
+		}
+	},
+	"packageManager": "pnpm@10.28.2",
+	"engines": {
+		"node": "24.11.0"
+	},
+	"dependencies": {
+		"dompurify": "3.3.1"
+	}
+}
