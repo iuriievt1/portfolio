@@ -1,0 +1,87 @@
+opt_out_usage
+
+default_platform(:ios)
+
+def bfbs_match_options(readonly:, force_for_new_devices:, type: "adhoc")
+  options = {
+    app_identifier: ENV.fetch("IOS_BUNDLE_IDENTIFIER", "com.bfbs.player.dev"),
+    clone_branch_directly: true,
+    force_for_new_devices: force_for_new_devices,
+    readonly: readonly,
+    team_id: ENV.fetch("APPLE_DEV_TEAM", "QL6YGY5889"),
+    type: type,
+    username: ENV.fetch("APPLE_DEV_USERNAME", "ios-dev@fxdigital.uk")
+  }
+
+  if ENV["IOS_KEYCHAIN_NAME"]
+    options[:keychain_name] = ENV["IOS_KEYCHAIN_NAME"]
+    options[:keychain_password] = ENV.fetch("IOS_KEYCHAIN_PASSWORD")
+  end
+
+  options
+end
+
+platform :ios do
+  desc "Fetch existing ad hoc signing assets for local EAS iOS builds"
+  lane :sync_adhoc_readonly do
+    sync_code_signing(**bfbs_match_options(readonly: true, force_for_new_devices: false))
+  end
+
+  desc "Fetch existing App Store signing assets for release-test EAS iOS builds"
+  lane :sync_appstore_readonly do
+    sync_code_signing(**bfbs_match_options(readonly: true, force_for_new_devices: false, type: "appstore"))
+  end
+
+  desc "Create or update ad hoc signing assets in the match repository"
+  lane :setup_adhoc do
+    sync_code_signing(**bfbs_match_options(readonly: false, force_for_new_devices: true))
+  end
+
+  desc "Upload a release-test IPA to TestFlight"
+  lane :upload_release_test_testflight do |options|
+    api_key = app_store_connect_api_key(
+      key_id: ENV.fetch("APP_STORE_CONNECT_API_KEY_ID"),
+      issuer_id: ENV.fetch("APP_STORE_CONNECT_API_ISSUER_ID"),
+      key_content: ENV.fetch("APP_STORE_CONNECT_API_KEY_P8_BASE64"),
+      is_key_content_base64: true,
+      duration: 1200,
+      in_house: false
+    )
+
+    upload_to_testflight(
+      api_key: api_key,
+      app_identifier: ENV.fetch("RELEASE_APP_IDENTIFIER", "com.bfbs.hub"),
+      ipa: options[:ipa] || ENV.fetch("IOS_IPA_PATH"),
+      skip_submission: true,
+      skip_waiting_for_build_processing: true
+    )
+  end
+end
+
+platform :android do
+  desc "Upload a release-test AAB to Google Play internal testing"
+  lane :upload_release_test_google_play do |options|
+    upload_to_play_store(
+      package_name: ENV.fetch("RELEASE_APP_IDENTIFIER", "com.bfbs.hub"),
+      json_key: ENV.fetch("GOOGLE_PLAY_JSON_KEY_PATH"),
+      aab: options[:aab] || ENV.fetch("GOOGLE_PLAY_AAB_PATH"),
+      track: ENV.fetch("GOOGLE_PLAY_TRACK", "internal"),
+      release_status: ENV.fetch("GOOGLE_PLAY_RELEASE_STATUS", "completed"),
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Upload a release-test APK to Amazon Appstore"
+  lane :upload_release_test_amazon_appstore do |options|
+    upload_to_amazon_appstore(
+      package_name: ENV.fetch("RELEASE_APP_IDENTIFIER", "com.bfbs.hub"),
+      apk: options[:apk] || ENV.fetch("AMAZON_APPSTORE_APK"),
+      client_id: ENV.fetch("AMAZON_APPSTORE_CLIENT_ID"),
+      client_secret: ENV.fetch("AMAZON_APPSTORE_CLIENT_SECRET"),
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+end

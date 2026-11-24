@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+
+# Block any push whose destination ref is `main`.
+# Git pipes one line per ref into the hook:
+#   <local_ref> <local_sha> <remote_ref> <remote_sha>
+while read -r local_ref local_sha remote_ref remote_sha; do
+  if [ "$remote_ref" = "refs/heads/main" ]; then
+    echo "✖ Direct pushes to 'main' are not allowed. Open a merge request."
+    echo "  Bypass intentionally with: git push --no-verify"
+    exit 1
+  fi
+done
+
+echo "Running lint..."
+pnpm lint
+
+echo "Running typecheck..."
+pnpm typecheck
+
+echo "Running tests..."
+pnpm test --ci --runInBand --passWithNoTests

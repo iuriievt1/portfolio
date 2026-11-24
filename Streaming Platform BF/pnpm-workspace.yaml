@@ -1,0 +1,25 @@
+packages:
+  - docs-website
+allowBuilds:
+  esbuild: true
+  "@sentry/cli": true
+  bitmovin-player-react-native: true
+  core-js: false
+  "@firebase/util": false
+  protobufjs: false
+minimumReleaseAgeExclude:
+  - "@bfbs/common-sdk"
+nodeLinker: hoisted
+supportedArchitectures:
+  os:
+    - current
+  cpu:
+    - current
+  libc:
+    - current
+    - glibc
+    - musl
+
+overrides:
+  expo-keep-awake: "55.0.8"
+  expo-modules-core: "55.0.25"

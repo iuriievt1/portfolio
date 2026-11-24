@@ -1,0 +1,7 @@
+source "https://rubygems.org"
+
+gem "cocoapods", "1.17.0"
+gem "fastlane", "2.235.0"
+gem "fastlane-plugin-amazon_appstore", "1.6.0"
+# ActiveSupport used by CocoaPods still passes options rejected by JSON 3.
+gem "json", "2.19.7"

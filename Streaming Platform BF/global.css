@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-black: #0e0e0e;
+  --color-white: #f8f8f8;
+
+  --color-slate-blue: #074f71;
+  --color-slate-blue-80: #39728e;
+  --color-slate-blue-60: #6a95aa;
+  --color-slate-blue-40: #9cb9c6;
+  --color-slate-blue-20: #cddce3;
+  --color-slate-blue-8: #ecf6fa;
+
+  --color-golden-yellow: #ffce00;
+  --color-golden-yellow-80: #ffd833;
+  --color-golden-yellow-60: #ffe166;
+  --color-golden-yellow-40: #ffeb99;
+  --color-golden-yellow-20: #fff5cc;
+
+  --color-liquorice-green: #2a403d;
+  --color-liquorice-green-80: #556664;
+  --color-liquorice-green-60: #7f8c8b;
+  --color-liquorice-green-40: #aab3b1;
+  --color-liquorice-green-20: #d4d9d8;
+  --color-liquorice-green-8: #eef0f0;
+
+  --color-surya-red: #781521;
+  --color-surya-red-80: #93444d;
+  --color-surya-red-60: #ae747a;
+  --color-surya-red-40: #c9a2a7;
+  --color-surya-red-20: #e4d0d3;
+
+  --color-red: #e95c4c;
+  --color-red-80: #ed7d70;
+  --color-red-60: #f29d94;
+  --color-red-40: #f6beb7;
+  --color-red-20: #fbdedb;
+
+  --color-lime: #d9db31;
+  --color-lime-80: #e1e25a;
+  --color-lime-60: #e8e983;
+  --color-lime-40: #f0f1ad;
+  --color-lime-20: #f7f8d6;
+
+  --color-pink: #ed96b7;
+  --color-pink-80: #f1abc5;
+  --color-pink-60: #f4c0d0;
+  --color-pink-40: #f8d5e2;
+  --color-pink-20: #fbeaf1;
+
+  --color-cyan: #4dc9e3;
+  --color-cyan-80: #6ed4e9;
+  --color-cyan-60: #92dfee;
+  --color-cyan-40: #b7e9f4;
+  --color-cyan-20: #dbf4f9;
+
+  --color-oatmeal: #e9e6df;
+  --color-oatmeal-80: #f1f0ec;
+
+  --color-dark-slate-blue: #030a0c;
+  --color-medium-slate-blue: #04283a;
+
+  --color-grey-90: #1a1a1a;
+  --color-grey-80: #333333;
+  --color-grey-70: #4d4d4d;
+  --color-grey-60: #666666;
+  --color-grey-50: #808080;
+  --color-grey-40: #999999;
+  --color-grey-30: #b2b2b2;
+  --color-grey-20: #cccccc;
+  --color-grey-10: #e5e5e5;
+
+  --color-transparent-black-90: rgba(14, 14, 14, 0.9);
+  --color-transparent-black-80: rgba(14, 14, 14, 0.8);
+  --color-transparent-black-70: rgba(14, 14, 14, 0.7);
+  --color-transparent-black-60: rgba(14, 14, 14, 0.6);
+  --color-transparent-black-50: rgba(14, 14, 14, 0.5);
+  --color-transparent-black-40: rgba(14, 14, 14, 0.4);
+  --color-transparent-black-30: rgba(14, 14, 14, 0.3);
+  --color-transparent-black-20: rgba(14, 14, 14, 0.2);
+  --color-transparent-black-10: rgba(14, 14, 14, 0.1);
+
+  --color-transparent-white-90: rgba(248, 248, 248, 0.9);
+  --color-transparent-white-80: rgba(248, 248, 248, 0.8);
+  --color-transparent-white-70: rgba(248, 248, 248, 0.7);
+  --color-transparent-white-60: rgba(248, 248, 248, 0.6);
+  --color-transparent-white-50: rgba(248, 248, 248, 0.5);
+  --color-transparent-white-40: rgba(248, 248, 248, 0.4);
+  --color-transparent-white-30: rgba(248, 248, 248, 0.3);
+  --color-transparent-white-20: rgba(248, 248, 248, 0.2);
+  --color-transparent-white-10: rgba(248, 248, 248, 0.1);
+
+  --font-family-euclid-light: EuclidLight;
+  --font-family-euclid-regular: EuclidNormal;
+  --font-family-euclid-medium: EuclidMedium;
+  --font-family-euclid-semibold: EuclidSemiBold;
+  --font-family-euclid-bold: EuclidBold;
+
+  --font-size-body-small: 14px;
+  --line-height-body-small: 20.3px;
+  --font-size-body-base: 18px;
+  --line-height-body-base: 26.1px;
+  --font-size-body-large: 20px;
+  --line-height-body-large: 29px;
+  --font-size-headline-1: 100px;
+  --line-height-headline-1: 130px;
+  --font-size-headline-2: 75px;
+  --line-height-headline-2: 97.5px;
+  --font-size-headline-3: 55px;
+  --line-height-headline-3: 71.5px;
+
+  --gradient-slate-blue: linear-gradient(90deg, #074f71 0%, #6a95aa 100%);
+  --gradient-golden-yellow: linear-gradient(90deg, #ffce00 0%, #fff5cc 100%);
+  --gradient-liquorice-green: linear-gradient(90deg, #2a403d 0%, #7f8c8b 100%);
+  --gradient-surya-red: linear-gradient(90deg, #781521 0%, #ae747a 100%);
+  --gradient-red: linear-gradient(90deg, #e95c4c 0%, #f29d94 100%);
+  --gradient-lime: linear-gradient(90deg, #d9db31 0%, #f7f8d6 100%);
+  --gradient-pink: linear-gradient(90deg, #ed96b7 0%, #f4c0d0 100%);
+  --gradient-cyan: linear-gradient(90deg, #4dc9e3 0%, #92dfee 100%);
+  --gradient-oatmeal: linear-gradient(90deg, #e9e6df 0%, #f1f0ec 100%);
+  --gradient-slate-blue-cyan: linear-gradient(90deg, #074f71 0%, #4dc9e3 100%);
+  --gradient-medium-slate-blue: linear-gradient(
+    90deg,
+    #04283a 0%,
+    #39728e 100%
+  );
+  --gradient-medium-slate-blue-light: linear-gradient(
+    90deg,
+    #04283a 0%,
+    #6a95aa 100%
+  );
+}

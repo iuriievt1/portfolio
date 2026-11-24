@@ -1,0 +1,10 @@
+git_url(ENV.fetch("FASTLANE_MATCH_REPO", "git@git.fxdigital.uk:fxd-dev-util/fx-fastlane-match.git"))
+git_branch(ENV.fetch("FASTLANE_MATCH_BRANCH", "main"))
+storage_mode("git")
+
+type("adhoc")
+app_identifier(ENV.fetch("IOS_BUNDLE_IDENTIFIER", "com.bfbs.player.dev"))
+platform("ios")
+
+username(ENV.fetch("APPLE_DEV_USERNAME", "ios-dev@fxdigital.uk"))
+team_id(ENV.fetch("APPLE_DEV_TEAM", "QL6YGY5889"))

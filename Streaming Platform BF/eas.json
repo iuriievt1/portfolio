@@ -1,0 +1,73 @@
+{
+  "cli": {
+    "appVersionSource": "local",
+    "version": ">= 19.1.0"
+  },
+  "build": {
+    "mobile-dev": {
+      "distribution": "internal",
+      "env": {
+        "APP_VARIANT": "mobile-dev",
+        "NODE_ENV": "production",
+        "SENTRY_ALLOW_FAILURE": "true"
+      },
+      "android": {
+        "buildType": "apk",
+        "credentialsSource": "local"
+      },
+      "ios": {
+        "credentialsSource": "local",
+        "buildConfiguration": "Release"
+      }
+    },
+    "mobile-dev-simulator": {
+      "distribution": "internal",
+      "env": {
+        "APP_VARIANT": "mobile-dev",
+        "NODE_ENV": "production",
+        "SENTRY_ALLOW_FAILURE": "true"
+      },
+      "ios": {
+        "simulator": true,
+        "buildConfiguration": "Release"
+      }
+    },
+    "release-test-ios": {
+      "distribution": "store",
+      "env": {
+        "APP_VARIANT": "release-test-ios",
+        "NODE_ENV": "production",
+        "SENTRY_ALLOW_FAILURE": "true"
+      },
+      "ios": {
+        "credentialsSource": "local",
+        "buildConfiguration": "Release"
+      }
+    },
+    "release-test-google-play": {
+      "distribution": "store",
+      "env": {
+        "APP_VARIANT": "release-test-google-play",
+        "NODE_ENV": "production",
+        "SENTRY_ALLOW_FAILURE": "true"
+      },
+      "android": {
+        "buildType": "app-bundle",
+        "credentialsSource": "local"
+      }
+    },
+    "release-test-amazon-appstore": {
+      "distribution": "store",
+      "env": {
+        "APP_VARIANT": "release-test-amazon-appstore",
+        "NODE_ENV": "production",
+        "SENTRY_ALLOW_FAILURE": "true"
+      },
+      "android": {
+        "buildType": "apk",
+        "credentialsSource": "local"
+      }
+    }
+  },
+  "submit": {}
+}
