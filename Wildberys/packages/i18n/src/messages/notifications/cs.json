@@ -1,0 +1,34 @@
+{
+  "signInCodeEmail": {
+    "subject": "Kód pro přihlášení do {product}: {code}",
+    "text": "Váš kód pro přihlášení do {product}: {code}\n\nKód platí {minutes} minut. Pokud jste o něj nežádali, tento e-mail ignorujte.",
+    "products": {
+      "web": "Bluberi",
+      "seller": "Bluberi Seller",
+      "admin": "Bluberi Admin"
+    }
+  },
+  "passwordResetCodeEmail": {
+    "subject": "Kód pro nové heslo do Bluberi: {code}",
+    "text": "Váš kód pro nastavení nového hesla do Bluberi: {code}\n\nKód platí {minutes} minut. Pokud jste o nové heslo nežádali, tento e-mail ignorujte. Vaše heslo se nezmění."
+  },
+  "phoneCodeSms": {
+    "text": "Bluberi: váš ověřovací kód je {code}. Platí {minutes} minut."
+  },
+  "sellerApprovedEmail": {
+    "subject": "Bluberi: váš obchod je schválený",
+    "text": "Dobrý den,\n\nregistraci prodejce {company} jsme ověřili a schválili. Přihlaste se do Bluberi Seller a můžete začít prodávat.\n\nTým Bluberi"
+  },
+  "sellerDocumentsRequestedEmail": {
+    "subject": "Bluberi: k registraci potřebujeme doplnit doklady",
+    "text": "Dobrý den,\n\nk registraci prodejce {company} potřebujeme doplnit:\n\n{message}\n\nDoklady nahrajete po přihlášení do Bluberi Seller. Pak registraci odešlete znovu.\n\nTým Bluberi"
+  },
+  "sellerRejectedEmail": {
+    "subject": "Bluberi: registraci prodejce jsme neschválili",
+    "text": "Dobrý den,\n\nregistraci prodejce {company} jsme neschválili.\n\nDůvod:\n\n{message}\n\nPokud s rozhodnutím nesouhlasíte, napište nám na {supportEmail}.\n\nTým Bluberi"
+  },
+  "sellerMessageEmail": {
+    "subject": "Bluberi: nová zpráva od týmu",
+    "text": "Dobrý den,\n\ntým Bluberi vám k prodejci {company} napsal:\n\n{message}\n\nOdpovědět můžete v Bluberi Seller v sekci Zprávy.\n\nTým Bluberi"
+  }
+}

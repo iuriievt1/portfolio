@@ -1,0 +1,136 @@
+/*
+ * Web-only tokens and base styles. Each Next.js app imports this file after Tailwind.
+ * The Manrope font is loaded with next/font and exposed as --font-manrope.
+ */
+@import './theme.css';
+
+/* The shared components use Tailwind classes too. */
+@source './components';
+
+@theme {
+  --font-*: initial;
+  --font-sans:
+    var(--font-manrope), -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+
+  /* The width the designs for a computer are drawn at. */
+  --breakpoint-2xl: 90rem;
+
+  /* Radii of design/src that the tokens have no name for: the plate and the band of the landing page, a drawn phone and its screen. */
+  --radius-2xl: 36px;
+  --radius-3xl: 40px;
+  --radius-phone: 64px;
+  --radius-phone-screen: 52px;
+
+  /* Gradients from design/src: --grad-brand in brand.css and the panel of the seller registration. */
+  --background-image-brand: linear-gradient(135deg, #6c4cff 0%, #9b5cff 52%, #ff7eb8 100%);
+  --background-image-panel:
+    radial-gradient(520px 420px at 110% -10%, rgb(255 154 203 / 0.65), transparent 60%),
+    radial-gradient(520px 520px at -20% 110%, rgb(43 24 115 / 0.75), transparent 60%),
+    linear-gradient(160deg, #7a5bff 0%, #6c4cff 45%, #8e5cff 100%);
+
+  /* The other gradients of brand.css: --grad-soft, --grad-berry, --grad-pink. */
+  --background-image-soft: linear-gradient(135deg, #f3eeff 0%, #fbf4ff 50%, #ffedf6 100%);
+  --background-image-berry: linear-gradient(135deg, #7a5bff 0%, #5a3bf0 60%, #3e25a8 100%);
+  --background-image-pink: linear-gradient(135deg, #ff9acb 0%, #ff4fa0 100%);
+
+  /* Backgrounds of product pictures: the "tile" colours of brand.css. */
+  --background-image-tile-lavender: linear-gradient(160deg, #f1ecff, #e4dbff);
+  --background-image-tile-pink: linear-gradient(160deg, #fff0f7, #ffdcec);
+  --background-image-tile-lilac: linear-gradient(160deg, #f6eeff, #ebddff);
+  --background-image-tile-cloud: linear-gradient(160deg, #f7f6fb, #eceaf4);
+  --background-image-tile-periwinkle: linear-gradient(160deg, #eef0ff, #dce1ff);
+  --background-image-tile-rose: linear-gradient(160deg, #fff3f3, #ffe0e6);
+
+  /*
+   * The landing page of design 01: the first screen on a computer and on a phone, and the app band.
+   * The first screen fades to white at its bottom, so it runs into the page under it without an edge.
+   */
+  --background-image-hero:
+    linear-gradient(180deg, rgb(255 255 255 / 0) calc(100% - 240px), #ffffff 100%),
+    radial-gradient(620px 520px at 78% 38%, rgb(155 92 255 / 0.22), transparent 70%),
+    radial-gradient(520px 420px at 96% 86%, rgb(255 126 184 / 0.26), transparent 70%),
+    radial-gradient(700px 500px at 8% 0%, rgb(236 230 255 / 0.9), transparent 70%),
+    linear-gradient(180deg, #fbf9ff 0%, #ffffff 100%);
+  --background-image-hero-phone:
+    linear-gradient(180deg, rgb(255 255 255 / 0) calc(100% - 160px), #ffffff 100%),
+    radial-gradient(300px 260px at 90% 70%, rgb(255 126 184 / 0.22), transparent 70%),
+    radial-gradient(320px 300px at 10% 10%, rgb(155 92 255 / 0.14), transparent 70%);
+  --background-image-app-band:
+    radial-gradient(700px 520px at 100% 0%, rgb(255 154 203 / 0.6), transparent 62%),
+    radial-gradient(700px 600px at 0% 100%, rgb(62 37 168 / 0.7), transparent 62%),
+    linear-gradient(#6c4cff, #6c4cff);
+
+  /* The drawn phone: the titanium band around it, the buttons on its sides, the shine of its glass and its shadow. */
+  --color-phone-body: #08080c;
+  --background-image-phone-band: linear-gradient(
+    145deg,
+    #ecebf1 0%,
+    #9f9da8 14%,
+    #f5f4f8 30%,
+    #7f7d88 52%,
+    #d7d5de 70%,
+    #8d8b96 86%,
+    #c9c7d1 100%
+  );
+  --background-image-phone-button: linear-gradient(90deg, #7c7a85 0%, #e5e4eb 50%, #86848f 100%);
+  --background-image-phone-glass: linear-gradient(
+    118deg,
+    rgb(255 255 255 / 0.2) 0%,
+    rgb(255 255 255 / 0.04) 24%,
+    rgb(255 255 255 / 0) 40%
+  );
+  --shadow-phone:
+    0 0 0 1px rgb(22 12 51 / 0.28), 0 60px 80px -36px rgb(22 12 51 / 0.5),
+    0 36px 56px -28px rgb(60 32 170 / 0.32);
+  /* The same phone turned a little to the left: its right side shows as a thick metal edge. */
+  --shadow-phone-turned:
+    2px 0 0 #a3a1ac, 4px 0.5px 0 #8a8893, 6px 1px 0 #72707b, 8px 1.5px 0 #5c5a65,
+    9px 2px 0 1px rgb(22 12 51 / 0.3), 0 60px 80px -36px rgb(22 12 51 / 0.5),
+    0 36px 56px -28px rgb(60 32 170 / 0.32);
+
+  /* A step of a form or a small window that comes in: it fades in and moves up a little. */
+  --animate-step-in: step-in 0.22s ease-out both;
+
+  @keyframes step-in {
+    from {
+      opacity: 0;
+      translate: 0 0.375rem;
+    }
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-white font-sans text-berry-950 antialiased;
+  }
+
+  /* Tailwind leaves the arrow cursor on buttons. Whatever can be clicked shows the hand, like links do. */
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+/*
+ * Pages that fade into each other are animated by the ViewTransition component of React,
+ * see the PageFade component. The page stays clickable while it fades.
+ */
+::view-transition {
+  pointer-events: none;
+}
+
+/* Short, so a click right after a change of page is not lost in the fade. */
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 0.2s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}

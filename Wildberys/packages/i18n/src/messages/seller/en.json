@@ -1,0 +1,355 @@
+{
+  "metadata": {
+    "title": "Bluberi for sellers",
+    "description": "Bluberi seller portal"
+  },
+  "badge": "Seller",
+  "signIn": {
+    "panelTitle": "Sell on Bluberi",
+    "benefits": {
+      "free": "Free registration",
+      "payouts": "Payouts every week",
+      "promotion": "Promotion at the start",
+      "upload": "Upload in a few clicks"
+    },
+    "form": {
+      "emailTitle": "Sign in",
+      "emailText": "Start with your email.",
+      "emailLabel": "Email",
+      "continue": "Continue",
+      "codeTitle": "Enter the code",
+      "codeText": "We sent it to {email}",
+      "codeLabel": "Code from the email",
+      "submit": "Sign in",
+      "changeEmail": "Use another account"
+    },
+    "password": {
+      "passwordTitle": "Enter your password",
+      "passwordText": "Account {email}",
+      "passwordLabel": "Password",
+      "forgotPassword": "Forgot your password?",
+      "confirmationTitle": "Confirm the sign-in",
+      "confirmationByEmail": "We sent a code to {email}",
+      "confirmationBySms": "We sent a code by SMS to the number ending in {digits}",
+      "resetTitle": "New password",
+      "resetText": "We sent a code to {email}. Enter it and choose a new password.",
+      "newPasswordLabel": "New password",
+      "saveAndSignIn": "Save and sign in"
+    }
+  },
+  "oneTimeCode": {
+    "resendIn": "Send again in {time}",
+    "resend": "Send again"
+  },
+  "passwordField": {
+    "show": "Show password",
+    "hide": "Hide password",
+    "hint": "At least {count} characters"
+  },
+  "messages": {
+    "inbox": "Inbox",
+    "new": "New message",
+    "team": "Bluberi team",
+    "you": "You",
+    "registration": "Seller registration",
+    "decisions": {
+      "DOCUMENTS_REQUESTED": "Request for documents",
+      "APPROVED": "The registration is approved",
+      "REJECTED": "We did not approve the registration"
+    },
+    "addDocuments": "Add documents",
+    "empty": "Nothing here yet",
+    "older": "Older conversations",
+    "earlier": "Earlier messages",
+    "unseen": "New messages",
+    "choose": "Choose a message on the left or write a new one",
+    "unavailable": "The messages could not be loaded now. Please try again in a moment",
+    "back": "Back to the inbox",
+    "newTitle": "New message",
+    "toTeam": "For the Bluberi team",
+    "subjectLabel": "Subject",
+    "bodyLabel": "Message",
+    "replyLabel": "Write an answer",
+    "send": "Send",
+    "closed": "Nobody can write in this conversation now"
+  },
+  "review": {
+    "pending": "We are checking your registration and will email you the result",
+    "documentsRequested": "We need more documents for your registration",
+    "addDocuments": "Add documents",
+    "requestedTitle": "Add the documents",
+    "messageLabel": "Message from the Bluberi team",
+    "send": "Send for review",
+    "rejectedTitle": "We did not approve the registration",
+    "suspendedTitle": "Selling is paused",
+    "toPortal": "Back to the portal",
+    "reasonLabel": "Reason",
+    "contact": "If you do not agree with the decision, write to us at"
+  },
+  "errors": {
+    "ONE_TIME_CODE_INVALID": "The code is wrong or no longer valid.",
+    "ONE_TIME_CODE_REQUESTED_TOO_SOON": "You can ask for a new code in a moment.",
+    "VALIDATION_FAILED": "Please check what you entered.",
+    "ACCOUNT_BLOCKED": "This account is blocked.",
+    "INVALID_CREDENTIALS": "The password is wrong.",
+    "SIGN_IN_CONFIRMATION_EXPIRED": "Please enter the password again.",
+    "RECENT_SIGN_IN_REQUIRED": "You signed in a while ago. Please sign in again and set the password right after.",
+    "PHONE_ALREADY_USED": "Another account uses this number.",
+    "PHONE_NOT_CONFIRMED": "Confirm your phone number first.",
+    "UNAUTHENTICATED": "Your sign-in has expired. Please sign in again.",
+    "ACCOUNT_NOT_READY": "Finish the first step first: the phone and the password.",
+    "COMPANY_NOT_FOUND": "We did not find a company with this number in the ARES register.",
+    "COMPANY_NOT_ACTIVE": "The ARES register says this company no longer exists.",
+    "COMPANY_REGISTRY_UNAVAILABLE": "The ARES register does not answer now. Please try again in a moment.",
+    "COMPANY_ALREADY_REGISTERED": "This company is already registered.",
+    "COMPANY_REQUIRED": "Fill in the company details first.",
+    "VAT_NUMBER_MISSING": "The register has no tax number for this company, so it cannot be a VAT payer.",
+    "VAT_NUMBER_NOT_FOUND": "This VAT number is not valid in the VIES register. Check the country and the number.",
+    "VAT_REGISTRY_UNAVAILABLE": "The VIES register does not answer for this country now. Please try again in a moment.",
+    "PAYOUT_METHOD_REQUIRED": "Choose where you want your payouts first.",
+    "PAYOUT_METHOD_NOT_BANK": "You look after the bank account in your account at Stripe.",
+    "BANK_ACCOUNT_REQUIRED": "Save the bank account first.",
+    "STORE_NAME_TAKEN": "Another store already uses this name. Please choose another one.",
+    "REGISTRATION_INCOMPLETE": "Please finish the payouts and the store.",
+    "REGISTRATION_ALREADY_SUBMITTED": "The registration is already sent.",
+    "IMAGE_INVALID": "The file is not a JPG, PNG or WebP picture.",
+    "IMAGE_TOO_LARGE": "The picture is larger than 10 MB.",
+    "CATEGORY_NOT_FOUND": "One of the categories is no longer available. Please choose again.",
+    "DOCUMENT_INVALID": "The file is not a PDF, JPG or PNG.",
+    "DOCUMENT_TOO_LARGE": "The file is larger than 10 MB.",
+    "DOCUMENT_NOT_FOUND": "The document no longer exists.",
+    "DOCUMENTS_LIMIT_REACHED": "There are too many documents. Remove one first.",
+    "DOCUMENTS_REQUIRED": "Please upload every document.",
+    "DOCUMENTS_NOT_REQUESTED": "We did not ask you for documents.",
+    "MESSAGES_CLOSED": "Messages are not available now.",
+    "CONVERSATION_NOT_FOUND": "This conversation no longer exists.",
+    "UNKNOWN": "Something went wrong. Please try again."
+  },
+  "nav": {
+    "settings": "Settings",
+    "items": {
+      "prehled": "Overview",
+      "zpravy": "Messages",
+      "objednavky": "Orders",
+      "produkty": "Products",
+      "import": "Import",
+      "finance": "Finance",
+      "vraceni": "Returns",
+      "hodnoceni": "Reviews",
+      "propagace": "Promotion",
+      "analytika": "Analytics",
+      "obchod": "Store",
+      "tym": "Team",
+      "napoveda": "Help"
+    }
+  },
+  "shell": {
+    "language": "Language",
+    "signOut": "Sign out",
+    "comingSoon": "We are working on this section.",
+    "account": "Account and security"
+  },
+  "security": {
+    "title": "Account security",
+    "account": "You sign in with the email {email}",
+    "step": "Step {number} of {count}",
+    "close": "Close",
+    "signInAgain": "Sign in again",
+    "reminder": {
+      "open": "Finish securing your account",
+      "title": "Secure your account",
+      "text": "Set a password and a phone number. At the next sign-in a password and a code will protect the account.",
+      "continue": "Continue",
+      "later": "Later"
+    },
+    "password": {
+      "title": "Password",
+      "missing": "You have no password yet, you sign in with a code from an email only.",
+      "present": "The password is set. After the password we also ask for a code at sign-in.",
+      "add": "Set a password",
+      "change": "Change password",
+      "currentLabel": "Current password",
+      "newLabel": "New password",
+      "save": "Save password"
+    },
+    "phone": {
+      "title": "Phone",
+      "missing": "Your phone number is not confirmed yet.",
+      "confirmed": "Confirmed",
+      "add": "Add a phone number",
+      "change": "Change number",
+      "label": "Phone number",
+      "hint": "In the international format, for example +420 777 123 456",
+      "sendCode": "Send code",
+      "codeTitle": "Code from the SMS",
+      "codeText": "We sent it to {phone}",
+      "codeLabel": "Code from the SMS",
+      "confirm": "Confirm"
+    },
+    "channel": {
+      "title": "Code at sign-in",
+      "text": "After the password we send you a code. Choose where you want to get it.",
+      "needsPhone": "You can choose SMS after you confirm your phone number.",
+      "options": {
+        "EMAIL": "Email",
+        "SMS": "SMS"
+      }
+    }
+  },
+  "registration": {
+    "steps": {
+      "label": "Steps of the registration",
+      "account": "Account",
+      "company": "Company",
+      "payouts": "Payouts",
+      "store": "Store"
+    },
+    "haveAccount": "Already have an account?",
+    "signIn": "Sign in",
+    "back": "Back",
+    "continue": "Continue",
+    "account": {
+      "title": "Create your seller account",
+      "emailText": "Start with your email, we send you a code",
+      "emailLabel": "Email",
+      "emailCodeText": "We sent the code to {email}",
+      "codeLabel": "Code",
+      "changeEmail": "Change email",
+      "existingAccount": "This email already has an account with a password. Please sign in.",
+      "phoneText": "Add your phone, we confirm it with a code from an SMS",
+      "phoneLabel": "Phone",
+      "sendCode": "Send code",
+      "smsCodeText": "We sent the code to {phone}",
+      "changePhone": "Change number",
+      "confirm": "Confirm",
+      "passwordText": "Only the password is left",
+      "passwordLabel": "Password",
+      "passwordSaved": "The password is set",
+      "readyText": "Your account is ready",
+      "signInAgain": "Sign in again",
+      "terms": "I agree to the terms for sellers and to the <policy>processing of personal data</policy>."
+    },
+    "company": {
+      "title": "Company details",
+      "text": "Enter the company number (IČO), we load the rest from the ARES register",
+      "textAbroad": "Enter the VAT number, we check it in VIES",
+      "textWithoutVatNumber": "Fill in the details, we check them by documents",
+      "countryLabel": "Country of registration",
+      "icoLabel": "Company number (IČO)",
+      "icoFieldLabel": "Company or sole trader number (IČO)",
+      "load": "Load from ARES",
+      "source": "ARES",
+      "legalForms": {
+        "COMPANY": "Company",
+        "SOLE_TRADER": "Sole trader"
+      },
+      "vatNumberLabel": "Tax number (DIČ)",
+      "vatPayer": "VAT payer",
+      "invalidIco": "A company number has eight digits. Please check it.",
+      "vatIdLabel": "VAT number",
+      "check": "Check in VIES",
+      "vatSource": "VIES",
+      "vatValid": "Valid VAT number",
+      "legalNameLabel": "Company name",
+      "legalFormLabel": "Legal form",
+      "registrationNumberLabel": "Company registration number",
+      "registrationNumberHint": "The number in the business register of your country",
+      "invalidVatNumber": "The VAT number does not look right. Please check it.",
+      "noVatNumber": "I have no VAT number",
+      "haveVatNumber": "I have a VAT number",
+      "withoutCheck": "Continue without the check",
+      "manualNote": "We check the company by the documents in the next step",
+      "publicNote": "Buyers will see these details, your email and your phone"
+    },
+    "documents": {
+      "title": "Documents",
+      "text": "PDF, JPG or PNG up to 10 MB",
+      "kinds": {
+        "IDENTITY_DOCUMENT": {
+          "title": "ID card or passport",
+          "hint": "Of the person who acts for the company"
+        },
+        "REGISTER_EXTRACT": {
+          "title": "Business register extract",
+          "hint": "From the register of your country"
+        },
+        "OTHER": {
+          "title": "Another document",
+          "hint": "As our message asks"
+        }
+      },
+      "upload": "Upload a file",
+      "remove": "Remove",
+      "privateNote": "Only the Bluberi team sees the documents",
+      "missing": "Please upload every document."
+    },
+    "address": {
+      "streetLabel": "Street and number",
+      "cityLabel": "City",
+      "postalCodeLabel": "Postal code"
+    },
+    "payouts": {
+      "title": "Where to send your payouts",
+      "text": "We send the money for sold goods once a week",
+      "methods": {
+        "BANK": {
+          "title": "Bank account",
+          "text": "An account in crowns or euros"
+        },
+        "STRIPE": {
+          "title": "Stripe account",
+          "text": "You look after your payouts at Stripe"
+        }
+      },
+      "ibanLabel": "IBAN",
+      "holderLabel": "Account holder",
+      "bankAccountSaved": "{country} •••• {last4} · {currency}",
+      "changeBankAccount": "Change account",
+      "invalidBankAccount": "The account number is not right. Please check it.",
+      "chooseMethod": "Choose where you want your payouts.",
+      "statuses": {
+        "PENDING": "Being checked",
+        "VERIFIED": "Verified"
+      },
+      "simulation": "Test mode: the check by Stripe is simulated",
+      "accountNumberLabel": "Account number",
+      "bankCodeLabel": "Bank code",
+      "currencyLabel": "Account currency"
+    },
+    "store": {
+      "title": "Set up your store",
+      "text": "This is how buyers see you",
+      "uploadLogo": "Upload logo",
+      "changeLogo": "Change logo",
+      "logoHint": "JPG, PNG or WebP up to 10 MB",
+      "nameLabel": "Store name",
+      "categoriesLabel": "What you sell",
+      "wholeSection": "All",
+      "partOfSection": "{chosen} of {count}",
+      "showSubcategories": "Subcategories",
+      "noCategories": "Choose at least one category.",
+      "sameAsRegistered": "Goods come back to the registered address",
+      "invalidStore": "Please check the store name and the address.",
+      "finish": "Finish registration",
+      "logoTitle": "Adjust the logo",
+      "logoText": "Drag the picture and zoom in",
+      "logoZoom": "Zoom",
+      "logoUse": "Use",
+      "selfCertification": "I will offer only goods that comply with EU law"
+    }
+  },
+  "welcome": {
+    "title": "Welcome to Bluberi!",
+    "text": "We are checking your details now. Meanwhile, get your catalog ready",
+    "account": "Account and company",
+    "identity": "Identity check",
+    "products": "First products",
+    "launch": "Start of sales",
+    "done": "Done",
+    "inProgress": "In progress",
+    "nextStep": "Next step",
+    "afterCheck": "After the check",
+    "addProduct": "Add the first product",
+    "importCatalog": "Import the catalog"
+  }
+}

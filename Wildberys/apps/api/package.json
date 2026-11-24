@@ -1,0 +1,50 @@
+{
+  "name": "@bluberi/api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nest start --watch --env-file .env",
+    "build": "nest build",
+    "lint": "eslint . --max-warnings 0 && prisma validate && prisma format --check",
+    "typegen": "prisma generate",
+    "typecheck": "tsc",
+    "test": "vitest run",
+    "openapi": "prisma generate && nest build && node --env-file=.env.example dist/openapi/write-openapi.js ../../packages/api-client/openapi.json",
+    "owner:add": "prisma generate && nest build && node --env-file=.env dist/cli/add-platform-owner.js",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "storage:init": "prisma generate && nest build && node --env-file=.env dist/cli/init-storage.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "3.1161.0",
+    "@bluberi/i18n": "workspace:*",
+    "@nestjs/common": "12.4.0",
+    "@nestjs/core": "12.4.0",
+    "@nestjs/platform-express": "12.4.0",
+    "@nestjs/swagger": "12.1.1",
+    "@prisma/adapter-pg": "7.10.1",
+    "@prisma/client": "7.10.1",
+    "class-transformer": "0.5.1",
+    "class-validator": "0.15.1",
+    "ioredis": "6.0.0",
+    "jose": "6.2.17",
+    "nodemailer": "10.5.0",
+    "reflect-metadata": "0.2.2",
+    "rxjs": "7.8.2",
+    "sharp": "0.35.5"
+  },
+  "devDependencies": {
+    "@bluberi/config": "workspace:*",
+    "@nestjs/cli": "12.0.12",
+    "@nestjs/testing": "12.4.0",
+    "@types/express": "5.0.6",
+    "@types/node": "catalog:",
+    "@types/supertest": "7.2.1",
+    "eslint": "catalog:",
+    "prisma": "7.10.1",
+    "supertest": "7.3.2",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  }
+}

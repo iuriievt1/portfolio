@@ -1,0 +1,33 @@
+{
+  "name": "@bluberi/seller",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --port 3001",
+    "build": "next build",
+    "lint": "eslint . --max-warnings 0",
+    "typegen": "next typegen",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@bluberi/api-client": "workspace:*",
+    "@bluberi/i18n": "workspace:*",
+    "@bluberi/ui": "workspace:*",
+    "@bluberi/web-auth": "workspace:*",
+    "lucide-react": "catalog:",
+    "next": "catalog:",
+    "next-intl": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@bluberi/config": "workspace:*",
+    "@tailwindcss/postcss": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "eslint": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:"
+  }
+}

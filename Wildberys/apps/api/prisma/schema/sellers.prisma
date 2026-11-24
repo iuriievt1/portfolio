@@ -1,0 +1,259 @@
+enum SellerLegalForm {
+  COMPANY
+  SOLE_TRADER
+
+  @@map("seller_legal_form")
+}
+
+enum SellerStatus {
+  DRAFT
+  PENDING_REVIEW
+  /// The team asked the seller for documents and waits for them.
+  DOCUMENTS_REQUESTED
+  APPROVED
+  REJECTED
+  SUSPENDED
+
+  @@map("seller_status")
+}
+
+/// How the company of a seller was checked when it registered.
+enum CompanyCheck {
+  /// Read from the company register of its country by its number.
+  COMPANY_REGISTER
+  /// Its VAT number is valid in the register of VAT numbers of the EU.
+  VAT_REGISTER
+  /// No register confirmed it. The team checks its documents.
+  DOCUMENTS
+
+  @@map("company_check")
+}
+
+/// What a document of a seller shows.
+enum SellerDocumentKind {
+  /// The identity document of the trader, or of the person who acts for the company.
+  IDENTITY_DOCUMENT
+  /// The extract from the business register the company is listed in.
+  REGISTER_EXTRACT
+  /// Anything else the team asked for.
+  OTHER
+
+  @@map("seller_document_kind")
+}
+
+/// What a conversation of a seller is about.
+enum SellerConversationTopic {
+  /// The registration of the seller. The decisions of the team go here. One per seller.
+  REGISTRATION
+  /// Anything else one side opened, under a subject of its own.
+  GENERAL
+
+  @@map("seller_conversation_topic")
+}
+
+/// Which side of a conversation wrote a message.
+enum SellerMessageSide {
+  /// A member of the Bluberi team.
+  TEAM
+  /// A person who works for the seller.
+  SELLER
+
+  @@map("seller_message_side")
+}
+
+/// What a message of a conversation is.
+enum SellerMessageKind {
+  /// A text one side wrote to the other.
+  TEXT
+  /// The team asked the seller for documents. The text says which.
+  DOCUMENTS_REQUESTED
+  /// The team approved the seller. It needs no text.
+  APPROVED
+  /// The team refused the seller. The text says why.
+  REJECTED
+
+  @@map("seller_message_kind")
+}
+
+enum SellerMemberRole {
+  OWNER
+  STAFF
+
+  @@map("seller_member_role")
+}
+
+enum StoreStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+
+  @@map("store_status")
+}
+
+/// The legal entity that sells: a company or a sole trader. Holds the trader data required by the DSA.
+model Seller {
+  id                  String          @id @default(uuid(7)) @db.Uuid
+  legalName           String          @map("legal_name")
+  legalForm           SellerLegalForm @map("legal_form")
+  /// Country of registration, ISO 3166-1 alpha-2.
+  countryCode         String          @map("country_code") @db.Char(2)
+  /// Company registration number. In Czechia this is the IČO.
+  registrationNumber  String          @map("registration_number")
+  /// VAT number. In Czechia this is the DIČ.
+  vatNumber           String?         @map("vat_number")
+  isVatPayer          Boolean         @default(false) @map("is_vat_payer")
+  companyCheck        CompanyCheck    @map("company_check")
+  contactEmail        String          @map("contact_email")
+  contactPhone        String          @map("contact_phone")
+  registeredAddressId String          @map("registered_address_id") @db.Uuid
+  status              SellerStatus    @default(DRAFT)
+  /// When the owner agreed to the terms for sellers, at the registration.
+  termsAcceptedAt     DateTime        @map("terms_accepted_at") @db.Timestamptz(3)
+  /// When the owner promised to offer only goods that comply with the law of the EU (DSA, Article 30).
+  selfCertifiedAt     DateTime?       @map("self_certified_at") @db.Timestamptz(3)
+  /// When the registration was last sent to Bluberi for a check.
+  submittedAt         DateTime?       @map("submitted_at") @db.Timestamptz(3)
+  reviewedAt          DateTime?       @map("reviewed_at") @db.Timestamptz(3)
+  reviewedById        String?         @map("reviewed_by_id") @db.Uuid
+  /// What the team wrote to the seller with its last decision: which documents to send, or why the seller was refused.
+  reviewMessage       String?         @map("review_message")
+  createdAt           DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt           DateTime        @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  registeredAddress Address              @relation(fields: [registeredAddressId], references: [id], onDelete: Restrict)
+  reviewedBy        User?                @relation(fields: [reviewedById], references: [id], onDelete: SetNull)
+  members           SellerMember[]
+  stores            Store[]
+  stockLocations    StockLocation[]
+  ledgerAccounts    LedgerAccount[]
+  payoutAccount     SellerPayoutAccount?
+  documents         SellerDocument[]
+  conversations     SellerConversation[]
+
+  @@unique([countryCode, registrationNumber])
+  @@index([status, submittedAt])
+  @@index([registeredAddressId])
+  @@index([reviewedById])
+  @@map("sellers")
+}
+
+/// A user who works for a seller.
+/// A document a seller gave to Bluberi. The file lies in the closed storage under seller-documents/<seller>/<id>.
+model SellerDocument {
+  id           String             @id @default(uuid(7)) @db.Uuid
+  sellerId     String             @map("seller_id") @db.Uuid
+  kind         SellerDocumentKind
+  /// The name the file had on the device it was uploaded from.
+  fileName     String             @map("file_name")
+  contentType  String             @map("content_type")
+  sizeBytes    Int                @map("size_bytes")
+  uploadedById String             @map("uploaded_by_id") @db.Uuid
+  createdAt    DateTime           @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  seller     Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  uploadedBy User   @relation(fields: [uploadedById], references: [id], onDelete: Restrict)
+
+  @@index([sellerId])
+  @@index([uploadedById])
+  @@map("seller_documents")
+}
+
+/// A conversation in the inbox of a seller: with the Bluberi team today, with buyers later.
+/// It has a subject, like a letter, and the messages the two sides wrote under it.
+model SellerConversation {
+  id            String                  @id @default(uuid(7)) @db.Uuid
+  sellerId      String                  @map("seller_id") @db.Uuid
+  topic         SellerConversationTopic
+  /// What the conversation is about, in the words of who opened it. Empty for the registration: the apps name it.
+  subject       String
+  /// When the last message was written. The inboxes are sorted by it.
+  lastMessageAt DateTime                @map("last_message_at") @db.Timestamptz(3)
+  createdAt     DateTime                @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  seller   Seller          @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  messages SellerMessage[]
+
+  @@index([sellerId, lastMessageAt])
+  @@index([lastMessageAt])
+  @@map("seller_conversations")
+}
+
+/// One message of a conversation: a text of one side, or a decision of the team about the registration.
+model SellerMessage {
+  id             String            @id @default(uuid(7)) @db.Uuid
+  conversationId String            @map("conversation_id") @db.Uuid
+  side           SellerMessageSide
+  kind           SellerMessageKind @default(TEXT)
+  authorId       String            @map("author_id") @db.Uuid
+  body           String
+  /// When the other side opened the conversation with this message in it.
+  readAt         DateTime?         @map("read_at") @db.Timestamptz(3)
+  createdAt      DateTime          @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  conversation SellerConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  author       User               @relation(fields: [authorId], references: [id], onDelete: Restrict)
+
+  @@index([conversationId, id])
+  @@index([authorId])
+  @@map("seller_messages")
+}
+
+model SellerMember {
+  sellerId  String           @map("seller_id") @db.Uuid
+  userId    String           @map("user_id") @db.Uuid
+  role      SellerMemberRole
+  createdAt DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  seller Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([sellerId, userId])
+  @@index([userId])
+  @@map("seller_members")
+}
+
+/// The storefront buyers see. A seller can have several.
+model Store {
+  id              String      @id @default(uuid(7)) @db.Uuid
+  sellerId        String      @map("seller_id") @db.Uuid
+  name            String
+  slug            String      @unique
+  description     String?
+  /// The uploaded photo that is the logo of the store.
+  logoImageId     String?     @map("logo_image_id") @db.Uuid
+  status          StoreStatus @default(DRAFT)
+  /// The store takes part in express delivery.
+  expressEnabled  Boolean     @default(false) @map("express_enabled")
+  returnAddressId String?     @map("return_address_id") @db.Uuid
+  createdAt       DateTime    @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime    @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  seller          Seller          @relation(fields: [sellerId], references: [id], onDelete: Restrict)
+  logoImage       Image?          @relation(fields: [logoImageId], references: [id], onDelete: Restrict)
+  returnAddress   Address?        @relation(fields: [returnAddressId], references: [id], onDelete: Restrict)
+  categories      StoreCategory[]
+  createdProducts Product[]
+  offers          Offer[]
+  stockItems      StockItem[]
+  shipments       Shipment[]
+
+  @@index([sellerId])
+  @@index([logoImageId])
+  @@index([returnAddressId])
+  @@map("stores")
+}
+
+/// What a store sells: a whole section of the catalog, or one of its subcategories.
+/// A section stands for all of its subcategories, so a store never has both.
+model StoreCategory {
+  storeId    String   @map("store_id") @db.Uuid
+  categoryId String   @map("category_id") @db.Uuid
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  store    Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+
+  @@id([storeId, categoryId])
+  @@index([categoryId])
+  @@map("store_categories")
+}

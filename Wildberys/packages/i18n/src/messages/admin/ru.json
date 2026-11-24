@@ -1,0 +1,383 @@
+{
+  "metadata": {
+    "title": "Bluberi Admin",
+    "description": "Система управления Bluberi"
+  },
+  "badge": "Admin",
+  "signIn": {
+    "panelTitle": "Система управления",
+    "form": {
+      "emailTitle": "Вход",
+      "emailText": "Введите email, и мы пришлём одноразовый код.",
+      "emailLabel": "Email",
+      "continue": "Продолжить",
+      "codeTitle": "Введите код",
+      "codeText": "Мы отправили его на {email}",
+      "codeLabel": "Код из письма",
+      "submit": "Войти",
+      "resendIn": "Отправить снова через {time}",
+      "resend": "Отправить снова",
+      "changeEmail": "Изменить email",
+      "errors": {
+        "ONE_TIME_CODE_INVALID": "Код неверный или уже не действует.",
+        "ONE_TIME_CODE_REQUESTED_TOO_SOON": "Новый код можно запросить чуть позже.",
+        "VALIDATION_FAILED": "Проверьте введённые данные.",
+        "ACCOUNT_BLOCKED": "Этот аккаунт заблокирован.",
+        "UNKNOWN": "Что-то пошло не так. Попробуйте ещё раз."
+      }
+    }
+  },
+  "nav": {
+    "groups": {
+      "moderation": "Модерация",
+      "support": "Поддержка",
+      "finance": "Финансы",
+      "operations": "Операции",
+      "system": "Система"
+    },
+    "items": {
+      "overview": "Обзор",
+      "sellers": "Продавцы",
+      "products": "Товары",
+      "dsaNotices": "Жалобы DSA",
+      "supportTickets": "Обращения",
+      "disputesAndReturns": "Споры и возвраты",
+      "payouts": "Выплаты",
+      "commissions": "Комиссии",
+      "logistics": "Логистика",
+      "catalog": "Каталог",
+      "marketing": "Маркетинг",
+      "roles": "Роли и доступы",
+      "auditLog": "Журнал действий"
+    }
+  },
+  "roles": {
+    "OWNER": "Владелец",
+    "SUPPORT": "Поддержка",
+    "MODERATOR": "Модератор",
+    "FINANCE": "Финансы",
+    "LOGISTICS": "Логистика"
+  },
+  "shell": {
+    "signOut": "Выйти",
+    "comingSoon": "Раздел в разработке.",
+    "noAccessTitle": "Нет доступа",
+    "noAccessText": "У этого аккаунта нет роли в команде Bluberi. Роль выдаёт владелец платформы."
+  },
+  "marketing": {
+    "newsletter": {
+      "title": "Подписка на новости",
+      "text": "Люди, которые оставили почту в подвале сайта и согласились получать новости и предложения.",
+      "email": "Email",
+      "language": "Язык",
+      "consentedAt": "Дата согласия",
+      "empty": "Подписчиков пока нет. Они появятся, когда кто-то оставит почту в подвале сайта."
+    }
+  },
+  "sellers": {
+    "statuses": {
+      "DRAFT": "Черновик",
+      "PENDING_REVIEW": "На проверке",
+      "DOCUMENTS_REQUESTED": "Запрошены документы",
+      "APPROVED": "Одобрен",
+      "REJECTED": "Отклонён",
+      "SUSPENDED": "Приостановлен"
+    },
+    "payoutStatuses": {
+      "INCOMPLETE": "Не завершено",
+      "PENDING": "Проверяется",
+      "VERIFIED": "Проверено"
+    },
+    "list": {
+      "tabsLabel": "Статусы продавцов",
+      "tabs": {
+        "PENDING_REVIEW": "На проверке",
+        "DOCUMENTS_REQUESTED": "Запрошены документы",
+        "APPROVED": "Одобрены",
+        "REJECTED": "Отклонены",
+        "DRAFT": "Черновики"
+      },
+      "empty": {
+        "PENDING_REVIEW": "Никто не ждёт проверки",
+        "DOCUMENTS_REQUESTED": "Документы ни у кого не запрошены",
+        "APPROVED": "Одобренных продавцов пока нет",
+        "REJECTED": "Отклонённых продавцов нет",
+        "DRAFT": "Черновиков нет"
+      },
+      "columns": {
+        "seller": "Продавец",
+        "registrationNumber": "Рег. номер",
+        "categories": "Категории",
+        "submitted": "Подана",
+        "created": "Создан",
+        "checks": "Проверки"
+      },
+      "checks": {
+        "company": {
+          "COMPANY_REGISTER": "ARES",
+          "VAT_REGISTER": "VIES",
+          "DOCUMENTS": "Документы"
+        },
+        "companyHints": {
+          "COMPANY_REGISTER": "Компания взята из реестра ARES",
+          "VAT_REGISTER": "Номер НДС подтверждён в реестре VIES",
+          "DOCUMENTS": "Компанию проверяют по документам"
+        },
+        "payouts": "Выплаты",
+        "payoutHints": {
+          "NONE": "Выплаты: способ не выбран",
+          "INCOMPLETE": "Выплаты: счёт не завершён",
+          "PENDING": "Выплаты: счёт проверяется",
+          "VERIFIED": "Выплаты: счёт проверен"
+        },
+        "documents": "Документов: {count}",
+        "unread": "Переписок с непрочитанным: {count}"
+      }
+    },
+    "card": {
+      "back": "Продавцы",
+      "error": "Не удалось загрузить продавца. Обновите страницу.",
+      "yes": "Да",
+      "no": "Нет",
+      "notFound": {
+        "title": "Продавец не найден",
+        "text": "Возможно, его регистрацию удалили",
+        "back": "К списку продавцов"
+      },
+      "summary": {
+        "submitted": "Заявка подана",
+        "created": "Черновик создан",
+        "moment": "{date} · {ago}",
+        "reviewed": "Последнее решение",
+        "reviewedBy": "{email} · {date}",
+        "message": "Сообщение продавцу"
+      },
+      "company": {
+        "title": "Компания",
+        "country": "Страна",
+        "registrationNumber": "Регистрационный номер",
+        "legalForm": "Правовая форма",
+        "legalForms": {
+          "COMPANY": "Юридическое лицо",
+          "SOLE_TRADER": "Индивидуальный предприниматель"
+        },
+        "vatNumber": "Номер НДС",
+        "vatPayer": "Плательщик НДС",
+        "address": "Юридический адрес",
+        "check": "Проверка при регистрации",
+        "checks": {
+          "COMPANY_REGISTER": "Данные взяты из реестра ARES",
+          "VAT_REGISTER": "Номер НДС подтверждён в реестре VIES",
+          "DOCUMENTS": "Реестры компанию не подтвердили, её проверяют по документам"
+        }
+      },
+      "registers": {
+        "title": "Реестры сейчас",
+        "loading": "Запрашиваем реестры",
+        "error": "Не удалось запросить реестры. Обновите страницу.",
+        "results": {
+          "MATCHES": "Совпадает",
+          "DIFFERS": "Есть расхождения",
+          "NOT_FOUND": "В реестре не найдено",
+          "UNAVAILABLE": "Реестр не отвечает",
+          "NOT_CHECKED": "Реестр не проверяет"
+        },
+        "notes": {
+          "MATCHES": "Реестр подтверждает данные продавца",
+          "DIFFERS": "Реестр говорит о компании не то же, что продавец",
+          "NOT_FOUND": "Сейчас в реестре нет такой компании или такого номера",
+          "UNAVAILABLE": "Реестр не ответил. Обновите страницу, чтобы спросить ещё раз.",
+          "NOT_CHECKED": "Ни один реестр не может подтвердить эту компанию. Проверьте её по документам."
+        },
+        "register": "Реестр",
+        "registerNames": {
+          "company": "ARES, реестр чешских компаний",
+          "vat": "VIES, реестр номеров НДС Евросоюза"
+        },
+        "registerName": "Название в реестре",
+        "registerAddress": "Адрес в реестре",
+        "differences": "Расхождения",
+        "differenceNames": {
+          "legalName": "Название",
+          "legalForm": "Правовая форма",
+          "vatNumber": "Номер НДС",
+          "address": "Адрес",
+          "closed": "Компания прекратила деятельность"
+        },
+        "trades": "Торговые лицензии",
+        "tradesMissing": "В торговом реестре записи нет, или он не отвечает",
+        "noTrades": "Действующих лицензий нет",
+        "tradeKinds": {
+          "FREE": "Свободная",
+          "CRAFT": "Ремесленная",
+          "PROFESSIONAL": "Связанная",
+          "CONCESSION": "Концессия"
+        },
+        "tradeDetails": "{kind} · с {date}",
+        "tradeFields": "Виды деятельности: {count}",
+        "retail": "Розничная торговля",
+        "retailYes": "Разрешена",
+        "retailNo": "В лицензиях не найдена",
+        "moreTrades": "Ещё лицензии: {count}"
+      },
+      "contacts": {
+        "title": "Контакты",
+        "email": "Email",
+        "phone": "Телефон"
+      },
+      "store": {
+        "title": "Магазин",
+        "missing": "Магазин ещё не настроен",
+        "name": "Название",
+        "slug": "Имя в адресе",
+        "categories": "Категории",
+        "noCategories": "Не выбраны",
+        "wholeSection": "весь раздел",
+        "returnAddress": "Адрес для возвратов"
+      },
+      "payouts": {
+        "title": "Выплаты",
+        "missing": "Способ выплат ещё не выбран",
+        "method": "Способ",
+        "methods": {
+          "BANK": "Банковский счёт",
+          "STRIPE": "Счёт Stripe"
+        },
+        "bankAccount": "Счёт",
+        "bankAccountValue": "{country} •••• {last4} · {currency}",
+        "noBankAccount": "Ещё не указан",
+        "holder": "Владелец счёта",
+        "simulation": "Проверка платёжного провайдера имитируется, пока не подключён аккаунт Stripe"
+      },
+      "documents": {
+        "title": "Документы",
+        "empty": "Документов нет",
+        "kinds": {
+          "IDENTITY_DOCUMENT": "Удостоверение личности",
+          "REGISTER_EXTRACT": "Выписка из реестра",
+          "OTHER": "Другой документ"
+        },
+        "details": "{name} · {size} · {date}",
+        "opensInNewTab": "Откроется в новой вкладке",
+        "notUploaded": "Не загружен"
+      },
+      "traceability": {
+        "title": "DSA: данные о продавце",
+        "items": {
+          "contacts": "Контакты",
+          "address": "Адрес",
+          "identityDocument": "Удостоверение личности",
+          "paymentAccount": "Платёжный счёт",
+          "registrationNumber": "Регистрационный номер",
+          "selfCertification": "Самосертификация"
+        },
+        "present": "Есть",
+        "missing": "Нет",
+        "termsAccepted": "Условия приняты",
+        "selfCertified": "Самосертификация"
+      },
+      "history": {
+        "title": "История",
+        "empty": "Записей пока нет",
+        "system": "Система",
+        "actions": {
+          "seller": {
+            "registration_started": "Начал регистрацию",
+            "registration_submitted": "Отправил регистрацию на проверку",
+            "payout_method_chosen": "Выбрал способ выплат",
+            "bank_account_saved": "Сохранил банковский счёт",
+            "document_added": "Добавил документ",
+            "document_removed": "Удалил документ",
+            "document_opened": "Открыл документ",
+            "approved": "Одобрил продавца",
+            "documents_requested": "Запросил документы",
+            "rejected": "Отклонил продавца",
+            "review_reopened": "Вернул на проверку",
+            "draft_removed": "Удалил черновик",
+            "staff_added": "Добавил сотрудника",
+            "staff_removed": "Удалил сотрудника"
+          }
+        }
+      },
+      "messages": {
+        "title": "Сообщения",
+        "empty": "Переписки с продавцом пока нет",
+        "more": "Более ранние переписки в разделе «Обращения»",
+        "error": "Не удалось загрузить сообщения",
+        "write": "Написать продавцу",
+        "subjectLabel": "Тема",
+        "bodyLabel": "Сообщение",
+        "hint": "Продавец увидит письмо в кабинете и получит его на почту",
+        "send": "Отправить"
+      },
+      "decision": {
+        "title": "Решение",
+        "approve": "Одобрить",
+        "requestDocuments": "Запросить документы",
+        "reject": "Отклонить",
+        "reopen": "Вернуть на проверку",
+        "documentsRequestedNote": "У продавца запрошены документы. Когда он добавит их и отправит регистрацию снова, она вернётся на проверку.",
+        "rejectedNote": "Продавцу отказано. Заявку можно вернуть на проверку, например после его возражения.",
+        "messageLabel": "Сообщение продавцу",
+        "messageHint": "Продавец получит его по почте и увидит в портале",
+        "cancel": "Отмена",
+        "draftTitle": "Черновик",
+        "draftNote": "Продавец не отправил регистрацию на проверку",
+        "removeDraft": "Удалить черновик",
+        "removeDraftTitle": "Удалить черновик?",
+        "removeDraftText": "Вместе с ним удалятся магазин, документы и платёжный счёт. Номер компании освободится для новой регистрации.",
+        "removeDraftConfirm": "Удалить",
+        "close": "Закрыть"
+      },
+      "errors": {
+        "SELLER_STATUS_CONFLICT": "Решение по этому продавцу уже принял кто-то другой. Обновите страницу.",
+        "VALIDATION_FAILED": "Сообщение должно быть от {min} до {max} символов.",
+        "SELLER_NOT_DRAFT": "Регистрацию уже отправили на проверку, удалить её нельзя. Обновите страницу.",
+        "SELLER_NOT_FOUND": "Продавец не найден. Возможно, его регистрацию удалили.",
+        "FORBIDDEN": "У вас нет прав на это действие.",
+        "UNAUTHENTICATED": "Сессия закончилась. Войдите снова.",
+        "UNKNOWN": "Что-то пошло не так. Попробуйте ещё раз."
+      }
+    }
+  },
+  "support": {
+    "inbox": "Входящие",
+    "empty": "Писем пока нет",
+    "older": "Более ранние переписки",
+    "earlier": "Более ранние сообщения",
+    "unseen": "Новые сообщения",
+    "choose": "Выберите переписку слева",
+    "unavailable": "Не удалось загрузить переписки. Попробуйте ещё раз",
+    "noAccess": "У вас нет доступа к переписке с продавцами",
+    "back": "К списку",
+    "registration": "Регистрация продавца",
+    "team": "Команда",
+    "decisions": {
+      "DOCUMENTS_REQUESTED": "Запрос документов",
+      "APPROVED": "Продавец одобрен",
+      "REJECTED": "Отказ"
+    },
+    "sellerCard": "Карточка продавца",
+    "replyLabel": "Напишите ответ",
+    "send": "Отправить",
+    "closed": "Писать можно, пока у продавца открыт кабинет",
+    "readOnly": "У вас доступ только на чтение",
+    "errors": {
+      "MESSAGES_CLOSED": "У продавца закрыт кабинет, написать ему нельзя.",
+      "CONVERSATION_NOT_FOUND": "Переписка не найдена.",
+      "VALIDATION_FAILED": "Проверьте тему и текст сообщения.",
+      "FORBIDDEN": "У вас нет прав на это действие.",
+      "UNAUTHENTICATED": "Сессия закончилась. Войдите снова.",
+      "UNKNOWN": "Что-то пошло не так. Попробуйте ещё раз."
+    }
+  },
+  "lists": {
+    "error": "Не удалось загрузить список. Обновите страницу.",
+    "next": "Следующие",
+    "first": "В начало",
+    "languages": {
+      "cs": "Чешский",
+      "en": "Английский"
+    }
+  }
+}

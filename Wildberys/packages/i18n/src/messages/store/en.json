@@ -1,0 +1,352 @@
+{
+  "metadata": {
+    "siteName": "Bluberi",
+    "home": {
+      "title": "Bluberi | Your marketplace",
+      "description": "Fashion, shoes, beauty and accessories from verified sellers. Delivered in Prague within 3 hours or the same evening. Shop on the web or in the Bluberi app."
+    },
+    "privacy": {
+      "description": "What personal data Bluberi processes, why, how long it keeps it and what your rights are."
+    },
+    "socialImage": "The Bluberi app on a phone and the words Everything you want. Today"
+  },
+  "home": {
+    "title": "Everything you want. Today."
+  },
+  "site": {
+    "language": "Language",
+    "menu": "Main menu",
+    "nav": {
+      "categories": "Categories",
+      "products": "New arrivals",
+      "delivery": "Delivery",
+      "app": "App"
+    },
+    "actions": {
+      "shop": "Shop now",
+      "sell": "Sell on Bluberi",
+      "startSelling": "Start selling",
+      "backHome": "Back to the home page"
+    },
+    "stores": {
+      "appStore": {
+        "line": "Download on the",
+        "name": "App Store"
+      },
+      "googlePlay": {
+        "line": "Get it on",
+        "name": "Google Play"
+      }
+    }
+  },
+  "landing": {
+    "hero": {
+      "claim": {
+        "first": "Everything you want",
+        "accent": "Today"
+      },
+      "lead": "Shopping that respects your time"
+    },
+    "categories": {
+      "title": "Categories",
+      "items": {
+        "women": "Women",
+        "men": "Men",
+        "kids": "Kids",
+        "shoes": "Shoes",
+        "cosmetics": "Cosmetics",
+        "accessories": "Accessories",
+        "sport": "Sport",
+        "home": "Home",
+        "electronics": "Electronics"
+      }
+    },
+    "products": {
+      "title": "New arrivals",
+      "items": {
+        "hoodie": "Hoodie, white",
+        "shoes": "Leather shoes, brown",
+        "dress": "Midi dress, green",
+        "bag": "Leather handbag, brown",
+        "cream": "Hand cream, 75 ml",
+        "watch": "Minimal watch, white",
+        "tee": "Basic T-shirt, white",
+        "watchBlack": "Classic watch, black",
+        "glasses": "Round frame glasses",
+        "teddy": "Teddy bear",
+        "headphones": "Over-ear headphones",
+        "perfume": "Eau de parfum, 50 ml",
+        "candle": "Candle in a glass",
+        "vase": "Ceramic vase, cream",
+        "bagPink": "Shoulder bag, pink",
+        "sunglasses": "Sunglasses, black",
+        "kettlebell": "Kettlebell, 8 kg",
+        "bowls": "Ceramic bowls, set of 2",
+        "plant": "Wooden plant pot",
+        "spray": "Body spray, 100 ml"
+      },
+      "badges": {
+        "today": "Today",
+        "express": "In 3 h"
+      }
+    },
+    "delivery": {
+      "title": "As fast as you want",
+      "lead": "Waiting for parcels is so last century",
+      "options": {
+        "express": {
+          "value": "In 3 h",
+          "title": "At your door"
+        },
+        "today": {
+          "value": "Today",
+          "title": "This evening"
+        },
+        "tomorrow": {
+          "value": "Tomorrow",
+          "title": "At a pickup point"
+        }
+      },
+      "map": {
+        "city": "Prague",
+        "courier": "Courier on the way",
+        "eta": "12 min"
+      }
+    },
+    "app": {
+      "title": "The store in your pocket",
+      "lead": "Choose with ease. Unwrap with a smile"
+    },
+    "sellers": {
+      "title": "Sell on Bluberi",
+      "lead": "You earn, we take care of the rest",
+      "benefits": {
+        "free": "Free registration",
+        "payouts": "Payouts every week",
+        "promotion": "Promotion at the start",
+        "import": "Upload in a few clicks"
+      }
+    },
+    "preview": {
+      "express": {
+        "label": "Express",
+        "title": "Delivery within 3 hours"
+      },
+      "courier": {
+        "title": "Courier on the way",
+        "eta": "12 min",
+        "handedOver": "Handed over",
+        "onTheWay": "On the way",
+        "home": "Home"
+      },
+      "product": {
+        "reviews": "{rating} · {count} reviews",
+        "delivery": "Delivery today by 18:00",
+        "addToCart": "Add to cart"
+      },
+      "home": {
+        "search": "Search products",
+        "filters": {
+          "all": "All",
+          "women": "Women",
+          "men": "Men",
+          "kids": "Kids",
+          "shoes": "Shoes"
+        },
+        "banner": {
+          "label": "New collection",
+          "first": "Winter",
+          "second": "collection",
+          "action": "Shop now"
+        },
+        "tabs": {
+          "home": "Home",
+          "catalog": "Catalog",
+          "cart": "Cart",
+          "favorites": "Favorites",
+          "profile": "Profile"
+        }
+      },
+      "tracking": {
+        "order": "Order {number}",
+        "courierName": "Petr",
+        "courierInfo": "Bluberi courier · car",
+        "accepted": "Accepted",
+        "handedOver": "Handed to the courier",
+        "onTheWay": "On the way"
+      },
+      "checkout": {
+        "back": "Cart",
+        "title": "Checkout",
+        "delivery": "Delivery",
+        "express": {
+          "title": "Express in 3 h",
+          "text": "Today by 16:30"
+        },
+        "evening": {
+          "title": "This evening",
+          "text": "18:00–21:00"
+        },
+        "pickup": {
+          "title": "Pickup point",
+          "text": "Tomorrow"
+        },
+        "total": "Total",
+        "pay": "Pay"
+      },
+      "seller": {
+        "badge": "Seller",
+        "sales": "Sales today",
+        "orders": "Orders",
+        "payout": "Next payout",
+        "payoutDay": "Friday",
+        "hoodieOrder": "{number} · Hoodie",
+        "hoodieDelivery": "Express, 3 hours",
+        "confirm": "Confirm",
+        "teeOrder": "{number} · Basic T-shirt",
+        "teeDelivery": "Pickup point",
+        "waiting": "Waiting",
+        "label": "Label",
+        "payoutSent": "Payout sent"
+      }
+    }
+  },
+  "footer": {
+    "about": "Everything you love, in one place",
+    "shopping": {
+      "title": "Shopping"
+    },
+    "company": {
+      "title": "Bluberi",
+      "privacy": "Privacy policy",
+      "unsubscribe": "Unsubscribe"
+    },
+    "newsletter": {
+      "title": "News and deals by email",
+      "text": "The best of Bluberi, every now and then",
+      "email": "Your email",
+      "submit": "Subscribe",
+      "consent": "I agree to receive the news. <policy>Privacy</policy>",
+      "errors": {
+        "VALIDATION_FAILED": "Please check your email",
+        "UNKNOWN": "Something went wrong, please try again"
+      },
+      "joined": {
+        "title": "Thank you, you are subscribed",
+        "text": "We will send you the news by email"
+      }
+    },
+    "legal": "{name}, ID No. {registrationNumber}, {address}",
+    "copyright": "© 2026 Bluberi",
+    "payments": {
+      "visa": "Visa",
+      "mastercard": "Mastercard",
+      "applePay": "Apple Pay",
+      "googlePay": "Google Pay"
+    }
+  },
+  "cookies": {
+    "label": "Cookies",
+    "text": "Cookies that measure visits help us improve the site. <policy>More</policy>",
+    "accept": "Allow",
+    "decline": "Decline",
+    "settings": "Cookie settings"
+  },
+  "privacy": {
+    "title": "Privacy policy",
+    "effective": "Effective from 17 November 2026",
+    "intro": "This page says what personal data we process about you, why, for how long, and what your rights are. We follow Regulation (EU) 2016/679, the General Data Protection Regulation (GDPR). The policy describes what the website does today. When more services arrive, we will add them here.",
+    "controller": {
+      "title": "Who is responsible for your data",
+      "text": "The controller of your personal data is {name}, company ID (IČO) {registrationNumber}, with its registered office at {address}.",
+      "contact": "For anything about your personal data, write to <mail>{email}</mail>."
+    },
+    "newsletter": {
+      "title": "News by email",
+      "intro": "When you leave your email on the website and tick the consent, we send you news and offers from Bluberi.",
+      "data": "<b>What data.</b> Your email, the language of the page you signed up on, the date and time you gave your consent, and the wording of the consent you agreed to.",
+      "purpose": "<b>What for.</b> To send you news and offers from Bluberi. We keep the date, the time and the wording of the consent to be able to show that you gave it, as Article 7(1) GDPR requires.",
+      "basis": "<b>Legal basis.</b> Your consent under Article 6(1)(a) GDPR.",
+      "retention": "<b>For how long.</b> Until you withdraw the consent. Then we delete the data without undue delay.",
+      "voluntary": "<b>Do you have to give us your email?</b> No, it is voluntary. Without it we cannot send you the news.",
+      "withdrawal": "<b>How to withdraw the consent.</b> At any time: on the page <removal>Unsubscribe from the news</removal>, with the link in every email we send you, or by writing to <mail>{email}</mail>. Withdrawing does not affect the processing that took place before it."
+    },
+    "sellerRegistration": {
+      "title": "Seller registration",
+      "intro": "When you register as a seller in the seller portal, we create your account and record the details of your company and your store.",
+      "data": "<b>What data.</b> Your email, phone and password, which we keep only as a hash. The country the company is registered in. For a Czech company the company number (IČO), legal name, legal form, tax number (DIČ) and registered address, which we read from the public register ARES. For a company from another EU country its VAT number, which we check in the EU register VIES, and the name, legal form, registration number and registered address of the company. Also whether you are a VAT payer, the name of the store, the address for returned goods, the chosen way of getting paid, the name of the holder of the bank account, the country of the account and its last four characters, the date and time you agreed to the terms for sellers, the date and time you declared that you offer only goods that comply with EU law, and records of important changes of the account.",
+      "documents": "<b>Documents.</b> A copy of the identity document of the person who acts for the seller, and for a company from another EU country an extract from the business register. When the check needs it, we ask for more documents. We keep the documents in a closed storage. Only the members of the Bluberi team who check sellers see them, and we record every opening of a document. Article 30 of the Digital Services Act requires us to have a copy of the identity document.",
+      "messages": "<b>Messages.</b> The messages you exchange with the Bluberi team in the seller portal, and our decisions about your registration. Only the people of the seller and the members of the Bluberi team who check sellers or help them read them. A message from the team is also sent to you by email.",
+      "purpose": "<b>What for.</b> To run your seller account, to check who sells on Bluberi, to show buyers the details of the seller and to pay you the money for sold goods.",
+      "basis": "<b>On what basis.</b> The performance of a contract and steps before entering into it under Article 6(1)(b) GDPR. We also collect, check and publish the details of a seller because Article 30 of the Digital Services Act requires it, that is under Article 6(1)(c) GDPR.",
+      "retention": "<b>For how long.</b> While you sell on Bluberi and for six months after the contract ends, as Article 30 of the Digital Services Act requires. A registration you did not finish is deleted at your request.",
+      "payouts": "<b>Payouts and identity check.</b> The bank account number and the data for the identity check are processed by the payment provider Stripe Technology Europe Limited, 1 Wilton Park, Wilton Place, Dublin 2, Ireland. We do not keep the whole account number ourselves.",
+      "public": "<b>What buyers see.</b> The legal name, company number, VAT number, registered address, the contact email and phone of the seller and its declaration that it offers only goods that comply with EU law.",
+      "voluntary": "<b>Do you have to give us the data?</b> Yes, if you want to sell on Bluberi. Without it we cannot register you or pay you."
+    },
+    "browser": {
+      "title": "Cookies and what we store in your browser",
+      "intro": "Without your consent we store in your browser only what the website needs to work the way you chose:",
+      "language": "the cookie NEXT_LOCALE with the language you picked on the website. It is deleted when you close the browser;",
+      "consent": "the cookie bluberi_consent with your answer on whether we may measure visits. We remember a consent for 12 months and a refusal for 6 months, then we ask again;",
+      "form": "the forms you are filling in (what you typed into them) and the fact that you sent them. They stay in your browser tab only, are not sent to us, and disappear when you close the tab.",
+      "necessary": "We do not need your consent for this, because it is technically necessary for the service you asked for yourself.",
+      "optional": "We store the cookies that measure visits only with your consent. The next part describes them."
+    },
+    "analytics": {
+      "title": "Measuring visits",
+      "intro": "If you allow it, we measure visits to the website with Google Analytics. Without your consent this tool is not loaded at all.",
+      "data": "<b>What data.</b> Which pages you viewed and for how long, where you came to the website from, the type of your device and browser, your approximate location (country and city) and a random identifier stored in the cookies _ga and _ga_*. Google Analytics does not store your IP address. When you send a form, only the fact that it was sent is recorded, not what you typed into it.",
+      "purpose": "<b>What for.</b> To know how many people visit the website and which pages serve them, and to improve the website.",
+      "basis": "<b>Legal basis.</b> Your consent under Article 6(1)(a) GDPR. The same consent covers storing the cookies in your browser.",
+      "retention": "<b>For how long.</b> The cookies _ga and _ga_* stay in your browser for no longer than 12 months. We keep the data about visits in Google Analytics for no longer than 14 months.",
+      "processor": "<b>Who processes the data.</b> Our processor is Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland. Google may also process the data in the United States. The transfer relies on the adequacy decision of the European Commission (the EU-US Data Privacy Framework), in which Google LLC takes part.",
+      "voluntary": "<b>Do you have to agree?</b> No. The website works the same without your consent.",
+      "withdrawal": "<b>How to withdraw the consent.</b> At any time with the link <settings>Cookie settings</settings> in the footer of the website. The measuring stops and we delete the cookies of Google Analytics from your browser. Withdrawing does not affect the processing that took place before it."
+    },
+    "recipients": {
+      "title": "Who we share the data with",
+      "none": "We do not sell your data and we do not pass it to anyone who would use it for their own purposes.",
+      "processors": "Only our processors work with it: companies that run our service for us under a contract. They are the provider of the servers the website and the database run on, and the provider of the service that sends our emails.",
+      "payments": "The data of sellers needed for payouts and for the check of a seller required by law is passed to Stripe Technology Europe Limited, based in Ireland.",
+      "transfers": "We do not transfer the data to countries outside the European Economic Area.",
+      "analytics": "The one exception is the measuring of visits: if you agreed to it, Google Ireland Limited also works with the data about your visit and may process it in the United States, as described above.",
+      "authorities": "We hand it over to public authorities only when the law requires us to."
+    },
+    "rights": {
+      "title": "Your rights",
+      "intro": "Under the GDPR you have the right:",
+      "access": "of access: to learn whether we process your data and to get a copy of it (Article 15);",
+      "rectification": "to have inaccurate data corrected (Article 16);",
+      "erasure": "to have the data erased (Article 17);",
+      "restriction": "to restriction of processing (Article 18);",
+      "portability": "to data portability: to get the data you gave us in a commonly used machine-readable format (Article 20);",
+      "withdrawal": "to withdraw your consent at any time (Article 7(3)).",
+      "how": "Just write to <mail>{email}</mail>. We will answer without undue delay, within one month at the latest, and free of charge. So that we do not hand the data to a stranger, we may ask you to confirm that the email is yours.",
+      "automated": "We make no automated decisions about you and we do not build profiles of you."
+    },
+    "complaint": {
+      "title": "Complaints",
+      "text": "If you think we do not handle your data correctly, write to us and we will put it right. You also have the right to lodge a complaint with a supervisory authority. In Czechia it is the Office for Personal Data Protection (Úřad pro ochranu osobních údajů), Pplk. Sochora 27, 170 00 Praha 7, <authority>uoou.gov.cz</authority>. You can also complain to the authority of the EU country where you live or work."
+    },
+    "children": {
+      "title": "Children",
+      "text": "The news is meant for people aged 15 and over. We ask younger children not to leave us their email."
+    },
+    "changes": {
+      "title": "Changes to this policy",
+      "text": "When we change the policy, we will publish the new wording here with the date it takes effect. If we wanted to use your data for something other than what you agreed to, we would ask for your new consent first."
+    },
+    "languages": "This policy exists in Czech and English. If they differ, the Czech version applies."
+  },
+  "unsubscribe": {
+    "title": "Unsubscribe from the news",
+    "text": "Enter your email and the news will stop",
+    "email": "Your email",
+    "submit": "Unsubscribe",
+    "done": {
+      "title": "Done",
+      "text": "The email is no longer on the list"
+    }
+  }
+}

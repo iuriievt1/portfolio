@@ -1,0 +1,17 @@
+/// An uploaded photo. The files are in S3 storage under images/<id>/<width>.webp, one per stored copy.
+model Image {
+  id           String   @id @default(uuid(7)) @db.Uuid
+  uploadedById String   @map("uploaded_by_id") @db.Uuid
+  /// Size of the largest stored copy in pixels.
+  width        Int
+  height       Int
+  /// Widths of all stored copies, smallest first. The last one equals width.
+  copyWidths   Int[]    @map("copy_widths")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  uploadedBy User    @relation(fields: [uploadedById], references: [id], onDelete: Restrict)
+  storeLogos Store[]
+
+  @@index([uploadedById])
+  @@map("images")
+}

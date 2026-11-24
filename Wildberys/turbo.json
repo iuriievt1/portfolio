@@ -1,0 +1,32 @@
+{
+  "$schema": "./node_modules/turbo/schema.json",
+  "tasks": {
+    "transit": {
+      "dependsOn": ["^transit"]
+    },
+    "typegen": {
+      "outputs": [".next/types/**", "next-env.d.ts", "src/generated/**"]
+    },
+    "build": {
+      "dependsOn": ["^build", "lint", "typecheck"],
+      "env": ["GOOGLE_ANALYTICS_ID", "SITE_URL"],
+      "inputs": ["$TURBO_DEFAULT$", ".env"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+    },
+    "dev": {
+      "dependsOn": ["typegen"],
+      "cache": false,
+      "passThroughEnv": ["GOOGLE_ANALYTICS_ID", "SITE_URL"],
+      "persistent": true
+    },
+    "lint": {
+      "dependsOn": ["transit", "typegen"]
+    },
+    "typecheck": {
+      "dependsOn": ["transit", "typegen"]
+    },
+    "test": {
+      "dependsOn": ["transit", "typegen"]
+    }
+  }
+}

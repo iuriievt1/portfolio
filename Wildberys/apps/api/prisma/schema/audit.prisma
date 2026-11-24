@@ -1,0 +1,20 @@
+/// Who did what and when. Rows are only added: the database refuses to change or delete them.
+model AuditLogEntry {
+  id         String   @id @default(uuid(7)) @db.Uuid
+  /// What happened, for example team.role_granted. The list of actions is in the API code.
+  action     String
+  /// The user who did it. Null when it was done from the command line.
+  actorId    String?  @map("actor_id") @db.Uuid
+  /// What the action was done to: the kind of record and its id. Both are null when the action is about the actor.
+  targetType String?  @map("target_type")
+  targetId   String?  @map("target_id") @db.Uuid
+  /// Facts about the action, for example the role that was given.
+  details    Json
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  actor User? @relation(fields: [actorId], references: [id], onDelete: Restrict)
+
+  @@index([actorId, id])
+  @@index([action, id])
+  @@map("audit_log_entries")
+}

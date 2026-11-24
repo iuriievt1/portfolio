@@ -1,0 +1,5 @@
+design/
+pnpm-lock.yaml
+expo-env.d.ts
+packages/api-client/openapi.json
+packages/api-client/src/generated/

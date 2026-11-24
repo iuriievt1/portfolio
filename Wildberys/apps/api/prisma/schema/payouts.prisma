@@ -1,0 +1,46 @@
+/// How a seller gets the money for the goods they sold.
+enum PayoutMethod {
+  /// The seller has an account at Stripe and looks after the bank account there.
+  STRIPE
+  /// The seller gave a bank account. Stripe pays to it, the seller has no Stripe account of their own.
+  BANK
+
+  @@map("payout_method")
+}
+
+/// Where the check of a payout account by the payment provider stands.
+enum PayoutAccountStatus {
+  /// The seller has not finished the form of the provider.
+  INCOMPLETE
+  /// The provider is checking what the seller sent.
+  PENDING
+  /// The provider checked the seller. Payouts can be sent.
+  VERIFIED
+
+  @@map("payout_account_status")
+}
+
+/// The account at the payment provider (Stripe Connect) that the payouts of a seller go through. One per seller.
+model SellerPayoutAccount {
+  sellerId            String              @id @map("seller_id") @db.Uuid
+  method              PayoutMethod
+  /// Id of the account at the provider.
+  providerAccountId   String              @unique @map("provider_account_id")
+  status              PayoutAccountStatus @default(INCOMPLETE)
+  /// When the seller finished the form of the provider.
+  submittedAt         DateTime?           @map("submitted_at") @db.Timestamptz(3)
+  /// BANK only. The name the bank account is held under.
+  bankAccountHolder   String?             @map("bank_account_holder")
+  /// BANK only. The country of the IBAN, ISO 3166-1 alpha-2. The provider keeps the whole number.
+  bankAccountCountry  String?             @map("bank_account_country") @db.Char(2)
+  /// BANK only. The last four characters of the IBAN, to show which account it is.
+  bankAccountLast4    String?             @map("bank_account_last4") @db.Char(4)
+  /// BANK only. The currency the account is held in: payouts arrive in it.
+  bankAccountCurrency Currency?           @map("bank_account_currency")
+  createdAt           DateTime            @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt           DateTime            @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  seller Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+
+  @@map("seller_payout_accounts")
+}

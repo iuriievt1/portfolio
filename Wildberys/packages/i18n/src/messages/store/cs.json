@@ -1,0 +1,352 @@
+{
+  "metadata": {
+    "siteName": "Bluberi",
+    "home": {
+      "title": "Bluberi | Tvůj marketplace",
+      "description": "Móda, obuv, kosmetika a doplňky od ověřených prodejců. V Praze doručíme do 3 hodin nebo ještě dnes večer. Nakupujte na webu i v aplikaci Bluberi."
+    },
+    "privacy": {
+      "description": "Jaké osobní údaje Bluberi zpracovává, proč, jak dlouho je uchovává a jaká máte práva."
+    },
+    "socialImage": "Aplikace Bluberi v telefonu a nápis Všechno, co chcete. Ještě dnes"
+  },
+  "home": {
+    "title": "Všechno, co chcete. Ještě dnes."
+  },
+  "site": {
+    "language": "Jazyk",
+    "menu": "Hlavní nabídka",
+    "nav": {
+      "categories": "Kategorie",
+      "products": "Novinky",
+      "delivery": "Doručení",
+      "app": "Aplikace"
+    },
+    "actions": {
+      "shop": "Nakupovat",
+      "sell": "Prodávat na Bluberi",
+      "startSelling": "Začít prodávat",
+      "backHome": "Zpět na úvodní stránku"
+    },
+    "stores": {
+      "appStore": {
+        "line": "Stáhnout v",
+        "name": "App Store"
+      },
+      "googlePlay": {
+        "line": "Stáhnout na",
+        "name": "Google Play"
+      }
+    }
+  },
+  "landing": {
+    "hero": {
+      "claim": {
+        "first": "Všechno, co chcete",
+        "accent": "Ještě dnes"
+      },
+      "lead": "Nákupy, které šetří váš čas"
+    },
+    "categories": {
+      "title": "Kategorie",
+      "items": {
+        "women": "Ženy",
+        "men": "Muži",
+        "kids": "Děti",
+        "shoes": "Obuv",
+        "cosmetics": "Kosmetika",
+        "accessories": "Doplňky",
+        "sport": "Sport",
+        "home": "Domov",
+        "electronics": "Elektronika"
+      }
+    },
+    "products": {
+      "title": "Novinky",
+      "items": {
+        "hoodie": "Mikina s kapucí, bílá",
+        "shoes": "Polobotky kožené, hnědé",
+        "dress": "Šaty midi, zelené",
+        "bag": "Kabelka kožená, hnědá",
+        "cream": "Krém na ruce, 75 ml",
+        "watch": "Hodinky Minimal, bílé",
+        "tee": "Tričko Basic, bílé",
+        "watchBlack": "Hodinky Classic, černé",
+        "glasses": "Brýle s kulatou obroučkou",
+        "teddy": "Plyšový medvídek",
+        "headphones": "Sluchátka přes hlavu",
+        "perfume": "Parfémovaná voda, 50 ml",
+        "candle": "Svíčka ve skle",
+        "vase": "Váza keramická, krémová",
+        "bagPink": "Kabelka přes rameno, růžová",
+        "sunglasses": "Sluneční brýle, černé",
+        "kettlebell": "Kettlebell, 8 kg",
+        "bowls": "Misky keramické, 2 ks",
+        "plant": "Květináč dřevěný",
+        "spray": "Tělový sprej, 100 ml"
+      },
+      "badges": {
+        "today": "Dnes",
+        "express": "Do 3 h"
+      }
+    },
+    "delivery": {
+      "title": "Tak rychle, jak chcete",
+      "lead": "Čekání na balík patří do minulého století",
+      "options": {
+        "express": {
+          "value": "Do 3 h",
+          "title": "U vás doma"
+        },
+        "today": {
+          "value": "Dnes",
+          "title": "Ještě dnes večer"
+        },
+        "tomorrow": {
+          "value": "Zítra",
+          "title": "Na výdejním místě"
+        }
+      },
+      "map": {
+        "city": "Praha",
+        "courier": "Kurýr je na cestě",
+        "eta": "12 min"
+      }
+    },
+    "app": {
+      "title": "Celý obchod v telefonu",
+      "lead": "Vybírejte snadno. Rozbalujte s úsměvem"
+    },
+    "sellers": {
+      "title": "Prodávejte na Bluberi",
+      "lead": "Vy vyděláváte, o zbytek se postaráme",
+      "benefits": {
+        "free": "Registrace zdarma",
+        "payouts": "Výplata každý týden",
+        "promotion": "Propagace na startu",
+        "import": "Nahrání zboží na pár kliků"
+      }
+    },
+    "preview": {
+      "express": {
+        "label": "Expres",
+        "title": "Doručení do 3 hodin"
+      },
+      "courier": {
+        "title": "Kurýr je na cestě",
+        "eta": "12 min",
+        "handedOver": "Předáno",
+        "onTheWay": "Na cestě",
+        "home": "Doma"
+      },
+      "product": {
+        "reviews": "{rating} · {count} hodnocení",
+        "delivery": "Doručíme dnes do 18:00",
+        "addToCart": "Do košíku"
+      },
+      "home": {
+        "search": "Hledat zboží a značky",
+        "filters": {
+          "all": "Vše",
+          "women": "Ženy",
+          "men": "Muži",
+          "kids": "Děti",
+          "shoes": "Obuv"
+        },
+        "banner": {
+          "label": "Nová kolekce",
+          "first": "Zimní",
+          "second": "kolekce",
+          "action": "Nakupovat"
+        },
+        "tabs": {
+          "home": "Domů",
+          "catalog": "Katalog",
+          "cart": "Košík",
+          "favorites": "Oblíbené",
+          "profile": "Profil"
+        }
+      },
+      "tracking": {
+        "order": "Objednávka {number}",
+        "courierName": "Petr",
+        "courierInfo": "Kurýr Bluberi · auto",
+        "accepted": "Přijato",
+        "handedOver": "Předáno kurýrovi",
+        "onTheWay": "Na cestě"
+      },
+      "checkout": {
+        "back": "Košík",
+        "title": "Pokladna",
+        "delivery": "Doručení",
+        "express": {
+          "title": "Expres do 3 h",
+          "text": "Dnes do 16:30"
+        },
+        "evening": {
+          "title": "Dnes večer",
+          "text": "18:00–21:00"
+        },
+        "pickup": {
+          "title": "Výdejní místo",
+          "text": "Zítra"
+        },
+        "total": "Celkem",
+        "pay": "Pay"
+      },
+      "seller": {
+        "badge": "Seller",
+        "sales": "Tržby dnes",
+        "orders": "Objednávky",
+        "payout": "K výplatě",
+        "payoutDay": "pátek",
+        "hoodieOrder": "{number} · Mikina s kapucí",
+        "hoodieDelivery": "Expres do 3 hodin",
+        "confirm": "Potvrdit",
+        "teeOrder": "{number} · Tričko Basic",
+        "teeDelivery": "Výdejní místo",
+        "waiting": "Čeká",
+        "label": "Štítek",
+        "payoutSent": "Výplata odeslána"
+      }
+    }
+  },
+  "footer": {
+    "about": "Vše, co máte rádi, na jednom místě",
+    "shopping": {
+      "title": "Nakupování"
+    },
+    "company": {
+      "title": "Bluberi",
+      "privacy": "Ochrana osobních údajů",
+      "unsubscribe": "Odhlášení z novinek"
+    },
+    "newsletter": {
+      "title": "Novinky a slevy e-mailem",
+      "text": "Jednou za čas to nejlepší z Bluberi",
+      "email": "Váš e-mail",
+      "submit": "Odebírat",
+      "consent": "Souhlasím se zasíláním novinek. <policy>Ochrana údajů</policy>",
+      "errors": {
+        "VALIDATION_FAILED": "Zkontrolujte prosím svůj e-mail",
+        "UNKNOWN": "Něco se pokazilo, zkuste to prosím znovu"
+      },
+      "joined": {
+        "title": "Děkujeme, jste přihlášeni",
+        "text": "Novinky vám budeme posílat e-mailem"
+      }
+    },
+    "legal": "{name}, IČO {registrationNumber}, {address}",
+    "copyright": "© 2026 Bluberi",
+    "payments": {
+      "visa": "Visa",
+      "mastercard": "Mastercard",
+      "applePay": "Apple Pay",
+      "googlePay": "Google Pay"
+    }
+  },
+  "cookies": {
+    "label": "Cookies",
+    "text": "Cookies pro měření návštěvnosti nám pomáhají web zlepšovat. <policy>Více</policy>",
+    "accept": "Povolit",
+    "decline": "Odmítnout",
+    "settings": "Nastavení cookies"
+  },
+  "privacy": {
+    "title": "Zásady ochrany osobních údajů",
+    "effective": "Platné od 17. listopadu 2026",
+    "intro": "Tady najdete, jaké osobní údaje o vás zpracováváme, proč, jak dlouho a jaká máte práva. Řídíme se nařízením (EU) 2016/679, obecným nařízením o ochraně osobních údajů (GDPR). Zásady popisují to, co web dělá dnes. Až přibudou další služby, doplníme je sem.",
+    "controller": {
+      "title": "Kdo vaše údaje spravuje",
+      "text": "Správcem osobních údajů je {name}, IČO {registrationNumber}, se sídlem {address}.",
+      "contact": "S čímkoli, co se týká vašich osobních údajů, nám napište na <mail>{email}</mail>."
+    },
+    "newsletter": {
+      "title": "Novinky e-mailem",
+      "intro": "Když nám na webu necháte e-mail a zaškrtnete souhlas, budeme vám posílat novinky a nabídky Bluberi.",
+      "data": "<b>Jaké údaje.</b> Váš e-mail, jazyk stránky, na které jste se přihlásili, datum a čas udělení souhlasu a znění souhlasu, které jste odsouhlasili.",
+      "purpose": "<b>K čemu.</b> Abychom vám posílali novinky a nabídky Bluberi. Datum, čas a znění souhlasu uchováváme, abychom mohli doložit, že jste ho udělili, jak ukládá čl. 7 odst. 1 GDPR.",
+      "basis": "<b>Na jakém základě.</b> Na základě vašeho souhlasu podle čl. 6 odst. 1 písm. a) GDPR.",
+      "retention": "<b>Jak dlouho.</b> Dokud souhlas neodvoláte. Potom údaje bez zbytečného odkladu smažeme.",
+      "voluntary": "<b>Musíte nám e-mail dát?</b> Ne, je to dobrovolné. Bez e-mailu vám ale novinky posílat nemůžeme.",
+      "withdrawal": "<b>Jak souhlas odvolat.</b> Kdykoli: na stránce <removal>Odhlášení z novinek</removal>, odkazem v každém e-mailu, který vám pošleme, nebo zprávou na <mail>{email}</mail>. Odvolání nemá vliv na zpracování, které proběhlo před ním."
+    },
+    "sellerRegistration": {
+      "title": "Registrace prodejce",
+      "intro": "Když se v prodejním portálu zaregistrujete jako prodejce, vytvoříme vám účet a zapíšeme údaje o vaší firmě a obchodu.",
+      "data": "<b>Jaké údaje.</b> E-mail, telefon a heslo, které ukládáme jen jako otisk. Země, kde je firma registrovaná. U české firmy IČO, obchodní firma, právní forma, DIČ a sídlo, které načítáme z veřejného registru ARES. U firmy z jiné země EU její DIČ, které ověřujeme v evropském registru VIES, a název, právní forma, registrační číslo a sídlo firmy. Dále zda jste plátce DPH, název obchodu, adresa pro vrácení zboží, zvolený způsob výplaty, jméno majitele bankovního účtu, stát účtu a jeho poslední čtyři znaky, datum a čas souhlasu s obchodními podmínkami, datum a čas prohlášení, že budete nabízet jen zboží v souladu s právem EU, a záznamy o důležitých změnách účtu.",
+      "documents": "<b>Doklady.</b> Kopii dokladu totožnosti osoby, která za prodejce jedná, a u firmy z jiné země EU výpis z obchodního rejstříku. Když je to k ověření potřeba, požádáme o další doklady. Doklady ukládáme v uzavřeném úložišti. Vidí je jen členové týmu Bluberi, kteří prodejce ověřují, a každé otevření dokladu zaznamenáváme. Kopii dokladu totožnosti po nás vyžaduje čl. 30 nařízení o digitálních službách.",
+      "messages": "<b>Zprávy.</b> Zprávy, které si v prodejním portálu píšete s týmem Bluberi, a naše rozhodnutí o vaší registraci. Čtou je jen lidé prodejce a členové týmu Bluberi, kteří prodejce ověřují nebo jim pomáhají. Zprávu od týmu vám pošleme i e-mailem.",
+      "purpose": "<b>K čemu.</b> Abychom vám vedli účet prodejce, ověřili, kdo na Bluberi prodává, ukázali zákazníkům údaje o prodejci a mohli vám vyplácet peníze za prodané zboží.",
+      "basis": "<b>Na jakém základě.</b> Jde o plnění smlouvy a kroky před jejím uzavřením podle čl. 6 odst. 1 písm. b) GDPR. Údaje o prodejci získáváme, ověřujeme a zveřejňujeme také proto, že nám to ukládá čl. 30 nařízení o digitálních službách, tedy podle čl. 6 odst. 1 písm. c) GDPR.",
+      "retention": "<b>Jak dlouho.</b> Po dobu, kdy na Bluberi prodáváte, a šest měsíců po skončení smlouvy, jak ukládá čl. 30 nařízení o digitálních službách. Registraci, kterou jste nedokončili, smažeme na vaši žádost.",
+      "payouts": "<b>Výplaty a ověření totožnosti.</b> Číslo bankovního účtu a údaje k ověření totožnosti zpracovává poskytovatel platebních služeb Stripe Technology Europe Limited, 1 Wilton Park, Wilton Place, Dublin 2, Irsko. Celé číslo účtu u sebe neukládáme.",
+      "public": "<b>Co uvidí zákazníci.</b> Obchodní firmu, IČO nebo registrační číslo, DIČ, sídlo, kontaktní e-mail a telefon prodejce a jeho prohlášení, že nabízí jen zboží v souladu s právem EU.",
+      "voluntary": "<b>Musíte nám údaje dát?</b> Ano, pokud chcete na Bluberi prodávat. Bez nich vás nemůžeme zaregistrovat ani vám vyplácet peníze."
+    },
+    "browser": {
+      "title": "Cookies a co ukládáme ve vašem prohlížeči",
+      "intro": "Bez vašeho souhlasu ukládáme do prohlížeče jen to, co je nutné, aby web fungoval tak, jak jste si zvolili:",
+      "language": "cookie NEXT_LOCALE s jazykem, který jste si na webu vybrali. Smaže se, když zavřete prohlížeč;",
+      "consent": "cookie bluberi_consent s vaší odpovědí, zda smíme měřit návštěvnost. Souhlas si pamatujeme 12 měsíců, odmítnutí 6 měsíců, potom se zeptáme znovu;",
+      "form": "rozepsané formuláře (to, co jste do nich napsali) a údaj, že jste je odeslali. Zůstávají jen ve vaší kartě prohlížeče, neodesílají se nám a zmizí, když kartu zavřete.",
+      "necessary": "K takovému ukládání váš souhlas nepotřebujeme, protože je technicky nezbytné pro službu, kterou jste si sami vyžádali.",
+      "optional": "Cookies pro měření návštěvnosti ukládáme jen s vaším souhlasem. Popisujeme je v další části."
+    },
+    "analytics": {
+      "title": "Měření návštěvnosti",
+      "intro": "Pokud nám to dovolíte, měříme návštěvnost webu nástrojem Google Analytics. Bez vašeho souhlasu se tento nástroj vůbec nenačte.",
+      "data": "<b>Jaké údaje.</b> Které stránky jste si prohlédli a jak dlouho, odkud jste na web přišli, typ zařízení a prohlížeče, přibližná poloha (stát a město) a náhodný identifikátor uložený v cookies _ga a _ga_*. Vaši IP adresu Google Analytics neukládá. Když odešlete formulář, zaznamená se jen to, že byl odeslán, ne co jste do něj napsali.",
+      "purpose": "<b>K čemu.</b> Abychom věděli, kolik lidí web navštěvuje a které stránky jim slouží, a mohli web zlepšovat.",
+      "basis": "<b>Na jakém základě.</b> Na základě vašeho souhlasu podle čl. 6 odst. 1 písm. a) GDPR. Tentýž souhlas platí i pro uložení cookies do vašeho prohlížeče.",
+      "retention": "<b>Jak dlouho.</b> Cookies _ga a _ga_* zůstávají ve vašem prohlížeči nejdéle 12 měsíců. Údaje o návštěvách uchováváme v Google Analytics nejdéle 14 měsíců.",
+      "processor": "<b>Kdo údaje zpracovává.</b> Naším zpracovatelem je Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irsko. Google může údaje zpracovávat i ve Spojených státech. Předání se opírá o rozhodnutí Evropské komise o odpovídající ochraně (EU-US Data Privacy Framework), kterého se společnost Google LLC účastní.",
+      "voluntary": "<b>Musíte souhlasit?</b> Ne. Web funguje stejně i bez souhlasu.",
+      "withdrawal": "<b>Jak souhlas odvolat.</b> Kdykoli odkazem <settings>Nastavení cookies</settings> v patičce webu. Měření se zastaví a cookies Google Analytics z vašeho prohlížeče smažeme. Odvolání nemá vliv na zpracování, které proběhlo před ním."
+    },
+    "recipients": {
+      "title": "Komu údaje předáváme",
+      "none": "Vaše údaje neprodáváme a nepředáváme nikomu, kdo by je používal pro vlastní účely.",
+      "processors": "Pracují s nimi jen naši zpracovatelé, tedy firmy, které pro nás na základě smlouvy zajišťují provoz: poskytovatel serverů, na kterých běží web a databáze, a poskytovatel služby pro rozesílání e-mailů.",
+      "payments": "Údaje prodejců potřebné pro výplaty a pro zákonné ověření prodejce předáváme společnosti Stripe Technology Europe Limited se sídlem v Irsku.",
+      "transfers": "Údaje nepředáváme do zemí mimo Evropský hospodářský prostor.",
+      "analytics": "Jedinou výjimkou je měření návštěvnosti: pokud jste s ním souhlasili, pracuje s údaji o návštěvě také společnost Google Ireland Limited, která je může zpracovávat i ve Spojených státech, jak popisujeme výše.",
+      "authorities": "Orgánům veřejné moci je předáme jen tehdy, když nám to ukládá zákon."
+    },
+    "rights": {
+      "title": "Vaše práva",
+      "intro": "Podle GDPR máte právo:",
+      "access": "na přístup: zjistit, zda vaše údaje zpracováváme, a dostat jejich kopii (čl. 15);",
+      "rectification": "na opravu nepřesných údajů (čl. 16);",
+      "erasure": "na výmaz (čl. 17);",
+      "restriction": "na omezení zpracování (čl. 18);",
+      "portability": "na přenositelnost: dostat údaje, které jste nám dali, v běžném strojově čitelném formátu (čl. 20);",
+      "withdrawal": "kdykoli odvolat souhlas (čl. 7 odst. 3).",
+      "how": "Stačí napsat na <mail>{email}</mail>. Odpovíme bez zbytečného odkladu, nejpozději do jednoho měsíce, a zdarma. Abychom údaje nevydali někomu cizímu, můžeme vás požádat o ověření, že e-mail patří vám.",
+      "automated": "Nerozhodujeme o vás automatizovaně a nevytváříme o vás profily."
+    },
+    "complaint": {
+      "title": "Stížnost",
+      "text": "Pokud si myslíte, že s vašimi údaji nenakládáme správně, napište nám, rádi to napravíme. Máte také právo podat stížnost u dozorového úřadu. V Česku je to Úřad pro ochranu osobních údajů, Pplk. Sochora 27, 170 00 Praha 7, <authority>uoou.gov.cz</authority>. Stížnost můžete podat i u úřadu v zemi EU, kde bydlíte nebo pracujete."
+    },
+    "children": {
+      "title": "Děti",
+      "text": "Novinky jsou určeny lidem od 15 let. Mladší děti prosíme, aby nám svůj e-mail nenechávaly."
+    },
+    "changes": {
+      "title": "Změny zásad",
+      "text": "Když zásady změníme, zveřejníme tady nové znění s datem, od kterého platí. Pokud bychom chtěli vaše údaje použít k něčemu jinému, než s čím jste souhlasili, požádáme vás předem o nový souhlas."
+    },
+    "languages": "Zásady jsou sepsány česky a anglicky. Při rozporu platí české znění."
+  },
+  "unsubscribe": {
+    "title": "Odhlášení z novinek",
+    "text": "Zadejte e-mail a novinky už nepřijdou",
+    "email": "Váš e-mail",
+    "submit": "Odhlásit",
+    "done": {
+      "title": "Hotovo",
+      "text": "E-mail už na seznamu není"
+    }
+  }
+}

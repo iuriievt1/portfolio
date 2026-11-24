@@ -1,0 +1,131 @@
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+
+  @@map("user_status")
+}
+
+/// Roles of the Bluberi team. Every user can buy, so "buyer" is not a role.
+enum PlatformRole {
+  OWNER
+  SUPPORT
+  MODERATOR
+  FINANCE
+  LOGISTICS
+
+  @@map("platform_role")
+}
+
+enum SignInMethod {
+  PASSWORD
+  EMAIL_CODE
+
+  @@map("sign_in_method")
+}
+
+enum OneTimeCodePurpose {
+  SIGN_IN
+  VERIFY_PHONE
+  /// The second step of a sign-in with a password.
+  CONFIRM_SIGN_IN
+
+  @@map("one_time_code_purpose")
+}
+
+/// Where the code of the second step of a sign-in goes.
+enum SignInConfirmationChannel {
+  EMAIL
+  SMS
+
+  @@map("sign_in_confirmation_channel")
+}
+
+model User {
+  id                        String                    @id @default(uuid(7)) @db.Uuid
+  /// Always lowercase. One account per email.
+  email                     String                    @unique
+  phone                     String?                   @unique
+  /// Null while the user signs in only with one-time codes.
+  passwordHash              String?                   @map("password_hash")
+  firstName                 String?                   @map("first_name")
+  lastName                  String?                   @map("last_name")
+  locale                    Locale                    @default(cs)
+  status                    UserStatus                @default(ACTIVE)
+  emailVerifiedAt           DateTime?                 @map("email_verified_at") @db.Timestamptz(3)
+  phoneVerifiedAt           DateTime?                 @map("phone_verified_at") @db.Timestamptz(3)
+  /// Where the code of the second step of a sign-in with a password goes. SMS needs a confirmed phone.
+  signInConfirmationChannel SignInConfirmationChannel @default(EMAIL) @map("sign_in_confirmation_channel")
+  createdAt                 DateTime                  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt                 DateTime                  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  platformRoles     UserPlatformRole[]
+  sessions          Session[]
+  oneTimeCodes      OneTimeCode[]
+  auditLogEntries   AuditLogEntry[]
+  images            Image[]
+  sellerMemberships SellerMember[]
+  reviewedSellers   Seller[]
+  sellerDocuments   SellerDocument[]
+  sellerMessages    SellerMessage[]
+  addresses         Address[]
+  orders            Order[]
+  returnRequests    ReturnRequest[]
+  warrantyClaims    WarrantyClaim[]
+
+  @@map("users")
+}
+
+model UserPlatformRole {
+  userId    String       @map("user_id") @db.Uuid
+  role      PlatformRole
+  createdAt DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, role])
+  @@map("user_platform_roles")
+}
+
+/// One sign-in on one device. It ends when the user signs out or stops using it.
+model Session {
+  id                       String       @id @default(uuid(7)) @db.Uuid
+  userId                   String       @map("user_id") @db.Uuid
+  signInMethod             SignInMethod @map("sign_in_method")
+  /// SHA-256 of the refresh token. The token itself is never stored.
+  refreshTokenHash         String       @unique @map("refresh_token_hash")
+  /// SHA-256 of the refresh token that was replaced last. Seeing it again means the token was copied.
+  previousRefreshTokenHash String?      @unique @map("previous_refresh_token_hash")
+  expiresAt                DateTime     @map("expires_at") @db.Timestamptz(3)
+  revokedAt                DateTime?    @map("revoked_at") @db.Timestamptz(3)
+  createdAt                DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt                DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+/// A short code sent by email or SMS. Only its hash is stored.
+model OneTimeCode {
+  id          String             @id @default(uuid(7)) @db.Uuid
+  purpose     OneTimeCodePurpose
+  /// The email or the phone number the code was sent to.
+  destination String
+  /// The user who confirms a phone number or a sign-in with a password. Null for sign-in codes: the account may not exist yet.
+  userId      String?            @map("user_id") @db.Uuid
+  /// Language of the message. An account created with this code gets it too.
+  locale      Locale
+  codeHash    String             @map("code_hash")
+  /// How many times someone tried to use the code. It stops working after too many.
+  attempts    Int                @default(0)
+  expiresAt   DateTime           @map("expires_at") @db.Timestamptz(3)
+  usedAt      DateTime?          @map("used_at") @db.Timestamptz(3)
+  createdAt   DateTime           @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([purpose, destination, createdAt])
+  @@index([userId])
+  @@map("one_time_codes")
+}

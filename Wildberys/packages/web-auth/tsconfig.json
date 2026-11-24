@@ -1,0 +1,4 @@
+{
+  "extends": "@bluberi/config/typescript/next.json",
+  "include": ["src", "vitest.config.ts"]
+}

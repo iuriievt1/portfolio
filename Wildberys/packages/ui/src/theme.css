@@ -1,0 +1,67 @@
+/*
+ * Bluberi design tokens shared by the web apps and the mobile app.
+ * Values come from design/src/brand.css. Tailwind's default palette, radii and shadows
+ * are switched off, so only these tokens exist in the code.
+ */
+@theme {
+  --color-*: initial;
+  --color-white: #ffffff;
+
+  --color-berry-50: #f7f4ff;
+  --color-berry-100: #ece6ff;
+  --color-berry-200: #d6ccff;
+  --color-berry-300: #b4a2ff;
+  --color-berry-400: #8e72ff;
+  --color-berry-500: #6c4cff;
+  --color-berry-600: #5a3bf0;
+  --color-berry-700: #3e25a8;
+  --color-berry-800: #2b1873;
+  --color-berry-900: #21124f;
+  --color-berry-950: #160c33;
+
+  --color-pink-50: #fff4f9;
+  --color-pink-100: #ffe6f2;
+  --color-pink-200: #ffc6e2;
+  --color-pink-300: #ff9acb;
+  --color-pink-400: #ff7eb8;
+  --color-pink-500: #ff4fa0;
+  --color-pink-600: #e8368a;
+
+  --color-gray-50: #faf9fd;
+  --color-gray-100: #f4f2f9;
+  --color-gray-200: #e9e6f3;
+  --color-gray-300: #d9d5e8;
+  --color-gray-400: #a9a5bd;
+  --color-gray-600: #6e6a85;
+  --color-gray-700: #4a4662;
+
+  --color-green-100: #ddf6ec;
+  --color-green-500: #16b47e;
+  /* The text of a green badge. */
+  --color-green-700: #0e8a5f;
+  --color-amber-100: #fff1d6;
+  --color-amber-500: #f5a524;
+  /* The text of an amber badge. */
+  --color-amber-700: #b26f00;
+  --color-red-100: #ffe1e8;
+  --color-red-500: #f0436a;
+  /* The text of a red badge. */
+  --color-red-700: #c81e48;
+  --color-blue-100: #e1ecff;
+  --color-blue-500: #3b82f6;
+  /* The star of a rating. */
+  --color-star: #ffb21e;
+
+  --radius-*: initial;
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  --shadow-*: initial;
+  --shadow-sm: 0 1px 2px rgb(22 12 51 / 0.06), 0 2px 8px rgb(22 12 51 / 0.05);
+  --shadow-md: 0 4px 14px rgb(43 24 115 / 0.1), 0 1px 3px rgb(43 24 115 / 0.06);
+  --shadow-lg: 0 24px 60px rgb(60 32 170 / 0.18), 0 6px 18px rgb(60 32 170 / 0.1);
+  --shadow-xl: 0 40px 100px rgb(60 32 170 / 0.24), 0 10px 30px rgb(60 32 170 / 0.12);
+}

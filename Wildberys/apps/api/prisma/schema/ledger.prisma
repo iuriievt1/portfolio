@@ -1,0 +1,97 @@
+// Double-entry ledger. Every movement of money is one transaction with entries
+// whose debits and credits add up to the same amount. Entries are never changed or deleted.
+
+enum LedgerAccountType {
+  /// Money paid by buyers and refunded to them.
+  PAYMENTS
+  /// Bluberi's commission.
+  COMMISSION
+  /// Delivery fees collected from buyers.
+  DELIVERY
+  /// A seller's money for orders that can still be returned.
+  SELLER_PENDING
+  /// A seller's money that can be paid out.
+  SELLER_AVAILABLE
+  /// A seller's money kept back to cover returns.
+  SELLER_RESERVE
+  /// Money paid out to sellers.
+  PAYOUTS
+
+  @@map("ledger_account_type")
+}
+
+enum LedgerTransactionType {
+  PAYMENT
+  REFUND
+  /// Moves a seller's money from pending to available.
+  RELEASE
+  PAYOUT
+  ADJUSTMENT
+
+  @@map("ledger_transaction_type")
+}
+
+enum LedgerEntryDirection {
+  DEBIT
+  CREDIT
+
+  @@map("ledger_entry_direction")
+}
+
+model LedgerAccount {
+  id        String            @id @default(uuid(7)) @db.Uuid
+  type      LedgerAccountType
+  /// Set for the SELLER_ account types. Null for accounts of the platform.
+  sellerId  String?           @map("seller_id") @db.Uuid
+  currency  Currency
+  createdAt DateTime          @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  seller  Seller?       @relation(fields: [sellerId], references: [id], onDelete: Restrict)
+  entries LedgerEntry[]
+
+  @@unique([type, sellerId, currency])
+  @@index([sellerId])
+  @@map("ledger_accounts")
+}
+
+/// One business event that moved money. Links to what caused it.
+model LedgerTransaction {
+  id          String                @id @default(uuid(7)) @db.Uuid
+  type        LedgerTransactionType
+  description String?
+  orderId     String?               @map("order_id") @db.Uuid
+  shipmentId  String?               @map("shipment_id") @db.Uuid
+  paymentId   String?               @map("payment_id") @db.Uuid
+  refundId    String?               @map("refund_id") @db.Uuid
+  createdAt   DateTime              @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  order    Order?        @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  shipment Shipment?     @relation(fields: [shipmentId], references: [id], onDelete: Restrict)
+  payment  Payment?      @relation(fields: [paymentId], references: [id], onDelete: Restrict)
+  refund   Refund?       @relation(fields: [refundId], references: [id], onDelete: Restrict)
+  entries  LedgerEntry[]
+
+  @@index([orderId])
+  @@index([shipmentId])
+  @@index([paymentId])
+  @@index([refundId])
+  @@map("ledger_transactions")
+}
+
+model LedgerEntry {
+  id            String               @id @default(uuid(7)) @db.Uuid
+  transactionId String               @map("transaction_id") @db.Uuid
+  accountId     String               @map("account_id") @db.Uuid
+  direction     LedgerEntryDirection
+  /// Always positive. The direction says which way the money moves.
+  amount        BigInt
+  currency      Currency
+  createdAt     DateTime             @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  transaction LedgerTransaction @relation(fields: [transactionId], references: [id], onDelete: Restrict)
+  account     LedgerAccount     @relation(fields: [accountId], references: [id], onDelete: Restrict)
+
+  @@index([transactionId])
+  @@index([accountId, createdAt])
+  @@map("ledger_entries")
+}

@@ -1,0 +1,7 @@
+{
+  "extends": "@bluberi/config/typescript/library.json",
+  "compilerOptions": {
+    "lib": ["es2022", "dom", "dom.iterable"]
+  },
+  "include": ["src", "openapi-ts.config.ts"]
+}

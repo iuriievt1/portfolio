@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 400" preserveAspectRatio="none">
+  <defs>
+    <pattern id="streets-across" width="120" height="59" patternUnits="userSpaceOnUse" patternTransform="rotate(28)">
+      <rect y="54" width="120" height="5" fill="#fff" fill-opacity=".95"/>
+    </pattern>
+    <pattern id="streets-along" width="87" height="120" patternUnits="userSpaceOnUse" patternTransform="rotate(28)">
+      <rect x="82" width="5" height="120" fill="#fff" fill-opacity=".95"/>
+    </pattern>
+  </defs>
+  <rect width="390" height="400" fill="#ECE8FA"/>
+  <rect width="390" height="400" fill="url(#streets-along)"/>
+  <rect width="390" height="400" fill="url(#streets-across)"/>
+  <path d="M-20 290 C 90 280, 140 210, 220 220 S 330 290, 420 250" stroke="#CFDCFF" stroke-width="26" fill="none"/>
+  <path d="M80 130 L170 130 L170 250 L300 250 L300 320" stroke="#6C4CFF" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

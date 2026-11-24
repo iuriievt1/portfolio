@@ -1,0 +1,355 @@
+{
+  "metadata": {
+    "title": "Bluberi pro prodejce",
+    "description": "Prodejní portál Bluberi"
+  },
+  "badge": "Seller",
+  "signIn": {
+    "panelTitle": "Prodávejte na Bluberi",
+    "benefits": {
+      "free": "Registrace zdarma",
+      "payouts": "Výplata každý týden",
+      "promotion": "Propagace na startu",
+      "upload": "Nahrání zboží na pár kliků"
+    },
+    "form": {
+      "emailTitle": "Přihlášení",
+      "emailText": "Začněte svým e-mailem.",
+      "emailLabel": "E-mail",
+      "continue": "Pokračovat",
+      "codeTitle": "Zadejte kód",
+      "codeText": "Poslali jsme ho na {email}",
+      "codeLabel": "Kód z e-mailu",
+      "submit": "Přihlásit se",
+      "changeEmail": "Použít jiný účet"
+    },
+    "password": {
+      "passwordTitle": "Zadejte heslo",
+      "passwordText": "Účet {email}",
+      "passwordLabel": "Heslo",
+      "forgotPassword": "Zapomněli jste heslo?",
+      "confirmationTitle": "Potvrďte přihlášení",
+      "confirmationByEmail": "Kód jsme poslali na {email}",
+      "confirmationBySms": "Kód jsme poslali v SMS na číslo končící na {digits}",
+      "resetTitle": "Nové heslo",
+      "resetText": "Na {email} jsme poslali kód. Zadejte ho a zvolte si nové heslo.",
+      "newPasswordLabel": "Nové heslo",
+      "saveAndSignIn": "Uložit a přihlásit se"
+    }
+  },
+  "oneTimeCode": {
+    "resendIn": "Poslat znovu za {time}",
+    "resend": "Poslat znovu"
+  },
+  "passwordField": {
+    "show": "Zobrazit heslo",
+    "hide": "Skrýt heslo",
+    "hint": "Alespoň {count} znaků"
+  },
+  "messages": {
+    "inbox": "Doručené",
+    "new": "Nová zpráva",
+    "team": "Tým Bluberi",
+    "you": "Vy",
+    "registration": "Registrace prodejce",
+    "decisions": {
+      "DOCUMENTS_REQUESTED": "Žádost o doklady",
+      "APPROVED": "Registrace je schválená",
+      "REJECTED": "Registraci jsme neschválili"
+    },
+    "addDocuments": "Doplnit doklady",
+    "empty": "Zatím tu nic není",
+    "older": "Starší konverzace",
+    "earlier": "Dřívější zprávy",
+    "unseen": "Nové zprávy",
+    "choose": "Vyberte zprávu vlevo nebo napište novou",
+    "unavailable": "Zprávy se teď nepodařilo načíst. Zkuste to prosím za chvíli",
+    "back": "Zpět na doručené",
+    "newTitle": "Nová zpráva",
+    "toTeam": "Pro tým Bluberi",
+    "subjectLabel": "Předmět",
+    "bodyLabel": "Zpráva",
+    "replyLabel": "Napište odpověď",
+    "send": "Odeslat",
+    "closed": "V této konverzaci teď nelze psát"
+  },
+  "review": {
+    "pending": "Registraci ověřujeme, výsledek pošleme e-mailem",
+    "documentsRequested": "K registraci potřebujeme doplnit doklady",
+    "addDocuments": "Doplnit doklady",
+    "requestedTitle": "Doplňte doklady",
+    "messageLabel": "Zpráva od týmu Bluberi",
+    "send": "Odeslat ke kontrole",
+    "rejectedTitle": "Registraci jsme neschválili",
+    "suspendedTitle": "Prodej je pozastavený",
+    "toPortal": "Zpět do portálu",
+    "reasonLabel": "Důvod",
+    "contact": "Pokud s rozhodnutím nesouhlasíte, napište nám na"
+  },
+  "errors": {
+    "ONE_TIME_CODE_INVALID": "Kód není správný nebo už neplatí.",
+    "ONE_TIME_CODE_REQUESTED_TOO_SOON": "O nový kód můžete požádat za chvíli.",
+    "VALIDATION_FAILED": "Zkontrolujte prosím zadané údaje.",
+    "ACCOUNT_BLOCKED": "Tento účet je zablokovaný.",
+    "INVALID_CREDENTIALS": "Heslo není správné.",
+    "SIGN_IN_CONFIRMATION_EXPIRED": "Zadejte prosím heslo znovu.",
+    "RECENT_SIGN_IN_REQUIRED": "Od přihlášení uběhla delší doba. Přihlaste se prosím znovu a heslo nastavte hned potom.",
+    "PHONE_ALREADY_USED": "Toto číslo už používá jiný účet.",
+    "PHONE_NOT_CONFIRMED": "Nejdřív potvrďte telefonní číslo.",
+    "UNAUTHENTICATED": "Přihlášení vypršelo. Přihlaste se prosím znovu.",
+    "ACCOUNT_NOT_READY": "Nejdřív dokončete první krok: telefon a heslo.",
+    "COMPANY_NOT_FOUND": "Firmu s tímto IČO jsme v registru ARES nenašli.",
+    "COMPANY_NOT_ACTIVE": "Tato firma je podle registru ARES zaniklá.",
+    "COMPANY_REGISTRY_UNAVAILABLE": "Registr ARES teď neodpovídá. Zkuste to prosím za chvíli.",
+    "COMPANY_ALREADY_REGISTERED": "Tato firma je už zaregistrovaná.",
+    "COMPANY_REQUIRED": "Nejdřív vyplňte údaje o firmě.",
+    "VAT_NUMBER_MISSING": "Firma nemá v registru DIČ, takže nemůže být plátcem DPH.",
+    "VAT_NUMBER_NOT_FOUND": "Toto DIČ není v registru VIES platné. Zkontrolujte zemi a číslo.",
+    "VAT_REGISTRY_UNAVAILABLE": "Registr VIES teď pro tuto zemi neodpovídá. Zkuste to prosím za chvíli.",
+    "PAYOUT_METHOD_REQUIRED": "Nejdřív vyberte, kam chcete dostávat výplaty.",
+    "PAYOUT_METHOD_NOT_BANK": "Bankovní účet spravujete ve svém účtu u Stripe.",
+    "BANK_ACCOUNT_REQUIRED": "Nejdřív uložte bankovní účet.",
+    "STORE_NAME_TAKEN": "Tento název už používá jiný obchod. Zvolte prosím jiný.",
+    "REGISTRATION_INCOMPLETE": "Dokončete prosím výplaty a nastavení obchodu.",
+    "REGISTRATION_ALREADY_SUBMITTED": "Registrace je už odeslaná.",
+    "IMAGE_INVALID": "Soubor není obrázek JPG, PNG nebo WebP.",
+    "IMAGE_TOO_LARGE": "Obrázek je větší než 10 MB.",
+    "CATEGORY_NOT_FOUND": "Některá kategorie už není dostupná. Vyberte prosím znovu.",
+    "DOCUMENT_INVALID": "Soubor není PDF, JPG ani PNG.",
+    "DOCUMENT_TOO_LARGE": "Soubor je větší než 10 MB.",
+    "DOCUMENT_NOT_FOUND": "Doklad už neexistuje.",
+    "DOCUMENTS_LIMIT_REACHED": "Dokladů je už příliš mnoho. Některý nejdřív odstraňte.",
+    "DOCUMENTS_REQUIRED": "Nahrajte prosím všechny doklady.",
+    "DOCUMENTS_NOT_REQUESTED": "O doklady jsme vás nežádali.",
+    "MESSAGES_CLOSED": "Zprávy teď nejsou dostupné.",
+    "CONVERSATION_NOT_FOUND": "Tato konverzace už neexistuje.",
+    "UNKNOWN": "Něco se pokazilo. Zkuste to prosím znovu."
+  },
+  "nav": {
+    "settings": "Nastavení",
+    "items": {
+      "prehled": "Přehled",
+      "zpravy": "Zprávy",
+      "objednavky": "Objednávky",
+      "produkty": "Produkty",
+      "import": "Import",
+      "finance": "Finance",
+      "vraceni": "Vrácení",
+      "hodnoceni": "Hodnocení",
+      "propagace": "Propagace",
+      "analytika": "Analytika",
+      "obchod": "Obchod",
+      "tym": "Tým",
+      "napoveda": "Nápověda"
+    }
+  },
+  "shell": {
+    "language": "Jazyk",
+    "signOut": "Odhlásit se",
+    "comingSoon": "Tuto sekci připravujeme.",
+    "account": "Účet a zabezpečení"
+  },
+  "security": {
+    "title": "Zabezpečení účtu",
+    "account": "Přihlašujete se e-mailem {email}",
+    "step": "Krok {number} ze {count}",
+    "close": "Zavřít",
+    "signInAgain": "Přihlásit se znovu",
+    "reminder": {
+      "open": "Dokončete zabezpečení účtu",
+      "title": "Zabezpečte svůj účet",
+      "text": "Nastavte si heslo a telefon. Při příštím přihlášení účet ochrání heslo a kód.",
+      "continue": "Pokračovat",
+      "later": "Později"
+    },
+    "password": {
+      "title": "Heslo",
+      "missing": "Heslo zatím nemáte, přihlašujete se jen kódem z e-mailu.",
+      "present": "Heslo je nastavené. Po hesle vás při přihlášení požádáme ještě o kód.",
+      "add": "Nastavit heslo",
+      "change": "Změnit heslo",
+      "currentLabel": "Současné heslo",
+      "newLabel": "Nové heslo",
+      "save": "Uložit heslo"
+    },
+    "phone": {
+      "title": "Telefon",
+      "missing": "Telefon zatím nemáte potvrzený.",
+      "confirmed": "Ověřeno",
+      "add": "Přidat telefon",
+      "change": "Změnit číslo",
+      "label": "Telefonní číslo",
+      "hint": "V mezinárodním formátu, například +420 777 123 456",
+      "sendCode": "Poslat kód",
+      "codeTitle": "Kód z SMS",
+      "codeText": "Poslali jsme ho na {phone}",
+      "codeLabel": "Kód z SMS",
+      "confirm": "Potvrdit"
+    },
+    "channel": {
+      "title": "Kód při přihlášení",
+      "text": "Po zadání hesla vám pošleme kód. Vyberte, kam ho chcete dostávat.",
+      "needsPhone": "SMS můžete zvolit po potvrzení telefonu.",
+      "options": {
+        "EMAIL": "E-mail",
+        "SMS": "SMS"
+      }
+    }
+  },
+  "registration": {
+    "steps": {
+      "label": "Kroky registrace",
+      "account": "Účet",
+      "company": "Firma",
+      "payouts": "Výplaty",
+      "store": "Obchod"
+    },
+    "haveAccount": "Máte už účet?",
+    "signIn": "Přihlásit se",
+    "back": "Zpět",
+    "continue": "Pokračovat",
+    "account": {
+      "title": "Vytvořte si účet prodejce",
+      "emailText": "Začněte e-mailem, pošleme vám kód",
+      "emailLabel": "E-mail",
+      "emailCodeText": "Kód jsme poslali na {email}",
+      "codeLabel": "Kód",
+      "changeEmail": "Změnit e-mail",
+      "existingAccount": "Tento e-mail už má účet s heslem. Přihlaste se prosím.",
+      "phoneText": "Přidejte telefon, ověříme ho kódem z SMS",
+      "phoneLabel": "Telefon",
+      "sendCode": "Poslat kód",
+      "smsCodeText": "Kód jsme poslali na {phone}",
+      "changePhone": "Změnit číslo",
+      "confirm": "Potvrdit",
+      "passwordText": "Zbývá zvolit heslo",
+      "passwordLabel": "Heslo",
+      "passwordSaved": "Heslo je nastavené",
+      "readyText": "Účet je připravený",
+      "signInAgain": "Přihlásit se znovu",
+      "terms": "Souhlasím s obchodními podmínkami pro prodejce a se <policy>zpracováním osobních údajů</policy>."
+    },
+    "company": {
+      "title": "Údaje o firmě",
+      "text": "Zadejte IČO, zbytek načteme z registru ARES",
+      "textAbroad": "Zadejte DIČ, ověříme ho v registru VIES",
+      "textWithoutVatNumber": "Vyplňte údaje, ověříme je podle dokladů",
+      "countryLabel": "Země registrace firmy",
+      "icoLabel": "IČO",
+      "icoFieldLabel": "IČO firmy nebo OSVČ",
+      "load": "Načíst z ARES",
+      "source": "ARES",
+      "legalForms": {
+        "COMPANY": "Společnost",
+        "SOLE_TRADER": "OSVČ"
+      },
+      "vatNumberLabel": "DIČ",
+      "vatPayer": "Plátce DPH",
+      "invalidIco": "IČO má osm číslic. Zkontrolujte ho prosím.",
+      "vatIdLabel": "DIČ (VAT ID)",
+      "check": "Ověřit ve VIES",
+      "vatSource": "VIES",
+      "vatValid": "Platné DIČ",
+      "legalNameLabel": "Název firmy",
+      "legalFormLabel": "Právní forma",
+      "registrationNumberLabel": "Registrační číslo firmy",
+      "registrationNumberHint": "Číslo v obchodním rejstříku vaší země",
+      "invalidVatNumber": "DIČ nemá správný tvar. Zkontrolujte ho prosím.",
+      "noVatNumber": "Nemám DIČ",
+      "haveVatNumber": "Mám DIČ",
+      "withoutCheck": "Pokračovat bez ověření",
+      "manualNote": "Firmu ověříme podle dokladů v dalším kroku",
+      "publicNote": "Tyto údaje, váš e-mail a telefon uvidí zákazníci"
+    },
+    "documents": {
+      "title": "Doklady",
+      "text": "PDF, JPG nebo PNG do 10 MB",
+      "kinds": {
+        "IDENTITY_DOCUMENT": {
+          "title": "Občanský průkaz nebo pas",
+          "hint": "Osoby, která za firmu jedná"
+        },
+        "REGISTER_EXTRACT": {
+          "title": "Výpis z obchodního rejstříku",
+          "hint": "Z rejstříku vaší země"
+        },
+        "OTHER": {
+          "title": "Další doklad",
+          "hint": "Podle zprávy od nás"
+        }
+      },
+      "upload": "Nahrát soubor",
+      "remove": "Odstranit",
+      "privateNote": "Doklady uvidí jen tým Bluberi",
+      "missing": "Nahrajte prosím všechny doklady."
+    },
+    "address": {
+      "streetLabel": "Ulice a číslo",
+      "cityLabel": "Město",
+      "postalCodeLabel": "PSČ"
+    },
+    "payouts": {
+      "title": "Kam posílat výplaty",
+      "text": "Peníze za prodané zboží posíláme jednou týdně",
+      "methods": {
+        "BANK": {
+          "title": "Bankovní účet",
+          "text": "Účet v korunách nebo eurech"
+        },
+        "STRIPE": {
+          "title": "Účet Stripe",
+          "text": "Výplaty spravujete u Stripe"
+        }
+      },
+      "ibanLabel": "IBAN",
+      "holderLabel": "Majitel účtu",
+      "bankAccountSaved": "{country} •••• {last4} · {currency}",
+      "changeBankAccount": "Změnit účet",
+      "invalidBankAccount": "Číslo účtu není správně. Zkontrolujte ho prosím.",
+      "chooseMethod": "Vyberte, kam chcete dostávat výplaty.",
+      "statuses": {
+        "PENDING": "Ověřuje se",
+        "VERIFIED": "Ověřeno"
+      },
+      "simulation": "Zkušební režim: ověření přes Stripe se simuluje",
+      "accountNumberLabel": "Číslo účtu",
+      "bankCodeLabel": "Kód banky",
+      "currencyLabel": "Měna účtu"
+    },
+    "store": {
+      "title": "Nastavte svůj obchod",
+      "text": "Tak vás uvidí zákazníci",
+      "uploadLogo": "Nahrát logo",
+      "changeLogo": "Změnit logo",
+      "logoHint": "JPG, PNG nebo WebP do 10 MB",
+      "nameLabel": "Název obchodu",
+      "categoriesLabel": "Co prodáváte",
+      "wholeSection": "Vše",
+      "partOfSection": "{chosen} z {count}",
+      "showSubcategories": "Podkategorie",
+      "noCategories": "Vyberte aspoň jednu kategorii.",
+      "sameAsRegistered": "Zboží se vrací na sídlo firmy",
+      "invalidStore": "Zkontrolujte prosím název obchodu a adresu.",
+      "finish": "Dokončit registraci",
+      "logoTitle": "Upravte logo",
+      "logoText": "Posuňte obrázek a přibližte ho",
+      "logoZoom": "Přiblížení",
+      "logoUse": "Použít",
+      "selfCertification": "Budu nabízet jen zboží, které splňuje právní předpisy EU"
+    }
+  },
+  "welcome": {
+    "title": "Vítejte na Bluberi!",
+    "text": "Údaje teď ověřujeme. Mezitím si připravte katalog",
+    "account": "Účet a firma",
+    "identity": "Ověření totožnosti",
+    "products": "První produkty",
+    "launch": "Spuštění prodeje",
+    "done": "Hotovo",
+    "inProgress": "Probíhá",
+    "nextStep": "Další krok",
+    "afterCheck": "Po ověření",
+    "addProduct": "Přidat první produkt",
+    "importCatalog": "Importovat katalog"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "signInCodeEmail": {
+    "subject": "Your {product} sign-in code: {code}",
+    "text": "Your {product} sign-in code: {code}\n\nThe code is valid for {minutes} minutes. If you did not ask for it, ignore this email.",
+    "products": {
+      "web": "Bluberi",
+      "seller": "Bluberi Seller",
+      "admin": "Bluberi Admin"
+    }
+  },
+  "passwordResetCodeEmail": {
+    "subject": "Your Bluberi password reset code: {code}",
+    "text": "Your code to set a new Bluberi password: {code}\n\nThe code is valid for {minutes} minutes. If you did not ask for a new password, ignore this email. Your password stays as it is."
+  },
+  "phoneCodeSms": {
+    "text": "Bluberi: your verification code is {code}. It is valid for {minutes} minutes."
+  },
+  "sellerApprovedEmail": {
+    "subject": "Bluberi: your store is approved",
+    "text": "Hello,\n\nwe have checked and approved the seller registration of {company}. Sign in to Bluberi Seller and you can start selling.\n\nThe Bluberi team"
+  },
+  "sellerDocumentsRequestedEmail": {
+    "subject": "Bluberi: we need more documents for your registration",
+    "text": "Hello,\n\nfor the seller registration of {company} we need the following:\n\n{message}\n\nUpload the documents after you sign in to Bluberi Seller. Then send the registration again.\n\nThe Bluberi team"
+  },
+  "sellerRejectedEmail": {
+    "subject": "Bluberi: we did not approve the seller registration",
+    "text": "Hello,\n\nwe did not approve the seller registration of {company}.\n\nThe reason:\n\n{message}\n\nIf you do not agree with the decision, write to us at {supportEmail}.\n\nThe Bluberi team"
+  },
+  "sellerMessageEmail": {
+    "subject": "Bluberi: a new message from the team",
+    "text": "Hello,\n\nthe Bluberi team wrote to you about the seller {company}:\n\n{message}\n\nYou can answer in Bluberi Seller, in the section Messages.\n\nThe Bluberi team"
+  }
+}

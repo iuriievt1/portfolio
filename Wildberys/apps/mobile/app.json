@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "Bluberi",
+    "slug": "bluberi",
+    "version": "1.0.0",
+    "scheme": "bluberi",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "plugins": ["expo-router", "expo-localization"],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

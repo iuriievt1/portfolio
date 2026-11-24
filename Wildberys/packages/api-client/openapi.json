@@ -1,0 +1,5862 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/v1/admin/audit-log": {
+      "get": {
+        "operationId": "auditLogList",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "How many items to return.",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "The nextCursor of the previous page. Leave it out for the first page.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "actorId",
+            "required": false,
+            "in": "query",
+            "description": "Only what this person did.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "action",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/AuditAction"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditLogPage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Who did what and when, newest first",
+        "tags": [
+          "Admin: audit log"
+        ]
+      }
+    },
+    "/v1/auth/sign-in": {
+      "post": {
+        "description": "Says what to ask for next. An account with a password is asked for it. Otherwise a sign-in code goes to the email, also when there is no account yet.",
+        "operationId": "authStartSignIn",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartSignInBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The next step of the sign-in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignInStarted"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Start a sign-in with an email",
+        "tags": [
+          "Auth"
+        ],
+        "security": []
+      }
+    },
+    "/v1/auth/email-code": {
+      "post": {
+        "description": "The email is written in the given language. An account created with the code gets that language.",
+        "operationId": "authRequestEmailCode",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestEmailCodeBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The code is sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OneTimeCodeSent"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Send a sign-in code to an email",
+        "tags": [
+          "Auth"
+        ],
+        "security": []
+      }
+    },
+    "/v1/auth/password-reset-code": {
+      "post": {
+        "description": "The code signs in like any sign-in code. A new password can be set right after the sign-in. The answer is the same whether an account with this email exists or not.",
+        "operationId": "authRequestPasswordResetCode",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestPasswordResetCodeBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The code is sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OneTimeCodeSent"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Send a code for a forgotten password to an email",
+        "tags": [
+          "Auth"
+        ],
+        "security": []
+      }
+    },
+    "/v1/auth/sign-in/code": {
+      "post": {
+        "operationId": "authSignInWithCode",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignInWithCodeBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Signed in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthTokens"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Sign in with a code from an email. The first sign-in creates the account",
+        "tags": [
+          "Auth"
+        ],
+        "security": []
+      }
+    },
+    "/v1/auth/sign-in/password": {
+      "post": {
+        "description": "A right password sends a code to the email or the phone of the user. The sign-in is finished with that code and the token from the answer.",
+        "operationId": "authSignInWithPassword",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignInWithPasswordBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The password is right, a code is sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignInConfirmation"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Check an email and a password, the first of two steps",
+        "tags": [
+          "Auth"
+        ],
+        "security": []
+      }
+    },
+    "/v1/auth/sign-in/confirmation-code": {
+      "post": {
+        "operationId": "authResendSignInConfirmation",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResendSignInConfirmationBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The code is sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OneTimeCodeSent"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Send the code of the second step again",
+        "tags": [
+          "Auth"
+        ],
+        "security": []
+      }
+    },
+    "/v1/auth/sign-in/confirmation": {
+      "post": {
+        "operationId": "authConfirmSignIn",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfirmSignInBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Signed in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthTokens"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Finish a sign-in with a password: the code of the second step",
+        "tags": [
+          "Auth"
+        ],
+        "security": []
+      }
+    },
+    "/v1/auth/refresh": {
+      "post": {
+        "operationId": "authRefresh",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "New tokens. The old refresh token no longer works",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthTokens"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Exchange a refresh token for a new pair of tokens",
+        "tags": [
+          "Auth"
+        ],
+        "security": []
+      }
+    },
+    "/v1/auth/sign-out": {
+      "post": {
+        "operationId": "authSignOut",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": "Signed out"
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Sign out on this device",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/v1/auth/sign-out-all": {
+      "post": {
+        "operationId": "authSignOutAll",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": "Signed out everywhere"
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Sign out on all devices",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/v1/auth/password": {
+      "put": {
+        "operationId": "authSetPassword",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetPasswordBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The password is saved"
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Set or change the password. Signs out all other devices",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/v1/auth/phone-code": {
+      "post": {
+        "operationId": "authRequestPhoneCode",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestPhoneCodeBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The code is sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OneTimeCodeSent"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Send a code by SMS to confirm a phone number",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/v1/auth/phone": {
+      "put": {
+        "operationId": "authConfirmPhone",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfirmPhoneBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The phone number is saved"
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Save the phone number confirmed with a code from an SMS",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/v1/auth/sign-in-confirmation-channel": {
+      "put": {
+        "operationId": "authSetSignInConfirmationChannel",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetSignInConfirmationChannelBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The choice is saved"
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Choose where the code of the second step of a sign-in goes: email or SMS",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/v1/auth/me": {
+      "get": {
+        "operationId": "authCurrentUser",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentUser"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "The signed-in user and their roles",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/v1/categories": {
+      "get": {
+        "description": "Sections and their subcategories that are in use, in the order of the catalog.",
+        "operationId": "categoriesTree",
+        "parameters": [
+          {
+            "name": "locale",
+            "required": true,
+            "in": "query",
+            "description": "The language of the names.",
+            "schema": {
+              "$ref": "#/components/schemas/Locale"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CategorySection"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "The category tree of the catalog",
+        "tags": [
+          "Categories"
+        ],
+        "security": []
+      }
+    },
+    "/v1/company-registry/{ico}": {
+      "get": {
+        "description": "Reads the Czech register ARES. The seller registration shows the answer before the seller confirms it.",
+        "operationId": "companyRegistryFind",
+        "parameters": [
+          {
+            "name": "ico",
+            "required": true,
+            "in": "path",
+            "description": "The company number (IČO): eight digits with a right check digit.",
+            "schema": {
+              "example": "27082440",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Company"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Look a company up in the public register by its number (IČO)",
+        "tags": [
+          "Company registry"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "healthLive",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The process is running",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthStatus"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "The API process is running",
+        "tags": [
+          "Health"
+        ],
+        "security": []
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "operationId": "healthReady",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The API is ready",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthStatus"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The database does not answer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "The API can serve requests: the database answers",
+        "tags": [
+          "Health"
+        ],
+        "security": []
+      }
+    },
+    "/v1/images": {
+      "post": {
+        "description": "Takes a JPEG, PNG or WebP of up to 10 MB. Stores WebP copies in several sizes and returns their addresses.",
+        "operationId": "imagesUpload",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "file"
+                ],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadedImage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Upload a photo",
+        "tags": [
+          "Images"
+        ]
+      }
+    },
+    "/v1/sellers/{sellerId}/members": {
+      "get": {
+        "operationId": "sellerMembersList",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SellerTeamMember"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "People who work for the seller",
+        "tags": [
+          "Seller: members"
+        ]
+      },
+      "post": {
+        "operationId": "sellerMembersAddStaff",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddSellerStaffBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerTeamMember"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Add a person who already has an account to the staff",
+        "tags": [
+          "Seller: members"
+        ]
+      }
+    },
+    "/v1/sellers/{sellerId}/members/{userId}": {
+      "delete": {
+        "operationId": "sellerMembersRemoveStaff",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The person no longer works for the seller"
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Remove a person from the staff. The owner cannot be removed",
+        "tags": [
+          "Seller: members"
+        ]
+      }
+    },
+    "/v1/sellers/{sellerId}/conversations": {
+      "get": {
+        "description": "Conversations with the Bluberi team. The one written in last comes first, with its last message and how many messages are unread.",
+        "operationId": "sellerInboxInbox",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "How many items to return.",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "The nextCursor of the previous page. Leave it out for the first page.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConversationsPage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "The inbox of the seller",
+        "tags": [
+          "Seller: messages"
+        ]
+      },
+      "post": {
+        "description": "Opens a conversation under a subject. While the portal is open to the seller.",
+        "operationId": "sellerInboxOpen",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpenConversationBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpenedConversation"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Write to Bluberi about something new",
+        "tags": [
+          "Seller: messages"
+        ]
+      }
+    },
+    "/v1/sellers/{sellerId}/conversations/unread": {
+      "get": {
+        "operationId": "sellerInboxUnread",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnreadMessages"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "How many messages of Bluberi the seller has not opened yet",
+        "tags": [
+          "Seller: messages"
+        ]
+      }
+    },
+    "/v1/sellers/{sellerId}/conversations/{conversationId}": {
+      "get": {
+        "operationId": "sellerInboxThread",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "conversationId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "How many items to return.",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "The nextCursor of the previous page. Leave it out for the first page.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConversationThread"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "One conversation with its messages, newest first",
+        "tags": [
+          "Seller: messages"
+        ]
+      }
+    },
+    "/v1/sellers/{sellerId}/conversations/{conversationId}/messages": {
+      "post": {
+        "operationId": "sellerInboxSend",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "conversationId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendMessageBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerMessageView"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Answer in a conversation",
+        "tags": [
+          "Seller: messages"
+        ]
+      }
+    },
+    "/v1/sellers/{sellerId}/conversations/{conversationId}/reading": {
+      "post": {
+        "operationId": "sellerInboxMarkRead",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "conversationId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Nothing of Bluberi is unread in the conversation"
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "The seller opened the conversation: the messages of Bluberi in it count as read",
+        "tags": [
+          "Seller: messages"
+        ]
+      }
+    },
+    "/v1/admin/conversations": {
+      "get": {
+        "description": "Conversations with sellers. The one written in last comes first, with its last message and how many messages of the seller are unread.",
+        "operationId": "teamInboxInbox",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "How many items to return.",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "The nextCursor of the previous page. Leave it out for the first page.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "sellerId",
+            "required": false,
+            "in": "query",
+            "description": "Only the conversations with this seller.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeamConversationsPage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "The inbox of the team",
+        "tags": [
+          "Admin: messages"
+        ]
+      }
+    },
+    "/v1/admin/conversations/unread": {
+      "get": {
+        "operationId": "teamInboxUnread",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnreadMessages"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "How many messages of sellers nobody of the team has opened yet",
+        "tags": [
+          "Admin: messages"
+        ]
+      }
+    },
+    "/v1/admin/conversations/{conversationId}": {
+      "get": {
+        "operationId": "teamInboxThread",
+        "parameters": [
+          {
+            "name": "conversationId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "How many items to return.",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "The nextCursor of the previous page. Leave it out for the first page.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeamConversationThread"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "One conversation with its seller and its messages, newest first",
+        "tags": [
+          "Admin: messages"
+        ]
+      }
+    },
+    "/v1/admin/conversations/{conversationId}/messages": {
+      "post": {
+        "description": "The seller reads it in the portal and gets it by email.",
+        "operationId": "teamInboxSend",
+        "parameters": [
+          {
+            "name": "conversationId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendMessageBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerMessageView"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Answer a seller",
+        "tags": [
+          "Admin: messages"
+        ]
+      }
+    },
+    "/v1/admin/conversations/{conversationId}/reading": {
+      "post": {
+        "operationId": "teamInboxMarkRead",
+        "parameters": [
+          {
+            "name": "conversationId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Nothing of the seller is unread in the conversation"
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "The team opened the conversation: the messages of the seller in it count as read",
+        "tags": [
+          "Admin: messages"
+        ]
+      }
+    },
+    "/v1/admin/sellers/{sellerId}/conversations": {
+      "post": {
+        "description": "Opens a conversation under a subject. The seller reads it in the portal and gets it by email.",
+        "operationId": "teamNewConversationOpen",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpenConversationBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpenedConversation"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Write to a seller about something new",
+        "tags": [
+          "Admin: messages"
+        ]
+      }
+    },
+    "/v1/sellers/{sellerId}/events": {
+      "get": {
+        "description": "A stream of server-sent events for a page that is open. \"ready\" says that the page is heard from now on: what changed before is seen only after the page reads again. \"change\" says that something changed and names it: a conversation, a seller, the list of people who get the news. It never carries the content. The stream ends with the access token it was opened with, and the browser opens a new one.",
+        "operationId": "sellerLiveStreamChanges",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The stream of events",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Hear at once that something about the seller changed",
+        "tags": [
+          "Live events"
+        ]
+      }
+    },
+    "/v1/admin/events": {
+      "get": {
+        "description": "A stream of server-sent events for a page that is open. \"ready\" says that the page is heard from now on: what changed before is seen only after the page reads again. \"change\" says that something changed and names it: a conversation, a seller, the list of people who get the news. It never carries the content. The stream ends with the access token it was opened with, and the browser opens a new one.",
+        "operationId": "teamLiveStreamChanges",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The stream of events",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Hear at once that something in the admin changed",
+        "tags": [
+          "Live events"
+        ]
+      }
+    },
+    "/v1/admin/sellers": {
+      "get": {
+        "description": "Sellers who wait for the team come oldest first, by the time they were sent. The others come newest first.",
+        "operationId": "sellerModerationList",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "How many items to return.",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "The nextCursor of the previous page. Leave it out for the first page.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/SellerStatus"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModeratedSellersPage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Sellers in one status",
+        "tags": [
+          "Admin: sellers"
+        ]
+      }
+    },
+    "/v1/admin/sellers/counts": {
+      "get": {
+        "operationId": "sellerModerationCounts",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerCounts"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "How many sellers are in each status",
+        "tags": [
+          "Admin: sellers"
+        ]
+      }
+    },
+    "/v1/admin/sellers/{sellerId}": {
+      "get": {
+        "operationId": "sellerModerationFind",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModeratedSeller"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Everything the team decides about a seller by",
+        "tags": [
+          "Admin: sellers"
+        ]
+      },
+      "delete": {
+        "description": "With its store, its documents and its payout account. The company number becomes free for another registration.",
+        "operationId": "sellerModerationRemoveDraft",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The registration is deleted"
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Delete a registration that was not sent",
+        "tags": [
+          "Admin: sellers"
+        ]
+      }
+    },
+    "/v1/admin/sellers/{sellerId}/register-check": {
+      "get": {
+        "description": "A Czech company is compared with the company register ARES and comes with its trade licences. A company from another EU country is checked by its VAT number in VIES.",
+        "operationId": "sellerModerationRegisterCheck",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerRegisterCheck"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "What the public registers say about the company now",
+        "tags": [
+          "Admin: sellers"
+        ]
+      }
+    },
+    "/v1/admin/sellers/{sellerId}/documents/{documentId}": {
+      "get": {
+        "description": "The file itself: a PDF, a JPEG or a PNG. Every opening is written to the audit log.",
+        "operationId": "sellerModerationOpenDocument",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "documentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/png": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Open a document of a seller",
+        "tags": [
+          "Admin: sellers"
+        ]
+      }
+    },
+    "/v1/admin/sellers/{sellerId}/approval": {
+      "post": {
+        "description": "For a seller in the check. The store of the seller opens, and the seller gets an email.",
+        "operationId": "sellerModerationApprove",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The seller after the decision",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModeratedSeller"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Approve a seller",
+        "tags": [
+          "Admin: sellers"
+        ]
+      }
+    },
+    "/v1/admin/sellers/{sellerId}/document-request": {
+      "post": {
+        "description": "For a seller in the check. The seller gets the message by email, adds the documents in the portal and sends the registration again.",
+        "operationId": "sellerModerationRequestDocuments",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DecisionBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The seller after the decision",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModeratedSeller"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Ask a seller for documents",
+        "tags": [
+          "Admin: sellers"
+        ]
+      }
+    },
+    "/v1/admin/sellers/{sellerId}/rejection": {
+      "post": {
+        "description": "For a seller in the check or one the team waits for documents from. The seller gets the reason by email.",
+        "operationId": "sellerModerationReject",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DecisionBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The seller after the decision",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModeratedSeller"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Refuse a seller",
+        "tags": [
+          "Admin: sellers"
+        ]
+      }
+    },
+    "/v1/admin/sellers/{sellerId}/reopening": {
+      "post": {
+        "description": "For example after the seller objected to the refusal.",
+        "operationId": "sellerModerationReopen",
+        "parameters": [
+          {
+            "name": "sellerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The seller after the decision",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModeratedSeller"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Take a refused seller back into the check",
+        "tags": [
+          "Admin: sellers"
+        ]
+      }
+    },
+    "/v1/vat-registry/{countryCode}/{number}": {
+      "get": {
+        "description": "Asks VIES, the register of VAT numbers of the EU. The seller registration shows the answer before a company from another EU country is registered.",
+        "operationId": "vatRegistryFind",
+        "parameters": [
+          {
+            "name": "countryCode",
+            "required": true,
+            "in": "path",
+            "description": "The EU country of the number, ISO 3166-1 alpha-2. Greece is GR.",
+            "schema": {
+              "example": "PL",
+              "type": "string"
+            }
+          },
+          {
+            "name": "number",
+            "required": true,
+            "in": "path",
+            "description": "The VAT number without the letters of the country: capital letters and digits.",
+            "schema": {
+              "example": "5252674798",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CheckedVatNumber"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Check a VAT number of an EU country in the public register",
+        "tags": [
+          "VAT registry"
+        ]
+      }
+    },
+    "/v1/seller-registration": {
+      "get": {
+        "operationId": "sellerRegistrationState",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Where the registration stands now",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerRegistration"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Where the registration of this person as a seller stands",
+        "tags": [
+          "Seller registration"
+        ]
+      }
+    },
+    "/v1/seller-registration/company": {
+      "put": {
+        "description": "The name, the legal form, the tax number and the address are read from the public register. Needs an account with a password and a confirmed phone number. Sent again, it replaces the company of the draft.",
+        "operationId": "sellerRegistrationRegisterCompany",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterCompanyBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Where the registration stands now",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerRegistration"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Step 2, a Czech company: register it by its number (IČO)",
+        "tags": [
+          "Seller registration"
+        ]
+      }
+    },
+    "/v1/seller-registration/eu-company": {
+      "put": {
+        "description": "The VAT number is checked in the register of VAT numbers of the EU, and the name comes from there when its country shares it. The seller writes the rest. A number the register calls not valid is refused. A trader without a VAT number, and a company whose register does not answer, are taken without that check, and the team checks their documents. Needs an account with a password and a confirmed phone number. Sent again, it replaces the company of the draft.",
+        "operationId": "sellerRegistrationRegisterEuCompany",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterEuCompanyBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Where the registration stands now",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerRegistration"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Step 2, a company from another EU country: register it by its VAT number",
+        "tags": [
+          "Seller registration"
+        ]
+      }
+    },
+    "/v1/seller-registration/documents": {
+      "post": {
+        "description": "Takes a PDF, a JPEG or a PNG of up to 10 MB. Before the registration is sent, and again when the team asked for documents. Only the team reads the file.",
+        "operationId": "sellerRegistrationAddDocument",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "file",
+                  "kind",
+                  "fileName"
+                ],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "IDENTITY_DOCUMENT",
+                      "REGISTER_EXTRACT",
+                      "OTHER"
+                    ]
+                  },
+                  "fileName": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Where the registration stands now",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerRegistration"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Add a document to the registration",
+        "tags": [
+          "Seller registration"
+        ]
+      }
+    },
+    "/v1/seller-registration/documents/{documentId}": {
+      "delete": {
+        "description": "Before the registration is sent, and while the team waits for documents.",
+        "operationId": "sellerRegistrationRemoveDocument",
+        "parameters": [
+          {
+            "name": "documentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Where the registration stands now",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerRegistration"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Delete a document of the registration",
+        "tags": [
+          "Seller registration"
+        ]
+      }
+    },
+    "/v1/seller-registration/payout-method": {
+      "put": {
+        "description": "Opens an account at the payment provider. Another choice opens a new one, and the form of the provider starts again.",
+        "operationId": "sellerRegistrationChoosePayoutMethod",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChoosePayoutMethodBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Where the registration stands now",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerRegistration"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Step 3: choose how to be paid, through a Stripe account or to a bank account",
+        "tags": [
+          "Seller registration"
+        ]
+      }
+    },
+    "/v1/seller-registration/bank-account": {
+      "put": {
+        "description": "The number goes to the payment provider. Bluberi keeps its country and its last four characters.",
+        "operationId": "sellerRegistrationSaveBankAccount",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveBankAccountBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Where the registration stands now",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerRegistration"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Step 3, paid to a bank account: the account the payouts go to",
+        "tags": [
+          "Seller registration"
+        ]
+      }
+    },
+    "/v1/seller-registration/payout-check": {
+      "post": {
+        "description": "The check of the provider starts. The answer says where it stands.",
+        "operationId": "sellerRegistrationFinishPayoutForm",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Where the registration stands now",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerRegistration"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Step 3: the seller finished the form of the payment provider",
+        "tags": [
+          "Seller registration"
+        ]
+      }
+    },
+    "/v1/seller-registration/store": {
+      "put": {
+        "operationId": "sellerRegistrationSaveStore",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveStoreBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Where the registration stands now",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerRegistration"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Step 4: the name of the store, its logo and where goods come back",
+        "tags": [
+          "Seller registration"
+        ]
+      }
+    },
+    "/v1/seller-registration/submission": {
+      "post": {
+        "description": "Needs a finished payout form, a store and the documents the registration lists as required. The owner promises to offer only goods that comply with the law of the EU. After it only the documents can change, when the team asks for them.",
+        "operationId": "sellerRegistrationSubmit",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Where the registration stands now",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerRegistration"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Send the finished registration to Bluberi",
+        "tags": [
+          "Seller registration"
+        ]
+      }
+    },
+    "/v1/seller-registration/resubmission": {
+      "post": {
+        "description": "For a seller the team asked for documents. The check of the team starts again.",
+        "operationId": "sellerRegistrationResubmit",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Where the registration stands now",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerRegistration"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Send the registration back to Bluberi after a request for documents",
+        "tags": [
+          "Seller registration"
+        ]
+      }
+    },
+    "/v1/admin/team": {
+      "get": {
+        "operationId": "teamList",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TeamMember"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "People in the Bluberi team and their roles",
+        "tags": [
+          "Admin: team"
+        ]
+      }
+    },
+    "/v1/admin/team/roles": {
+      "post": {
+        "operationId": "teamGrantRole",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrantTeamRoleBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The person with all their roles",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeamMember"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Give a team role to a person who already has an account",
+        "tags": [
+          "Admin: team"
+        ]
+      }
+    },
+    "/v1/admin/team/{userId}/roles/{role}": {
+      "delete": {
+        "operationId": "teamRevokeRole",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "role",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "$ref": "#/components/schemas/PlatformRole"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The person no longer has the role"
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Take a team role away. The last owner cannot be removed",
+        "tags": [
+          "Admin: team"
+        ]
+      }
+    },
+    "/v1/newsletter": {
+      "post": {
+        "description": "The answer is the same whether the email is already on the list or not.",
+        "operationId": "newsletterSubscribe",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubscribeBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The person is on the list"
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Sign up for news by email",
+        "tags": [
+          "Newsletter"
+        ],
+        "security": []
+      }
+    },
+    "/v1/newsletter/removal": {
+      "post": {
+        "description": "Takes back the consent to get news by email and deletes the subscription. The answer is the same whether the email was on the list or not.",
+        "operationId": "newsletterUnsubscribe",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UnsubscribeBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The email is not on the list"
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Stop the news by email",
+        "tags": [
+          "Newsletter"
+        ],
+        "security": []
+      }
+    },
+    "/v1/admin/newsletter": {
+      "get": {
+        "operationId": "newsletterAdminList",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "How many items to return.",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "The nextCursor of the previous page. Leave it out for the first page.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewsletterPage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "People who get the news by email, newest first",
+        "tags": [
+          "Admin: marketing"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Bluberi API",
+    "description": "",
+    "version": "1",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "accessToken": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "ApiErrorDetail": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string",
+            "description": "The request field the problem is about.",
+            "example": "email"
+          },
+          "message": {
+            "type": "string",
+            "example": "email must be an email"
+          }
+        },
+        "required": [
+          "field",
+          "message"
+        ]
+      },
+      "ApiError": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer",
+            "example": 400
+          },
+          "code": {
+            "type": "string",
+            "description": "A stable code for programs. The apps choose the text for the user by it.",
+            "example": "VALIDATION_FAILED"
+          },
+          "message": {
+            "type": "string",
+            "description": "A text for developers, in English."
+          },
+          "requestId": {
+            "type": "string",
+            "description": "The id of the request, the same as in the x-request-id header."
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApiErrorDetail"
+            }
+          }
+        },
+        "required": [
+          "statusCode",
+          "code",
+          "message",
+          "requestId"
+        ]
+      },
+      "AuditAction": {
+        "type": "string",
+        "enum": [
+          "auth.signed_in",
+          "auth.signed_out_everywhere",
+          "auth.password_changed",
+          "auth.phone_confirmed",
+          "auth.sign_in_confirmation_channel_changed",
+          "team.role_granted",
+          "team.role_revoked",
+          "seller.staff_added",
+          "seller.staff_removed",
+          "seller.registration_started",
+          "seller.registration_submitted",
+          "seller.payout_method_chosen",
+          "seller.bank_account_saved",
+          "seller.document_added",
+          "seller.document_removed",
+          "seller.document_opened",
+          "seller.approved",
+          "seller.documents_requested",
+          "seller.rejected",
+          "seller.review_reopened",
+          "seller.draft_removed"
+        ]
+      },
+      "AuditLogPerson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "firstName",
+          "lastName"
+        ]
+      },
+      "AuditLogItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "action": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AuditAction"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actor": {
+            "nullable": true,
+            "description": "Who did it. Null when it was done from the command line.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AuditLogPerson"
+              }
+            ]
+          },
+          "targetUser": {
+            "nullable": true,
+            "description": "The person it was done to, for example who got a role. Null when there is none.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AuditLogPerson"
+              }
+            ]
+          },
+          "details": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Facts that depend on the action, for example the role that was given."
+          }
+        },
+        "required": [
+          "id",
+          "action",
+          "createdAt",
+          "actor",
+          "targetUser",
+          "details"
+        ]
+      },
+      "AuditLogPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "description": "Newest first.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuditLogItem"
+            }
+          },
+          "nextCursor": {
+            "type": "string",
+            "nullable": true,
+            "description": "Send it as the cursor to get the next page. Null on the last page."
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      },
+      "Locale": {
+        "type": "string",
+        "enum": [
+          "cs",
+          "en"
+        ]
+      },
+      "SignInApp": {
+        "type": "string",
+        "enum": [
+          "web",
+          "seller",
+          "admin"
+        ],
+        "description": "The app the person signs in to. The email with the code names it."
+      },
+      "StartSignInBody": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "jana@example.cz"
+          },
+          "locale": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Locale"
+              }
+            ]
+          },
+          "app": {
+            "description": "The app the person signs in to. The email with the code names it.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SignInApp"
+              }
+            ]
+          }
+        },
+        "required": [
+          "email",
+          "locale",
+          "app"
+        ]
+      },
+      "SignInStep": {
+        "type": "string",
+        "enum": [
+          "PASSWORD",
+          "EMAIL_CODE"
+        ],
+        "description": "PASSWORD: the account has a password, ask for it. EMAIL_CODE: a sign-in code was sent to the email."
+      },
+      "OneTimeCodeSent": {
+        "type": "object",
+        "properties": {
+          "expiresInSeconds": {
+            "type": "integer",
+            "description": "How long the code is valid."
+          },
+          "resendInSeconds": {
+            "type": "integer",
+            "description": "How long to wait before asking for another code."
+          }
+        },
+        "required": [
+          "expiresInSeconds",
+          "resendInSeconds"
+        ]
+      },
+      "SignInStarted": {
+        "type": "object",
+        "properties": {
+          "step": {
+            "description": "PASSWORD: the account has a password, ask for it. EMAIL_CODE: a sign-in code was sent to the email.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SignInStep"
+              }
+            ]
+          },
+          "code": {
+            "nullable": true,
+            "description": "Set when a code was sent.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OneTimeCodeSent"
+              }
+            ]
+          }
+        },
+        "required": [
+          "step",
+          "code"
+        ]
+      },
+      "RequestEmailCodeBody": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "jana@example.cz"
+          },
+          "locale": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Locale"
+              }
+            ]
+          },
+          "app": {
+            "description": "The app the person signs in to. The email with the code names it.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SignInApp"
+              }
+            ]
+          }
+        },
+        "required": [
+          "email",
+          "locale",
+          "app"
+        ]
+      },
+      "RequestPasswordResetCodeBody": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "jana@example.cz"
+          },
+          "locale": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Locale"
+              }
+            ]
+          }
+        },
+        "required": [
+          "email",
+          "locale"
+        ]
+      },
+      "SignInWithCodeBody": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "jana@example.cz"
+          },
+          "code": {
+            "type": "string",
+            "example": "482913"
+          }
+        },
+        "required": [
+          "email",
+          "code"
+        ]
+      },
+      "AuthTokens": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "description": "Goes into the Authorization header of every request: Bearer <token>."
+          },
+          "expiresInSeconds": {
+            "type": "integer",
+            "description": "How long the access token is valid."
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "Exchanged for a new pair of tokens. Works once: every exchange returns a new one."
+          }
+        },
+        "required": [
+          "accessToken",
+          "expiresInSeconds",
+          "refreshToken"
+        ]
+      },
+      "SignInWithPasswordBody": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "jana@example.cz"
+          },
+          "password": {
+            "type": "string"
+          },
+          "app": {
+            "description": "The app the person signs in to. The email with the code names it.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SignInApp"
+              }
+            ]
+          }
+        },
+        "required": [
+          "email",
+          "password",
+          "app"
+        ]
+      },
+      "SignInConfirmationChannel": {
+        "type": "string",
+        "enum": [
+          "EMAIL",
+          "SMS"
+        ],
+        "description": "Where the code went."
+      },
+      "SignInConfirmation": {
+        "type": "object",
+        "properties": {
+          "expiresInSeconds": {
+            "type": "integer",
+            "description": "How long the code is valid."
+          },
+          "resendInSeconds": {
+            "type": "integer",
+            "description": "How long to wait before asking for another code."
+          },
+          "confirmationToken": {
+            "type": "string",
+            "description": "Proves the password was right. Goes into the requests that finish the sign-in."
+          },
+          "channel": {
+            "description": "Where the code went.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SignInConfirmationChannel"
+              }
+            ]
+          },
+          "phoneEnding": {
+            "type": "string",
+            "nullable": true,
+            "example": "456",
+            "description": "The last digits of the phone number when the code went by SMS."
+          }
+        },
+        "required": [
+          "expiresInSeconds",
+          "resendInSeconds",
+          "confirmationToken",
+          "channel",
+          "phoneEnding"
+        ]
+      },
+      "ResendSignInConfirmationBody": {
+        "type": "object",
+        "properties": {
+          "confirmationToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "confirmationToken"
+        ]
+      },
+      "ConfirmSignInBody": {
+        "type": "object",
+        "properties": {
+          "confirmationToken": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string",
+            "example": "482913"
+          }
+        },
+        "required": [
+          "confirmationToken",
+          "code"
+        ]
+      },
+      "RefreshBody": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "refreshToken"
+        ]
+      },
+      "SetPasswordBody": {
+        "type": "object",
+        "properties": {
+          "newPassword": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 128
+          },
+          "currentPassword": {
+            "type": "string",
+            "description": "Not needed right after a sign-in with a one-time code."
+          }
+        },
+        "required": [
+          "newPassword"
+        ]
+      },
+      "RequestPhoneCodeBody": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "example": "+420777123456"
+          }
+        },
+        "required": [
+          "phone"
+        ]
+      },
+      "ConfirmPhoneBody": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "example": "+420777123456"
+          },
+          "code": {
+            "type": "string",
+            "example": "482913"
+          }
+        },
+        "required": [
+          "phone",
+          "code"
+        ]
+      },
+      "SetSignInConfirmationChannelBody": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SignInConfirmationChannel"
+              }
+            ]
+          }
+        },
+        "required": [
+          "channel"
+        ]
+      },
+      "PlatformRole": {
+        "type": "string",
+        "enum": [
+          "OWNER",
+          "SUPPORT",
+          "MODERATOR",
+          "FINANCE",
+          "LOGISTICS"
+        ],
+        "description": "Roles in the Bluberi team. Empty for buyers and sellers."
+      },
+      "AccessLevel": {
+        "type": "string",
+        "enum": [
+          "none",
+          "view",
+          "full"
+        ]
+      },
+      "PlatformAccess": {
+        "type": "object",
+        "properties": {
+          "overview": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccessLevel"
+              }
+            ]
+          },
+          "sellers": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccessLevel"
+              }
+            ]
+          },
+          "products": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccessLevel"
+              }
+            ]
+          },
+          "dsaNotices": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccessLevel"
+              }
+            ]
+          },
+          "supportTickets": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccessLevel"
+              }
+            ]
+          },
+          "disputesAndReturns": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccessLevel"
+              }
+            ]
+          },
+          "payouts": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccessLevel"
+              }
+            ]
+          },
+          "commissions": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccessLevel"
+              }
+            ]
+          },
+          "logistics": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccessLevel"
+              }
+            ]
+          },
+          "catalog": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccessLevel"
+              }
+            ]
+          },
+          "marketing": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccessLevel"
+              }
+            ]
+          },
+          "roles": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccessLevel"
+              }
+            ]
+          }
+        },
+        "required": [
+          "overview",
+          "sellers",
+          "products",
+          "dsaNotices",
+          "supportTickets",
+          "disputesAndReturns",
+          "payouts",
+          "commissions",
+          "logistics",
+          "catalog",
+          "marketing",
+          "roles"
+        ]
+      },
+      "SellerMemberRole": {
+        "type": "string",
+        "enum": [
+          "OWNER",
+          "STAFF"
+        ]
+      },
+      "SellerMembershipView": {
+        "type": "object",
+        "properties": {
+          "sellerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "role": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SellerMemberRole"
+              }
+            ]
+          }
+        },
+        "required": [
+          "sellerId",
+          "role"
+        ]
+      },
+      "CurrentUser": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "locale": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Locale"
+              }
+            ]
+          },
+          "emailVerified": {
+            "type": "boolean"
+          },
+          "phoneVerified": {
+            "type": "boolean"
+          },
+          "hasPassword": {
+            "type": "boolean",
+            "description": "False while the user signs in only with one-time codes."
+          },
+          "signInConfirmationChannel": {
+            "description": "Where the code of the second step of a sign-in with a password goes.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SignInConfirmationChannel"
+              }
+            ]
+          },
+          "platformRoles": {
+            "type": "array",
+            "description": "Roles in the Bluberi team. Empty for buyers and sellers.",
+            "items": {
+              "$ref": "#/components/schemas/PlatformRole"
+            }
+          },
+          "platformAccess": {
+            "description": "What the platform roles allow in each section of the admin.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PlatformAccess"
+              }
+            ]
+          },
+          "sellerMemberships": {
+            "description": "Sellers the user works for.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SellerMembershipView"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "phone",
+          "firstName",
+          "lastName",
+          "locale",
+          "emailVerified",
+          "phoneVerified",
+          "hasPassword",
+          "signInConfirmationChannel",
+          "platformRoles",
+          "platformAccess",
+          "sellerMemberships"
+        ]
+      },
+      "Subcategory": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "slug": {
+            "type": "string",
+            "example": "zeny-saty"
+          },
+          "name": {
+            "type": "string",
+            "example": "Šaty"
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "name"
+        ]
+      },
+      "CategorySection": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "slug": {
+            "type": "string",
+            "example": "zeny"
+          },
+          "name": {
+            "type": "string",
+            "example": "Ženy"
+          },
+          "subcategories": {
+            "description": "In the order of the catalog.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Subcategory"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "subcategories"
+        ]
+      },
+      "SellerLegalForm": {
+        "type": "string",
+        "enum": [
+          "COMPANY",
+          "SOLE_TRADER"
+        ]
+      },
+      "CompanyAddress": {
+        "type": "object",
+        "properties": {
+          "street": {
+            "type": "string",
+            "example": "Korunní 2569/108"
+          },
+          "city": {
+            "type": "string",
+            "example": "Praha 10"
+          },
+          "postalCode": {
+            "type": "string",
+            "example": "10100"
+          },
+          "countryCode": {
+            "type": "string",
+            "example": "CZ",
+            "description": "ISO 3166-1 alpha-2."
+          }
+        },
+        "required": [
+          "street",
+          "city",
+          "postalCode",
+          "countryCode"
+        ]
+      },
+      "Company": {
+        "type": "object",
+        "properties": {
+          "ico": {
+            "type": "string",
+            "example": "27082440",
+            "description": "The company number (IČO)."
+          },
+          "legalName": {
+            "type": "string",
+            "example": "Studio Lila s.r.o."
+          },
+          "legalForm": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SellerLegalForm"
+              }
+            ]
+          },
+          "vatNumber": {
+            "type": "string",
+            "nullable": true,
+            "example": "CZ27082440",
+            "description": "The tax number (DIČ). Null when the register has none."
+          },
+          "isVatPayer": {
+            "type": "boolean",
+            "description": "The register lists the company as a payer of VAT."
+          },
+          "address": {
+            "description": "The registered address.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CompanyAddress"
+              }
+            ]
+          }
+        },
+        "required": [
+          "ico",
+          "legalName",
+          "legalForm",
+          "vatNumber",
+          "isVatPayer",
+          "address"
+        ]
+      },
+      "HealthStatus": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok"
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "ImageCopy": {
+        "type": "object",
+        "properties": {
+          "width": {
+            "type": "integer"
+          },
+          "height": {
+            "type": "integer"
+          },
+          "url": {
+            "type": "string",
+            "description": "The address of the file. It is WebP and never changes."
+          }
+        },
+        "required": [
+          "width",
+          "height",
+          "url"
+        ]
+      },
+      "UploadedImage": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "width": {
+            "type": "integer",
+            "description": "Width of the largest copy in pixels."
+          },
+          "height": {
+            "type": "integer",
+            "description": "Height of the largest copy in pixels."
+          },
+          "copies": {
+            "description": "The stored copies, smallest first.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImageCopy"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "width",
+          "height",
+          "copies"
+        ]
+      },
+      "SellerTeamMember": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SellerMemberRole"
+              }
+            ]
+          }
+        },
+        "required": [
+          "userId",
+          "email",
+          "firstName",
+          "lastName",
+          "role"
+        ]
+      },
+      "AddSellerStaffBody": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "petr@studiolila.cz",
+            "description": "The person must already have an account."
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "SellerConversationTopic": {
+        "type": "string",
+        "enum": [
+          "REGISTRATION",
+          "GENERAL"
+        ],
+        "description": "REGISTRATION: the one conversation about the registration, where the decisions of the team go. GENERAL: a conversation one side opened under a subject."
+      },
+      "SellerMessageSide": {
+        "type": "string",
+        "enum": [
+          "TEAM",
+          "SELLER"
+        ]
+      },
+      "SellerMessageKind": {
+        "type": "string",
+        "enum": [
+          "TEXT",
+          "DOCUMENTS_REQUESTED",
+          "APPROVED",
+          "REJECTED"
+        ]
+      },
+      "MessagePreview": {
+        "type": "object",
+        "properties": {
+          "side": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SellerMessageSide"
+              }
+            ]
+          },
+          "kind": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SellerMessageKind"
+              }
+            ]
+          },
+          "body": {
+            "type": "string",
+            "description": "The start of the text."
+          }
+        },
+        "required": [
+          "side",
+          "kind",
+          "body"
+        ]
+      },
+      "ConversationRow": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "topic": {
+            "description": "REGISTRATION: the one conversation about the registration, where the decisions of the team go. GENERAL: a conversation one side opened under a subject.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SellerConversationTopic"
+              }
+            ]
+          },
+          "subject": {
+            "type": "string",
+            "description": "Empty for the registration: the apps name that conversation."
+          },
+          "lastMessageAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "lastMessage": {
+            "$ref": "#/components/schemas/MessagePreview"
+          },
+          "unreadCount": {
+            "type": "integer",
+            "description": "How many messages of the other side the reader has not opened yet."
+          }
+        },
+        "required": [
+          "id",
+          "topic",
+          "subject",
+          "lastMessageAt",
+          "lastMessage",
+          "unreadCount"
+        ]
+      },
+      "ConversationsPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "description": "The one written in last comes first.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConversationRow"
+            }
+          },
+          "nextCursor": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      },
+      "UnreadMessages": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "How many messages of the other side nobody has opened yet."
+          }
+        },
+        "required": [
+          "count"
+        ]
+      },
+      "OpenConversationBody": {
+        "type": "object",
+        "properties": {
+          "body": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000,
+            "example": "Dobrý den, výpis posílám."
+          },
+          "subject": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120,
+            "example": "Dotaz ke kategoriím"
+          }
+        },
+        "required": [
+          "body",
+          "subject"
+        ]
+      },
+      "OpenedConversation": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "SellerMessageView": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "side": {
+            "description": "TEAM: the Bluberi team wrote it. SELLER: a person of the seller did.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SellerMessageSide"
+              }
+            ]
+          },
+          "kind": {
+            "description": "TEXT: a message one side wrote. The others are decisions of the team about the registration: DOCUMENTS_REQUESTED and REJECTED come with a text, APPROVED with none.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SellerMessageKind"
+              }
+            ]
+          },
+          "body": {
+            "type": "string",
+            "description": "Empty only for an approval."
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "readAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "When the other side opened the conversation with this message in it."
+          }
+        },
+        "required": [
+          "id",
+          "side",
+          "kind",
+          "body",
+          "createdAt",
+          "readAt"
+        ]
+      },
+      "ConversationThread": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "topic": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SellerConversationTopic"
+              }
+            ]
+          },
+          "subject": {
+            "type": "string"
+          },
+          "open": {
+            "type": "boolean",
+            "description": "The two sides can write now: the seller has the portal."
+          },
+          "messages": {
+            "description": "Newest first.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SellerMessageView"
+            }
+          },
+          "nextCursor": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "description": "Send it as the cursor to read older messages. Null when there are none."
+          }
+        },
+        "required": [
+          "id",
+          "topic",
+          "subject",
+          "open",
+          "messages",
+          "nextCursor"
+        ]
+      },
+      "SendMessageBody": {
+        "type": "object",
+        "properties": {
+          "body": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000,
+            "example": "Dobrý den, výpis posílám."
+          }
+        },
+        "required": [
+          "body"
+        ]
+      },
+      "ConversationSeller": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "legalName": {
+            "type": "string",
+            "example": "Studio Lila s.r.o."
+          },
+          "storeName": {
+            "type": "string",
+            "nullable": true,
+            "example": "Studio Lila"
+          }
+        },
+        "required": [
+          "id",
+          "legalName",
+          "storeName"
+        ]
+      },
+      "TeamConversationRow": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "topic": {
+            "description": "REGISTRATION: the one conversation about the registration, where the decisions of the team go. GENERAL: a conversation one side opened under a subject.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SellerConversationTopic"
+              }
+            ]
+          },
+          "subject": {
+            "type": "string",
+            "description": "Empty for the registration: the apps name that conversation."
+          },
+          "lastMessageAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "lastMessage": {
+            "$ref": "#/components/schemas/MessagePreview"
+          },
+          "unreadCount": {
+            "type": "integer",
+            "description": "How many messages of the other side the reader has not opened yet."
+          },
+          "seller": {
+            "$ref": "#/components/schemas/ConversationSeller"
+          }
+        },
+        "required": [
+          "id",
+          "topic",
+          "subject",
+          "lastMessageAt",
+          "lastMessage",
+          "unreadCount",
+          "seller"
+        ]
+      },
+      "TeamConversationsPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "description": "The one written in last comes first.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeamConversationRow"
+            }
+          },
+          "nextCursor": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      },
+      "TeamSellerMessageView": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "side": {
+            "description": "TEAM: the Bluberi team wrote it. SELLER: a person of the seller did.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SellerMessageSide"
+              }
+            ]
+          },
+          "kind": {
+            "description": "TEXT: a message one side wrote. The others are decisions of the team about the registration: DOCUMENTS_REQUESTED and REJECTED come with a text, APPROVED with none.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SellerMessageKind"
+              }
+            ]
+          },
+          "body": {
+            "type": "string",
+            "description": "Empty only for an approval."
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "readAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "When the other side opened the conversation with this message in it."
+          },
+          "authorEmail": {
+            "type": "string",
+            "description": "The email of the person who wrote the message."
+          }
+        },
+        "required": [
+          "id",
+          "side",
+          "kind",
+          "body",
+          "createdAt",
+          "readAt",
+          "authorEmail"
+        ]
+      },
+      "TeamConversationThread": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "topic": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SellerConversationTopic"
+              }
+            ]
+          },
+          "subject": {
+            "type": "string"
+          },
+          "open": {
+            "type": "boolean",
+            "description": "The two sides can write now: the seller has the portal."
+          },
+          "seller": {
+            "$ref": "#/components/schemas/ConversationSeller"
+          },
+          "messages": {
+            "description": "Newest first.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeamSellerMessageView"
+            }
+          },
+          "nextCursor": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "topic",
+          "subject",
+          "open",
+          "seller",
+          "messages",
+          "nextCursor"
+        ]
+      },
+      "SellerStatus": {
+        "type": "string",
+        "enum": [
+          "DRAFT",
+          "PENDING_REVIEW",
+          "DOCUMENTS_REQUESTED",
+          "APPROVED",
+          "REJECTED",
+          "SUSPENDED"
+        ]
+      },
+      "CompanyCheck": {
+        "type": "string",
+        "enum": [
+          "COMPANY_REGISTER",
+          "VAT_REGISTER",
+          "DOCUMENTS"
+        ]
+      },
+      "SoldSection": {
+        "type": "object",
+        "properties": {
+          "section": {
+            "type": "string",
+            "example": "Kosmetika"
+          },
+          "subcategories": {
+            "example": [
+              "Péče o pleť",
+              "Vlasy"
+            ],
+            "description": "The subcategories the store chose. Empty when it sells the whole section.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "section",
+          "subcategories"
+        ]
+      },
+      "PayoutAccountStatus": {
+        "type": "string",
+        "enum": [
+          "INCOMPLETE",
+          "PENDING",
+          "VERIFIED"
+        ],
+        "description": "Null until the seller chooses how to be paid."
+      },
+      "ModeratedSellerRow": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "legalName": {
+            "type": "string",
+            "example": "Studio Lila s.r.o."
+          },
+          "countryCode": {
+            "type": "string",
+            "example": "CZ",
+            "description": "ISO 3166-1 alpha-2."
+          },
+          "registrationNumber": {
+            "type": "string",
+            "example": "27082440"
+          },
+          "status": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SellerStatus"
+              }
+            ]
+          },
+          "companyCheck": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CompanyCheck"
+              }
+            ]
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "submittedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "When the registration was last sent for a check. Null for a draft."
+          },
+          "storeName": {
+            "type": "string",
+            "nullable": true,
+            "example": "Studio Lila"
+          },
+          "logoUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "The smallest copy of the logo."
+          },
+          "categories": {
+            "description": "What the store sells, section by section.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SoldSection"
+            }
+          },
+          "documentsCount": {
+            "type": "integer"
+          },
+          "unreadConversations": {
+            "type": "integer",
+            "description": "In how many conversations the seller wrote something nobody of the team has opened yet."
+          },
+          "payoutStatus": {
+            "nullable": true,
+            "description": "Null until the seller chooses how to be paid.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PayoutAccountStatus"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "legalName",
+          "countryCode",
+          "registrationNumber",
+          "status",
+          "companyCheck",
+          "createdAt",
+          "submittedAt",
+          "storeName",
+          "logoUrl",
+          "categories",
+          "documentsCount",
+          "unreadConversations",
+          "payoutStatus"
+        ]
+      },
+      "ModeratedSellersPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ModeratedSellerRow"
+            }
+          },
+          "nextCursor": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      },
+      "SellerCounts": {
+        "type": "object",
+        "properties": {
+          "DRAFT": {
+            "type": "integer"
+          },
+          "PENDING_REVIEW": {
+            "type": "integer"
+          },
+          "DOCUMENTS_REQUESTED": {
+            "type": "integer"
+          },
+          "APPROVED": {
+            "type": "integer"
+          },
+          "REJECTED": {
+            "type": "integer"
+          },
+          "SUSPENDED": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "DRAFT",
+          "PENDING_REVIEW",
+          "DOCUMENTS_REQUESTED",
+          "APPROVED",
+          "REJECTED",
+          "SUSPENDED"
+        ]
+      },
+      "ModeratedCompany": {
+        "type": "object",
+        "properties": {
+          "countryCode": {
+            "type": "string",
+            "example": "CZ",
+            "description": "The country of registration, ISO 3166-1 alpha-2."
+          },
+          "registrationNumber": {
+            "type": "string",
+            "example": "27082440"
+          },
+          "legalName": {
+            "type": "string",
+            "example": "Studio Lila s.r.o."
+          },
+          "legalForm": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SellerLegalForm"
+              }
+            ]
+          },
+          "vatNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "isVatPayer": {
+            "type": "boolean"
+          },
+          "check": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CompanyCheck"
+              }
+            ]
+          },
+          "address": {
+            "description": "The registered address.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CompanyAddress"
+              }
+            ]
+          }
+        },
+        "required": [
+          "countryCode",
+          "registrationNumber",
+          "legalName",
+          "legalForm",
+          "vatNumber",
+          "isVatPayer",
+          "check",
+          "address"
+        ]
+      },
+      "PayoutMethod": {
+        "type": "string",
+        "enum": [
+          "STRIPE",
+          "BANK"
+        ],
+        "description": "STRIPE: the seller has an account at Stripe. BANK: the seller gave a bank account and has no Stripe account."
+      },
+      "Currency": {
+        "type": "string",
+        "enum": [
+          "CZK",
+          "EUR"
+        ],
+        "description": "The currency the account is held in."
+      },
+      "PayoutBankAccount": {
+        "type": "object",
+        "properties": {
+          "holderName": {
+            "type": "string",
+            "example": "Studio Lila s.r.o.",
+            "description": "The name the account is held under."
+          },
+          "country": {
+            "type": "string",
+            "example": "CZ",
+            "description": "The country of the IBAN, ISO 3166-1 alpha-2."
+          },
+          "last4": {
+            "type": "string",
+            "example": "5399",
+            "description": "The last four characters of the IBAN. The whole number is kept by the provider."
+          },
+          "currency": {
+            "description": "The currency the account is held in.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Currency"
+              }
+            ]
+          }
+        },
+        "required": [
+          "holderName",
+          "country",
+          "last4",
+          "currency"
+        ]
+      },
+      "PayoutAccount": {
+        "type": "object",
+        "properties": {
+          "method": {
+            "description": "STRIPE: the seller has an account at Stripe. BANK: the seller gave a bank account and has no Stripe account.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PayoutMethod"
+              }
+            ]
+          },
+          "status": {
+            "description": "INCOMPLETE until the seller finishes the form of the provider, PENDING while the provider checks, VERIFIED after.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PayoutAccountStatus"
+              }
+            ]
+          },
+          "bankAccount": {
+            "nullable": true,
+            "description": "Only with the method BANK, once the seller gave the account.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PayoutBankAccount"
+              }
+            ]
+          }
+        },
+        "required": [
+          "method",
+          "status",
+          "bankAccount"
+        ]
+      },
+      "ModeratedStore": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Studio Lila"
+          },
+          "slug": {
+            "type": "string",
+            "example": "studio-lila"
+          },
+          "logoUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "categories": {
+            "description": "What the store sells, section by section.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SoldSection"
+            }
+          },
+          "returnAddress": {
+            "description": "Where buyers send goods back.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CompanyAddress"
+              }
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "slug",
+          "logoUrl",
+          "categories",
+          "returnAddress"
+        ]
+      },
+      "SellerDocumentKind": {
+        "type": "string",
+        "enum": [
+          "IDENTITY_DOCUMENT",
+          "REGISTER_EXTRACT",
+          "OTHER"
+        ]
+      },
+      "SellerDocumentInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "kind": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SellerDocumentKind"
+              }
+            ]
+          },
+          "fileName": {
+            "type": "string",
+            "example": "Výpis z rejstříku.pdf"
+          },
+          "contentType": {
+            "type": "string",
+            "example": "application/pdf",
+            "description": "A PDF, a JPEG or a PNG."
+          },
+          "sizeBytes": {
+            "type": "integer",
+            "example": 184320
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "fileName",
+          "contentType",
+          "sizeBytes",
+          "createdAt"
+        ]
+      },
+      "SellerTraceability": {
+        "type": "object",
+        "properties": {
+          "contacts": {
+            "type": "boolean",
+            "description": "The name, the phone and the email of the trader."
+          },
+          "address": {
+            "type": "boolean"
+          },
+          "identityDocument": {
+            "type": "boolean",
+            "description": "A copy of an identity document."
+          },
+          "paymentAccount": {
+            "type": "boolean",
+            "description": "The payment account, which the payment provider keeps."
+          },
+          "registrationNumber": {
+            "type": "boolean",
+            "description": "The number in a business register."
+          },
+          "selfCertification": {
+            "type": "boolean",
+            "description": "The promise to offer only goods that comply with the law of the EU."
+          }
+        },
+        "required": [
+          "contacts",
+          "address",
+          "identityDocument",
+          "paymentAccount",
+          "registrationNumber",
+          "selfCertification"
+        ]
+      },
+      "SellerHistoryEntry": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "action": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AuditAction"
+              }
+            ]
+          },
+          "actorEmail": {
+            "type": "string",
+            "nullable": true,
+            "description": "Who did it."
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true,
+            "description": "What the seller was told, for a decision."
+          }
+        },
+        "required": [
+          "id",
+          "action",
+          "actorEmail",
+          "createdAt",
+          "message"
+        ]
+      },
+      "ModeratedSeller": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SellerStatus"
+              }
+            ]
+          },
+          "reviewMessage": {
+            "type": "string",
+            "nullable": true,
+            "description": "What the team told the seller last."
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "submittedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "reviewedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "reviewedByEmail": {
+            "type": "string",
+            "nullable": true,
+            "description": "Who made the last decision."
+          },
+          "company": {
+            "$ref": "#/components/schemas/ModeratedCompany"
+          },
+          "contactEmail": {
+            "type": "string"
+          },
+          "contactPhone": {
+            "type": "string"
+          },
+          "termsAcceptedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "selfCertifiedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "payoutAccount": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PayoutAccount"
+              }
+            ]
+          },
+          "store": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ModeratedStore"
+              }
+            ]
+          },
+          "documents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SellerDocumentInfo"
+            }
+          },
+          "requiredDocuments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SellerDocumentKind"
+            }
+          },
+          "traceability": {
+            "$ref": "#/components/schemas/SellerTraceability"
+          },
+          "history": {
+            "description": "What happened to the seller, newest first.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SellerHistoryEntry"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "reviewMessage",
+          "createdAt",
+          "submittedAt",
+          "reviewedAt",
+          "reviewedByEmail",
+          "company",
+          "contactEmail",
+          "contactPhone",
+          "termsAcceptedAt",
+          "selfCertifiedAt",
+          "payoutAccount",
+          "store",
+          "documents",
+          "requiredDocuments",
+          "traceability",
+          "history"
+        ]
+      },
+      "RegisterCheckResult": {
+        "type": "string",
+        "enum": [
+          "MATCHES",
+          "DIFFERS",
+          "NOT_FOUND",
+          "UNAVAILABLE",
+          "NOT_CHECKED"
+        ],
+        "description": "MATCHES: the register says what the seller has. DIFFERS: something changed since the registration. NOT_FOUND: the register has no such company or number now. UNAVAILABLE: the register does not answer. NOT_CHECKED: no register can be asked about this seller."
+      },
+      "RegisterDifference": {
+        "type": "string",
+        "enum": [
+          "legalName",
+          "legalForm",
+          "vatNumber",
+          "address",
+          "closed"
+        ]
+      },
+      "TradeKind": {
+        "type": "string",
+        "enum": [
+          "FREE",
+          "CRAFT",
+          "PROFESSIONAL",
+          "CONCESSION"
+        ],
+        "description": "FREE: anybody can announce it. CRAFT and PROFESSIONAL need a qualification. CONCESSION is granted by the state."
+      },
+      "RegisterTrade": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Výroba, obchod a služby neuvedené v přílohách 1 až 3 živnostenského zákona"
+          },
+          "kind": {
+            "description": "FREE: anybody can announce it. CRAFT and PROFESSIONAL need a qualification. CONCESSION is granted by the state.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TradeKind"
+              }
+            ]
+          },
+          "since": {
+            "type": "string",
+            "format": "date",
+            "example": "2003-08-26"
+          },
+          "fields": {
+            "example": [
+              "Velkoobchod a maloobchod"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "kind",
+          "since",
+          "fields"
+        ]
+      },
+      "SellerRegisterCheck": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "description": "MATCHES: the register says what the seller has. DIFFERS: something changed since the registration. NOT_FOUND: the register has no such company or number now. UNAVAILABLE: the register does not answer. NOT_CHECKED: no register can be asked about this seller.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RegisterCheckResult"
+              }
+            ]
+          },
+          "differences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RegisterDifference"
+            }
+          },
+          "registerName": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name the register has now."
+          },
+          "registerAddress": {
+            "type": "string",
+            "nullable": true,
+            "description": "The address the register has now, in one line."
+          },
+          "trades": {
+            "nullable": true,
+            "description": "The trade licences a Czech company holds now. Null when the trade register has no record of it, does not answer, or the company is not Czech.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RegisterTrade"
+            }
+          },
+          "retailTrade": {
+            "type": "boolean",
+            "nullable": true,
+            "description": "The trade licences let the company sell goods to buyers. Null when the licences are not known."
+          }
+        },
+        "required": [
+          "result",
+          "differences",
+          "registerName",
+          "registerAddress",
+          "trades",
+          "retailTrade"
+        ]
+      },
+      "DecisionBody": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 2000,
+            "example": "Pošlete prosím výpis z obchodního rejstříku, ne starší než tři měsíce.",
+            "description": "What the seller is told: which documents to send, or why the seller is refused."
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "CheckedVatNumber": {
+        "type": "object",
+        "properties": {
+          "vatNumber": {
+            "type": "string",
+            "example": "PL5252674798",
+            "description": "The number with the letters of its country in front. A Greek number starts with EL."
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "example": "ALLEGRO SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ",
+            "description": "The name the number is registered under. Null when its country does not share names."
+          },
+          "address": {
+            "type": "string",
+            "nullable": true,
+            "example": "WIERZBIĘCICE 1B, 61-569 POZNAŃ",
+            "description": "The address in one line. Null when its country does not share addresses."
+          }
+        },
+        "required": [
+          "vatNumber",
+          "name",
+          "address"
+        ]
+      },
+      "RegistrationAccount": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneVerified": {
+            "type": "boolean"
+          },
+          "hasPassword": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "email",
+          "phone",
+          "phoneVerified",
+          "hasPassword"
+        ]
+      },
+      "RegistrationCompany": {
+        "type": "object",
+        "properties": {
+          "countryCode": {
+            "type": "string",
+            "example": "CZ",
+            "description": "The country the company is registered in, ISO 3166-1 alpha-2."
+          },
+          "registrationNumber": {
+            "type": "string",
+            "example": "27082440",
+            "description": "The number of the company in the business register of its country. In Czechia it is the IČO."
+          },
+          "legalName": {
+            "type": "string",
+            "example": "Studio Lila s.r.o."
+          },
+          "legalForm": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SellerLegalForm"
+              }
+            ]
+          },
+          "vatNumber": {
+            "type": "string",
+            "nullable": true,
+            "description": "The VAT number with the letters of its country. In Czechia it is the DIČ."
+          },
+          "isVatPayer": {
+            "type": "boolean"
+          },
+          "address": {
+            "description": "The registered address.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CompanyAddress"
+              }
+            ]
+          },
+          "check": {
+            "description": "COMPANY_REGISTER: read from the company register of its country. VAT_REGISTER: its VAT number is valid in the register of the EU. DOCUMENTS: no register confirmed it, the team checks its documents.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CompanyCheck"
+              }
+            ]
+          }
+        },
+        "required": [
+          "countryCode",
+          "registrationNumber",
+          "legalName",
+          "legalForm",
+          "vatNumber",
+          "isVatPayer",
+          "address",
+          "check"
+        ]
+      },
+      "RegistrationStoreLogo": {
+        "type": "object",
+        "properties": {
+          "imageId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "url": {
+            "type": "string",
+            "description": "The address of the smallest stored copy of the photo."
+          }
+        },
+        "required": [
+          "imageId",
+          "url"
+        ]
+      },
+      "RegistrationReturnAddress": {
+        "type": "object",
+        "properties": {
+          "street": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "postalCode": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "street",
+          "city",
+          "postalCode"
+        ]
+      },
+      "RegistrationStore": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Studio Lila"
+          },
+          "slug": {
+            "type": "string",
+            "example": "studio-lila",
+            "description": "The address of the store, made from its name."
+          },
+          "logo": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RegistrationStoreLogo"
+              }
+            ]
+          },
+          "categoryIds": {
+            "description": "What the store sells, written the short way: a section in place of all of its subcategories.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "returnAddress": {
+            "nullable": true,
+            "description": "Null when goods come back to the registered address of the company.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RegistrationReturnAddress"
+              }
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "slug",
+          "logo",
+          "categoryIds",
+          "returnAddress"
+        ]
+      },
+      "RegistrationSeller": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "description": "DRAFT until the registration is sent, PENDING_REVIEW while Bluberi checks it, DOCUMENTS_REQUESTED while Bluberi waits for documents, then APPROVED or REJECTED.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SellerStatus"
+              }
+            ]
+          },
+          "reviewMessage": {
+            "type": "string",
+            "nullable": true,
+            "description": "What the team wrote with its last decision: which documents to send, or why the seller was refused."
+          },
+          "company": {
+            "$ref": "#/components/schemas/RegistrationCompany"
+          },
+          "payoutAccount": {
+            "nullable": true,
+            "description": "Null until the seller chooses how to be paid.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PayoutAccount"
+              }
+            ]
+          },
+          "store": {
+            "nullable": true,
+            "description": "Null until the store is set up.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RegistrationStore"
+              }
+            ]
+          },
+          "documents": {
+            "description": "The documents the seller gave, oldest first.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SellerDocumentInfo"
+            }
+          },
+          "requiredDocuments": {
+            "type": "array",
+            "description": "The kinds of documents the registration is sent with. A document of each kind has to be there.",
+            "items": {
+              "$ref": "#/components/schemas/SellerDocumentKind"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "reviewMessage",
+          "company",
+          "payoutAccount",
+          "store",
+          "documents",
+          "requiredDocuments"
+        ]
+      },
+      "SellerRegistration": {
+        "type": "object",
+        "properties": {
+          "account": {
+            "$ref": "#/components/schemas/RegistrationAccount"
+          },
+          "seller": {
+            "nullable": true,
+            "description": "The seller this person owns. Null until the company is registered.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RegistrationSeller"
+              }
+            ]
+          },
+          "portalOpen": {
+            "type": "boolean",
+            "description": "The person works for a seller that is being checked or was approved, so the seller portal is open to them."
+          },
+          "countries": {
+            "example": [
+              "CZ",
+              "PL",
+              "SK"
+            ],
+            "description": "The countries a company of a seller can be registered in, ISO 3166-1 alpha-2. A Czech company is registered by its company number, a company of another country by its VAT number.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "account",
+          "seller",
+          "portalOpen",
+          "countries"
+        ]
+      },
+      "RegisterCompanyBody": {
+        "type": "object",
+        "properties": {
+          "ico": {
+            "type": "string",
+            "example": "27082440",
+            "description": "The company number (IČO). The name, the legal form, the tax number and the address are read from the register."
+          },
+          "isVatPayer": {
+            "type": "boolean",
+            "description": "The seller is a payer of VAT. Needs a tax number in the register."
+          },
+          "termsAccepted": {
+            "type": "boolean",
+            "enum": [
+              true
+            ],
+            "description": "The person agreed to the terms for sellers. Only true is accepted."
+          }
+        },
+        "required": [
+          "ico",
+          "isVatPayer",
+          "termsAccepted"
+        ]
+      },
+      "PostalAddressBody": {
+        "type": "object",
+        "properties": {
+          "street": {
+            "type": "string",
+            "example": "Korunní 2569/108"
+          },
+          "city": {
+            "type": "string",
+            "example": "Praha 10"
+          },
+          "postalCode": {
+            "type": "string",
+            "example": "10100",
+            "description": "Capital letters, digits, spaces and dashes. A Czech code is five digits without a space."
+          }
+        },
+        "required": [
+          "street",
+          "city",
+          "postalCode"
+        ]
+      },
+      "RegisterEuCompanyBody": {
+        "type": "object",
+        "properties": {
+          "countryCode": {
+            "type": "string",
+            "example": "PL",
+            "description": "The EU country the company is registered in, ISO 3166-1 alpha-2: one of the countries of the registration. A Czech company is registered by its company number instead."
+          },
+          "vatNumber": {
+            "type": "string",
+            "nullable": true,
+            "example": "5252674798",
+            "description": "The VAT number without the letters of the country, checked in the register of VAT numbers of the EU. Null for a trader who has none: the team then checks the documents of the seller."
+          },
+          "registrationNumber": {
+            "type": "string",
+            "example": "0000635012",
+            "description": "The number of the company in the business register of its country."
+          },
+          "legalName": {
+            "type": "string",
+            "example": "Allegro sp. z o.o.",
+            "description": "Saved when the register does not share the name of the company. Otherwise the name of the register is saved."
+          },
+          "legalForm": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SellerLegalForm"
+              }
+            ]
+          },
+          "address": {
+            "description": "The registered address of the company, in the country of the company.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PostalAddressBody"
+              }
+            ]
+          },
+          "termsAccepted": {
+            "type": "boolean",
+            "enum": [
+              true
+            ],
+            "description": "The person agreed to the terms for sellers. Only true is accepted."
+          }
+        },
+        "required": [
+          "countryCode",
+          "vatNumber",
+          "registrationNumber",
+          "legalName",
+          "legalForm",
+          "address",
+          "termsAccepted"
+        ]
+      },
+      "ChoosePayoutMethodBody": {
+        "type": "object",
+        "properties": {
+          "method": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PayoutMethod"
+              }
+            ]
+          }
+        },
+        "required": [
+          "method"
+        ]
+      },
+      "SaveBankAccountBody": {
+        "type": "object",
+        "properties": {
+          "iban": {
+            "type": "string",
+            "example": "CZ6508000000192000145399",
+            "description": "Capital letters and digits without spaces, with right check digits."
+          },
+          "holderName": {
+            "type": "string",
+            "example": "Studio Lila s.r.o.",
+            "description": "The name the account is held under."
+          },
+          "currency": {
+            "description": "The currency the account is held in. An account abroad is usually held in euros.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Currency"
+              }
+            ]
+          }
+        },
+        "required": [
+          "iban",
+          "holderName",
+          "currency"
+        ]
+      },
+      "SaveStoreBody": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Studio Lila",
+            "minLength": 2,
+            "description": "The address of the store is made from it, so two stores cannot share a name."
+          },
+          "logoImageId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "description": "A photo this person uploaded. Null for a store without a logo."
+          },
+          "categoryIds": {
+            "minItems": 1,
+            "description": "What the store sells: ids of sections or of subcategories. A section stands for all of its subcategories.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "returnAddress": {
+            "nullable": true,
+            "description": "Where buyers send goods back, in the country of the seller. Null when it is the registered address of the company.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PostalAddressBody"
+              }
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "logoImageId",
+          "categoryIds",
+          "returnAddress"
+        ]
+      },
+      "SubmitBody": {
+        "type": "object",
+        "properties": {
+          "selfCertified": {
+            "type": "boolean",
+            "enum": [
+              true
+            ],
+            "description": "The owner promises to offer only goods that comply with the law of the EU. Only true is accepted."
+          }
+        },
+        "required": [
+          "selfCertified"
+        ]
+      },
+      "TeamMember": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlatformRole"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "firstName",
+          "lastName",
+          "roles"
+        ]
+      },
+      "GrantTeamRoleBody": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "maria@bluberi.cz",
+            "description": "The person must already have an account."
+          },
+          "role": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PlatformRole"
+              }
+            ]
+          }
+        },
+        "required": [
+          "email",
+          "role"
+        ]
+      },
+      "SubscribeBody": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "jana@example.cz"
+          },
+          "locale": {
+            "description": "The language of the page. The news is written in it.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Locale"
+              }
+            ]
+          },
+          "consent": {
+            "type": "boolean",
+            "enum": [
+              true
+            ],
+            "description": "The person agreed to get news by email. Only true is accepted."
+          }
+        },
+        "required": [
+          "email",
+          "locale",
+          "consent"
+        ]
+      },
+      "UnsubscribeBody": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "jana@example.cz"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "NewsletterSubscriptionView": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string"
+          },
+          "locale": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Locale"
+              }
+            ]
+          },
+          "consentedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the person agreed."
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "locale",
+          "consentedAt"
+        ]
+      },
+      "NewsletterPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "description": "Newest first.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NewsletterSubscriptionView"
+            }
+          },
+          "nextCursor": {
+            "type": "string",
+            "nullable": true,
+            "description": "Send it as the cursor to get the next page. Null on the last page."
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "accessToken": []
+    }
+  ]
+}

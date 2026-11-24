@@ -1,0 +1,119 @@
+enum ReturnReason {
+  SIZE
+  NOT_AS_DESCRIBED
+  DAMAGED
+  WRONG_ITEM
+  CHANGED_MIND
+  OTHER
+
+  @@map("return_reason")
+}
+
+enum ReturnStatus {
+  REQUESTED
+  APPROVED
+  IN_TRANSIT
+  RECEIVED
+  REFUNDED
+  REJECTED
+  CANCELLED
+
+  @@map("return_status")
+}
+
+enum ReturnShippingPayer {
+  BUYER
+  SELLER
+  PLATFORM
+
+  @@map("return_shipping_payer")
+}
+
+enum WarrantyClaimStatus {
+  SUBMITTED
+  IN_REVIEW
+  RESOLVED
+  REJECTED
+
+  @@map("warranty_claim_status")
+}
+
+enum WarrantyClaimResolution {
+  REPAIR
+  REPLACEMENT
+  REFUND
+  DISCOUNT
+
+  @@map("warranty_claim_resolution")
+}
+
+/// A buyer sends goods back within 14 days of delivery.
+model ReturnRequest {
+  id             String              @id @default(uuid(7)) @db.Uuid
+  /// The number the buyer and the seller see.
+  number         String              @unique
+  shipmentId     String              @map("shipment_id") @db.Uuid
+  buyerId        String              @map("buyer_id") @db.Uuid
+  status         ReturnStatus        @default(REQUESTED)
+  reason         ReturnReason
+  comment        String?
+  /// Who pays for sending the goods back. It follows from the reason.
+  shippingPaidBy ReturnShippingPayer @map("shipping_paid_by")
+  receivedAt     DateTime?           @map("received_at") @db.Timestamptz(3)
+  resolvedAt     DateTime?           @map("resolved_at") @db.Timestamptz(3)
+  createdAt      DateTime            @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt      DateTime            @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  shipment Shipment     @relation(fields: [shipmentId], references: [id], onDelete: Restrict)
+  buyer    User         @relation(fields: [buyerId], references: [id], onDelete: Restrict)
+  items    ReturnItem[]
+  refunds  Refund[]
+
+  @@index([shipmentId])
+  @@index([buyerId])
+  @@index([status])
+  @@map("return_requests")
+}
+
+/// Which order items are returned and how many pieces of each.
+model ReturnItem {
+  returnRequestId String @map("return_request_id") @db.Uuid
+  orderItemId     String @map("order_item_id") @db.Uuid
+  quantity        Int
+
+  returnRequest ReturnRequest @relation(fields: [returnRequestId], references: [id], onDelete: Cascade)
+  orderItem     OrderItem     @relation(fields: [orderItemId], references: [id], onDelete: Restrict)
+
+  @@id([returnRequestId, orderItemId])
+  @@index([orderItemId])
+  @@map("return_items")
+}
+
+/// A claim about a defect (reklamace). The seller is liable for 24 months and must answer within 30 days.
+model WarrantyClaim {
+  id                  String                   @id @default(uuid(7)) @db.Uuid
+  /// The number the buyer and the seller see.
+  number              String                   @unique
+  orderItemId         String                   @map("order_item_id") @db.Uuid
+  buyerId             String                   @map("buyer_id") @db.Uuid
+  status              WarrantyClaimStatus      @default(SUBMITTED)
+  description         String
+  /// What the buyer asks for.
+  requestedResolution WarrantyClaimResolution? @map("requested_resolution")
+  /// What was decided. Null while the claim is open or when it was rejected.
+  resolution          WarrantyClaimResolution?
+  /// The legal deadline for the answer: 30 days after the claim was submitted.
+  dueAt               DateTime                 @map("due_at") @db.Timestamptz(3)
+  resolvedAt          DateTime?                @map("resolved_at") @db.Timestamptz(3)
+  createdAt           DateTime                 @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt           DateTime                 @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  orderItem OrderItem @relation(fields: [orderItemId], references: [id], onDelete: Restrict)
+  buyer     User      @relation(fields: [buyerId], references: [id], onDelete: Restrict)
+  refunds   Refund[]
+
+  @@index([orderItemId])
+  @@index([buyerId])
+  @@index([status, dueAt])
+  @@map("warranty_claims")
+}

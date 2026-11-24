@@ -1,0 +1,23 @@
+{
+  "name": "@bluberi/i18n",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    "./admin": "./src/admin.ts",
+    "./locales": "./src/locales.ts",
+    "./messages/notifications/*.json": "./src/messages/notifications/*.json",
+    "./operator": "./src/operator.ts",
+    "./seller": "./src/seller.ts",
+    "./store": "./src/store.ts"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@bluberi/config": "workspace:*",
+    "eslint": "catalog:",
+    "typescript": "catalog:"
+  }
+}

@@ -1,0 +1,73 @@
+// Conventions for every model:
+// - ids are UUID v7, so new rows sort by creation time;
+// - tables and columns are snake_case in the database, models and fields are camelCase here;
+// - money is an integer amount in minor units (haléře, cents) next to its currency;
+// - timestamps are stored with a time zone.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// ISO 4217 currency codes.
+enum Currency {
+  CZK
+  EUR
+
+  @@map("currency")
+}
+
+/// Languages of the store, the seller portal, catalog texts, emails and SMS.
+enum Locale {
+  cs
+  en
+
+  @@map("locale")
+}
+
+/// A country where Bluberi sells. Offers and orders belong to one market.
+model Market {
+  id            String   @id @default(uuid(7)) @db.Uuid
+  /// ISO 3166-1 alpha-2 country code, for example CZ.
+  countryCode   String   @unique @map("country_code") @db.Char(2)
+  currency      Currency
+  defaultLocale Locale   @map("default_locale")
+  isActive      Boolean  @default(false) @map("is_active")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  offers Offer[]
+  orders Order[]
+
+  @@map("markets")
+}
+
+/// A postal address. Rows used by an order are copies and are never edited.
+model Address {
+  id            String   @id @default(uuid(7)) @db.Uuid
+  /// Set for addresses in a buyer's address book. Null for sellers, stock locations and shipments.
+  userId        String?  @map("user_id") @db.Uuid
+  recipientName String?  @map("recipient_name")
+  phone         String?
+  street        String
+  city          String
+  postalCode    String   @map("postal_code")
+  /// ISO 3166-1 alpha-2 country code.
+  countryCode   String   @map("country_code") @db.Char(2)
+  note          String?
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  user           User?           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sellers        Seller[]
+  stores         Store[]
+  stockLocations StockLocation[]
+  shipments      Shipment[]
+
+  @@index([userId])
+  @@map("addresses")
+}

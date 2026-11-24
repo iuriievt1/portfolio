@@ -1,0 +1,79 @@
+enum PaymentProvider {
+  STRIPE
+
+  @@map("payment_provider")
+}
+
+enum PaymentMethod {
+  CARD
+  APPLE_PAY
+  GOOGLE_PAY
+
+  @@map("payment_method")
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+  CANCELLED
+
+  @@map("payment_status")
+}
+
+enum RefundStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+
+  @@map("refund_status")
+}
+
+/// One attempt of a buyer to pay for an order.
+model Payment {
+  id                String          @id @default(uuid(7)) @db.Uuid
+  orderId           String          @map("order_id") @db.Uuid
+  provider          PaymentProvider
+  /// The payment's id at the provider, for example a Stripe PaymentIntent.
+  providerPaymentId String?         @map("provider_payment_id")
+  method            PaymentMethod?
+  status            PaymentStatus   @default(PENDING)
+  amount            BigInt
+  currency          Currency
+  paidAt            DateTime?       @map("paid_at") @db.Timestamptz(3)
+  createdAt         DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt         DateTime        @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  order              Order               @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  refunds            Refund[]
+  ledgerTransactions LedgerTransaction[]
+
+  @@unique([provider, providerPaymentId])
+  @@index([orderId])
+  @@map("payments")
+}
+
+/// Money sent back to the buyer, for a return or a warranty claim.
+model Refund {
+  id               String       @id @default(uuid(7)) @db.Uuid
+  paymentId        String       @map("payment_id") @db.Uuid
+  /// The refund's id at the provider.
+  providerRefundId String?      @unique @map("provider_refund_id")
+  status           RefundStatus @default(PENDING)
+  amount           BigInt
+  currency         Currency
+  returnRequestId  String?      @map("return_request_id") @db.Uuid
+  warrantyClaimId  String?      @map("warranty_claim_id") @db.Uuid
+  createdAt        DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  payment            Payment             @relation(fields: [paymentId], references: [id], onDelete: Restrict)
+  returnRequest      ReturnRequest?      @relation(fields: [returnRequestId], references: [id], onDelete: Restrict)
+  warrantyClaim      WarrantyClaim?      @relation(fields: [warrantyClaimId], references: [id], onDelete: Restrict)
+  ledgerTransactions LedgerTransaction[]
+
+  @@index([paymentId])
+  @@index([returnRequestId])
+  @@index([warrantyClaimId])
+  @@map("refunds")
+}

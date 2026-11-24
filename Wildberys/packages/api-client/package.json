@@ -1,0 +1,21 @@
+{
+  "name": "@bluberi/api-client",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/generated/index.ts",
+    "./client": "./src/generated/client/index.ts"
+  },
+  "scripts": {
+    "generate": "openapi-ts",
+    "lint": "eslint . --max-warnings 0",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@bluberi/config": "workspace:*",
+    "@hey-api/openapi-ts": "0.99.0",
+    "eslint": "catalog:",
+    "typescript": "catalog:"
+  }
+}

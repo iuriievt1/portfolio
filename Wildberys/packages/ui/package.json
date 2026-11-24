@@ -1,0 +1,34 @@
+{
+  "name": "@bluberi/ui",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./brand-mark": "./src/brand-mark.ts",
+    "./components/*": "./src/components/*.tsx",
+    "./fonts": "./src/fonts.ts",
+    "./inbox-paging": "./src/inbox-paging.ts",
+    "./tab-store": "./src/tab-store.ts",
+    "./theme.css": "./src/theme.css",
+    "./web.css": "./src/web.css"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "lucide-react": "catalog:"
+  },
+  "devDependencies": {
+    "@bluberi/config": "workspace:*",
+    "@types/react": "catalog:",
+    "eslint": "catalog:",
+    "next": "catalog:",
+    "react": "catalog:",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "next": "catalog:",
+    "react": "catalog:",
+    "tailwindcss": "catalog:"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "extends": "@bluberi/config/typescript/nest.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": ["src", "test", "prisma.config.ts", "vitest.config.ts"]
+}

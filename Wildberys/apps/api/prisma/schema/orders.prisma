@@ -1,0 +1,142 @@
+enum OrderStatus {
+  PENDING_PAYMENT
+  PAID
+  COMPLETED
+  CANCELLED
+
+  @@map("order_status")
+}
+
+enum ShipmentStatus {
+  /// Waiting for the seller to confirm.
+  PENDING
+  CONFIRMED
+  PACKED
+  HANDED_OVER
+  IN_TRANSIT
+  READY_FOR_PICKUP
+  DELIVERED
+  CANCELLED
+
+  @@map("shipment_status")
+}
+
+enum Carrier {
+  ZASILKOVNA
+  WOLT_DRIVE
+  LIFTAGO
+
+  @@map("carrier")
+}
+
+enum DeliveryMethod {
+  /// Within one to two hours.
+  EXPRESS
+  SAME_DAY
+  HOME
+  PICKUP_POINT
+  PARCEL_BOX
+
+  @@map("delivery_method")
+}
+
+/// What a buyer bought in one checkout. It is split into shipments, one per store.
+model Order {
+  id             String      @id @default(uuid(7)) @db.Uuid
+  /// The number the buyer sees, for example BB-240117.
+  number         String      @unique
+  buyerId        String      @map("buyer_id") @db.Uuid
+  marketId       String      @map("market_id") @db.Uuid
+  status         OrderStatus @default(PENDING_PAYMENT)
+  currency       Currency
+  itemsAmount    BigInt      @map("items_amount")
+  deliveryAmount BigInt      @map("delivery_amount")
+  /// itemsAmount plus deliveryAmount.
+  totalAmount    BigInt      @map("total_amount")
+  contactEmail   String      @map("contact_email")
+  contactPhone   String      @map("contact_phone")
+  /// Language of the emails and messages about this order.
+  locale         Locale
+  createdAt      DateTime    @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt      DateTime    @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  buyer              User                @relation(fields: [buyerId], references: [id], onDelete: Restrict)
+  market             Market              @relation(fields: [marketId], references: [id], onDelete: Restrict)
+  shipments          Shipment[]
+  payments           Payment[]
+  ledgerTransactions LedgerTransaction[]
+
+  @@index([buyerId, createdAt])
+  @@index([marketId])
+  @@index([status])
+  @@map("orders")
+}
+
+/// The part of an order that one store sends in one parcel.
+model Shipment {
+  id                 String         @id @default(uuid(7)) @db.Uuid
+  orderId            String         @map("order_id") @db.Uuid
+  storeId            String         @map("store_id") @db.Uuid
+  /// Where the parcel is sent from.
+  stockLocationId    String         @map("stock_location_id") @db.Uuid
+  status             ShipmentStatus @default(PENDING)
+  carrier            Carrier
+  deliveryMethod     DeliveryMethod @map("delivery_method")
+  deliveryAmount     BigInt         @map("delivery_amount")
+  currency           Currency
+  /// Set for delivery to an address. A copy made for this shipment.
+  deliveryAddressId  String?        @map("delivery_address_id") @db.Uuid
+  /// Set for pickup points and parcel boxes: the carrier's code of the point.
+  pickupPointCode    String?        @map("pickup_point_code")
+  pickupPointName    String?        @map("pickup_point_name")
+  trackingNumber     String?        @map("tracking_number")
+  /// The shipment's id at the carrier.
+  carrierReference   String?        @map("carrier_reference")
+  /// The delivery time promised to the buyer at checkout.
+  promisedDeliveryAt DateTime?      @map("promised_delivery_at") @db.Timestamptz(3)
+  confirmedAt        DateTime?      @map("confirmed_at") @db.Timestamptz(3)
+  handedOverAt       DateTime?      @map("handed_over_at") @db.Timestamptz(3)
+  deliveredAt        DateTime?      @map("delivered_at") @db.Timestamptz(3)
+  cancelledAt        DateTime?      @map("cancelled_at") @db.Timestamptz(3)
+  createdAt          DateTime       @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt          DateTime       @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  order              Order               @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  store              Store               @relation(fields: [storeId], references: [id], onDelete: Restrict)
+  stockLocation      StockLocation       @relation(fields: [stockLocationId], references: [id], onDelete: Restrict)
+  deliveryAddress    Address?            @relation(fields: [deliveryAddressId], references: [id], onDelete: Restrict)
+  items              OrderItem[]
+  returnRequests     ReturnRequest[]
+  ledgerTransactions LedgerTransaction[]
+
+  @@index([orderId])
+  @@index([storeId, status])
+  @@index([stockLocationId])
+  @@index([deliveryAddressId])
+  @@map("shipments")
+}
+
+/// One line of an order: an offer and how many pieces of it.
+model OrderItem {
+  id              String   @id @default(uuid(7)) @db.Uuid
+  shipmentId      String   @map("shipment_id") @db.Uuid
+  offerId         String   @map("offer_id") @db.Uuid
+  quantity        Int
+  unitPriceAmount BigInt   @map("unit_price_amount")
+  /// unitPriceAmount times quantity.
+  totalAmount     BigInt   @map("total_amount")
+  currency        Currency
+  /// Names copied at checkout, so the order stays readable when the catalog changes.
+  productName     String   @map("product_name")
+  variantName     String?  @map("variant_name")
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  shipment       Shipment        @relation(fields: [shipmentId], references: [id], onDelete: Restrict)
+  offer          Offer           @relation(fields: [offerId], references: [id], onDelete: Restrict)
+  returnItems    ReturnItem[]
+  warrantyClaims WarrantyClaim[]
+
+  @@index([shipmentId])
+  @@index([offerId])
+  @@map("order_items")
+}

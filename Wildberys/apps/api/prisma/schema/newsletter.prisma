@@ -1,0 +1,14 @@
+/// A person who agreed to get news by email. They sign up in the footer of the store.
+model NewsletterSubscription {
+  id             String   @id @default(uuid(7)) @db.Uuid
+  /// Always lowercase. One subscription per email.
+  email          String   @unique
+  /// The language of the page the person signed up on. The news is written in it.
+  locale         Locale
+  /// The wording of the consent the person agreed to. A changed wording gets a new version.
+  consentVersion String   @map("consent_version")
+  consentedAt    DateTime @map("consented_at") @db.Timestamptz(3)
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@map("newsletter_subscriptions")
+}

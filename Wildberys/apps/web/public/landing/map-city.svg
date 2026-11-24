@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 420" preserveAspectRatio="none">
+  <defs>
+    <pattern id="streets-across" width="120" height="59" patternUnits="userSpaceOnUse" patternTransform="rotate(28)">
+      <rect y="54" width="120" height="5" fill="#fff" fill-opacity=".95"/>
+    </pattern>
+    <pattern id="streets-along" width="87" height="120" patternUnits="userSpaceOnUse" patternTransform="rotate(28)">
+      <rect x="82" width="5" height="120" fill="#fff" fill-opacity=".95"/>
+    </pattern>
+  </defs>
+  <rect width="440" height="420" fill="#ECE8FA"/>
+  <rect width="440" height="420" fill="url(#streets-along)"/>
+  <rect width="440" height="420" fill="url(#streets-across)"/>
+  <path d="M-20 70 C 80 90, 120 170, 190 190 S 300 170, 330 250 S 360 380, 470 400" stroke="#CFDCFF" stroke-width="30" fill="none" stroke-linecap="round"/>
+  <path d="M-20 70 C 80 90, 120 170, 190 190 S 300 170, 330 250 S 360 380, 470 400" stroke="#BCCDFF" stroke-width="2" fill="none" opacity=".8"/>
+  <ellipse cx="96" cy="300" rx="62" ry="40" fill="#DDF3E8"/>
+  <ellipse cx="350" cy="80" rx="54" ry="34" fill="#DDF3E8"/>
+  <path d="M70 110 L150 110 L150 250 L300 250 L300 330 L372 330" stroke="#6C4CFF" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
