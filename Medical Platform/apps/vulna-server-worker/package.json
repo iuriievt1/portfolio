@@ -1,0 +1,41 @@
+{
+	"name": "@ansora/server-worker",
+	"version": "0.0.0",
+	"private": true,
+	"description": "Worker process: artifact assembly, OCR, delivery to the PACS, registry synchronisation, audit export, retention jobs ✓ ADR-005 ř. 37.",
+	"license": "UNLICENSED",
+	"main": "./dist/main.js",
+	"scripts": {
+		"dev": "BINARY_STORE_PATH=../vulna-server-api/.data/binary node --watch --require @swc-node/register --env-file-if-exists=../../.env --env-file-if-exists=../../.data/clinical-record-worker.env --env-file-if-exists=../../.data/clinical-record-retention.env src/main.ts",
+		"start": "node dist/main.js",
+		"build": "tsc --build",
+		"test": "vitest run",
+		"test:db": "vitest run --config vitest.db.config.ts",
+		"test:ocr": "vitest run --config vitest.ocr.config.ts"
+	},
+	"dependencies": {
+		"@ansora/contracts": "workspace:*",
+		"@ansora/core-server": "workspace:*",
+		"@ansora/vulna-adapter-binary-local": "workspace:*",
+		"@ansora/vulna-adapter-clinical-record-medplum": "workspace:*",
+		"@ansora/vulna-adapter-dicom-dimse": "workspace:*",
+		"@ansora/vulna-adapter-registry-local": "workspace:*",
+		"@ansora/vulna-adapter-syslog": "workspace:*",
+		"@ansora/vulna-domain": "workspace:*",
+		"@ansora/vulna-projection-dicom": "workspace:*",
+		"@nestjs/common": "^11.1.6",
+		"@nestjs/core": "^11.1.6",
+		"@nestjs/platform-express": "^11.1.6",
+		"@veevoy/postgres": "workspace:*",
+		"jpeg-js": "0.4.4",
+		"reflect-metadata": "^0.2.2",
+		"rxjs": "^7.8.2",
+		"zod": "^4.6.7"
+	},
+	"nx": {
+		"tags": [
+			"layer:app",
+			"process:worker"
+		]
+	}
+}

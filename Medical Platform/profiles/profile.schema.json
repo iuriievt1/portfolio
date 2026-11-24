@@ -1,0 +1,365 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"title": "Customer profile",
+	"type": "object",
+	"additionalProperties": false,
+	"required": [
+		"id",
+		"nameTowardsCustomer",
+		"corePackages",
+		"domainPackages",
+		"adapters",
+		"applications",
+		"bannedPackages",
+		"projections",
+		"signIn",
+		"communicationTargets",
+		"dataLocation",
+		"mobileRelease",
+		"baseImage"
+	],
+	"properties": {
+		"$schema": {
+			"type": "string"
+		},
+		"id": {
+			"type": "string",
+			"pattern": "^[a-z][a-z0-9-]*$"
+		},
+		"nameTowardsCustomer": {
+			"type": "string"
+		},
+		"description": {
+			"type": "string"
+		},
+		"corePackages": {
+			"$ref": "#/$defs/packageList"
+		},
+		"domainPackages": {
+			"$ref": "#/$defs/packageList"
+		},
+		"adapters": {
+			"$ref": "#/$defs/packageList"
+		},
+		"applications": {
+			"$ref": "#/$defs/packageList"
+		},
+		"bannedPackages": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"additionalProperties": false,
+				"required": [
+					"pattern",
+					"reason",
+					"source"
+				],
+				"properties": {
+					"pattern": {
+						"type": "string"
+					},
+					"reason": {
+						"type": "string"
+					},
+					"source": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"projections": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
+		},
+		"projectionsSource": {
+			"type": "string"
+		},
+		"signIn": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": [
+				"methods"
+			],
+			"properties": {
+				"methods": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"note": {
+					"type": "string"
+				},
+				"source": {
+					"type": "string"
+				}
+			}
+		},
+		"communicationTargets": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"additionalProperties": false,
+				"required": [
+					"target",
+					"source"
+				],
+				"properties": {
+					"target": {
+						"enum": [
+							"pacs",
+							"identity-provider",
+							"log-management",
+							"database",
+							"clinical-record-store"
+						]
+					},
+					"source": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"dataLocation": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": [
+				"where",
+				"vendorCloud"
+			],
+			"properties": {
+				"where": {
+					"type": "string"
+				},
+				"vendorCloud": {
+					"type": "boolean"
+				},
+				"source": {
+					"type": "string"
+				}
+			}
+		},
+		"mobileRelease": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": [
+				"serverUrl",
+				"oidcDiscoveryUrl",
+				"pinningFingerprints"
+			],
+			"properties": {
+				"serverUrl": {
+					"type": [
+						"string",
+						"null"
+					],
+					"pattern": "^https://"
+				},
+				"oidcDiscoveryUrl": {
+					"type": [
+						"string",
+						"null"
+					],
+					"pattern": "^https://"
+				},
+				"pinningFingerprints": {
+					"type": [
+						"array",
+						"null"
+					],
+					"minItems": 2,
+					"uniqueItems": true,
+					"items": {
+						"type": "string",
+						"pattern": "^sha256/[A-Za-z0-9+/]{43}=$"
+					}
+				}
+			}
+		},
+		"baseImage": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": [
+				"image",
+				"digest"
+			],
+			"properties": {
+				"image": {
+					"type": "string"
+				},
+				"digest": {
+					"type": [
+						"string",
+						"null"
+					],
+					"pattern": "^sha256:[a-f0-9]{64}$"
+				},
+				"note": {
+					"type": "string"
+				},
+				"source": {
+					"type": "string"
+				}
+			}
+		},
+		"thirdPartyImages": {
+			"type": "array",
+			"description": "Images of third parties the profile carries next to the server image; each is referenced by digest and gets its own SBOM section ✓ NAB-471, CAP-029-R30, ADR-042 bod 7.",
+			"items": {
+				"type": "object",
+				"additionalProperties": false,
+				"required": [
+					"name",
+					"image",
+					"version",
+					"digest",
+					"license",
+					"source"
+				],
+				"properties": {
+					"name": {
+						"type": "string",
+						"pattern": "^[a-z0-9-]+$"
+					},
+					"image": {
+						"type": "string"
+					},
+					"version": {
+						"type": "string"
+					},
+					"digest": {
+						"$ref": "#/$defs/digest"
+					},
+					"license": {
+						"type": "string"
+					},
+					"note": {
+						"type": "string"
+					},
+					"source": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"builtImages": {
+			"type": "array",
+			"description": "Images the release builds itself from files of an official image on a distroless base — the way out of gate B11 for an official image with a shell ✓ CAP-029-R30, CAP-029-S20, ADR-042 bod 7. Gates run on them as on the server image; the SBOM section names the source image without passing the build off as the vendor's.",
+			"items": {
+				"type": "object",
+				"additionalProperties": false,
+				"required": [
+					"name",
+					"dockerfile",
+					"image",
+					"baseImage",
+					"sourceImage",
+					"source"
+				],
+				"properties": {
+					"name": {
+						"type": "string",
+						"pattern": "^[a-z0-9-]+$"
+					},
+					"dockerfile": {
+						"type": "string"
+					},
+					"image": {
+						"type": "string",
+						"pattern": "^[a-z0-9-]+$"
+					},
+					"baseImage": {
+						"type": "object",
+						"additionalProperties": false,
+						"required": [
+							"image",
+							"digest"
+						],
+						"properties": {
+							"image": {
+								"type": "string"
+							},
+							"digest": {
+								"$ref": "#/$defs/digest"
+							}
+						}
+					},
+					"sourceImage": {
+						"type": "object",
+						"additionalProperties": false,
+						"required": [
+							"image",
+							"version",
+							"digest",
+							"license"
+						],
+						"properties": {
+							"image": {
+								"type": "string"
+							},
+							"version": {
+								"type": "string"
+							},
+							"digest": {
+								"$ref": "#/$defs/digest"
+							},
+							"license": {
+								"type": "string"
+							}
+						}
+					},
+					"note": {
+						"type": "string"
+					},
+					"source": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"vendoredPackages": {
+			"type": "array",
+			"description": "Workspace packages that are third-party components kept by veevoy as a fork, with their pedigree ✓ ADR-017, ADR-003 ř. 26. A profile package may depend on them; they depend only on each other.",
+			"uniqueItems": true,
+			"items": {
+				"type": "object",
+				"additionalProperties": false,
+				"required": [
+					"name",
+					"pedigree",
+					"source"
+				],
+				"properties": {
+					"name": {
+						"type": "string",
+						"pattern": "^@veevoy/[a-z][a-z0-9-]*$"
+					},
+					"pedigree": {
+						"type": "string",
+						"pattern": "^vendor/[a-z0-9-]+/PEDIGREE\\.md$"
+					},
+					"source": {
+						"type": "string"
+					}
+				}
+			}
+		}
+	},
+	"$defs": {
+		"digest": {
+			"type": "string",
+			"pattern": "^sha256:[0-9a-f]{64}$"
+		},
+		"packageList": {
+			"type": "array",
+			"minItems": 1,
+			"uniqueItems": true,
+			"items": {
+				"type": "string",
+				"pattern": "^@ansora/[a-z][a-z0-9-]*$"
+			}
+		}
+	}
+}

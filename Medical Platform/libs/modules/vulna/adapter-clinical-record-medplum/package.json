@@ -1,0 +1,42 @@
+{
+	"name": "@ansora/vulna-adapter-clinical-record-medplum",
+	"version": "0.0.0",
+	"private": true,
+	"description": "Adapter for the ClinicalRecordStore port — the clinical record in Medplum ✓ ADR-042 bod 1, ADR-054 bod 1.",
+	"license": "UNLICENSED",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		},
+		"./installation": {
+			"types": "./dist/installation/index.d.ts",
+			"default": "./dist/installation/index.js"
+		}
+	},
+	"scripts": {
+		"build": "tsc --build",
+		"test": "vitest run",
+		"test:live": "vitest run --config vitest.live.config.ts"
+	},
+	"dependencies": {
+		"@ansora/core-server": "workspace:*",
+		"@ansora/vulna-domain": "workspace:*",
+		"@medplum/core": "5.2.18"
+	},
+	"files": [
+		"dist",
+		"manifest.json"
+	],
+	"nx": {
+		"tags": [
+			"layer:adapter",
+			"process:shared"
+		]
+	},
+	"devDependencies": {
+		"@medplum/fhirtypes": "5.2.18"
+	}
+}

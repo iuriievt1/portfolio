@@ -1,0 +1,91 @@
+{
+	"$schema": "../../../../profiles/adapter-manifest.schema.json",
+	"description": "Closed adapter manifest ✓ ADR-003 ř. 26. Whatever is not here, the adapter must not do.",
+	"name": "@ansora/vulna-adapter-dicom-dimse",
+	"ports": [
+		"ImageArchive",
+		"DocumentArchive",
+		"RegistrySource"
+	],
+	"processes": [
+		"worker"
+	],
+	"outboundCommunication": [
+		{
+			"target": "pacs",
+			"protocol": "dimse",
+			"role": "SCU",
+			"source": "✓ NAB-050, ADR-003 ř. 29 — SCU only, adds no listening port ✓ ADR-003 ř. 42"
+		}
+	],
+	"inboundCommunication": [],
+	"configurationSchema": {
+		"PACS_AE_TITLE": {
+			"type": [
+				"string",
+				"null"
+			],
+			"default": null,
+			"pattern": "^[\\x21-\\x5b\\x5d-\\x7e]([\\x20-\\x5b\\x5d-\\x7e]{0,14}[\\x21-\\x5b\\x5d-\\x7e])?$",
+			"description": "AE Title of the PACS; null leaves the delivery waiting ✓ NAB-336, CAP-012-R01."
+		},
+		"PACS_HOST": {
+			"type": [
+				"string",
+				"null"
+			],
+			"default": null,
+			"pattern": "^[A-Za-z0-9.:[\\]-]+$",
+			"outboundTarget": true,
+			"description": "PACS address; null leaves the delivery waiting ✓ NAB-050, NAB-336, CAP-012-R01."
+		},
+		"PACS_PORT": {
+			"type": [
+				"integer",
+				"null"
+			],
+			"default": null,
+			"minimum": 1,
+			"maximum": 65535,
+			"outboundTarget": true,
+			"description": "PACS port; null leaves the delivery waiting ✓ NAB-336, CAP-012-R01."
+		},
+		"PACS_CALLING_AE_TITLE": {
+			"type": [
+				"string",
+				"null"
+			],
+			"default": null,
+			"pattern": "^[\\x21-\\x5b\\x5d-\\x7e]([\\x20-\\x5b\\x5d-\\x7e]{0,14}[\\x21-\\x5b\\x5d-\\x7e])?$",
+			"description": "One AE Title and one IP address registered in the PACS; null leaves the delivery waiting ✓ NAB-352, TS-145, CAP-012-R01."
+		},
+		"PACS_WORKLIST_MODALITY": {
+			"type": "string",
+			"required": false,
+			"description": "Modality of the Modality Worklist query; without it the query asks for every modality ✓ CAP-024-R14."
+		}
+	},
+	"secrets": [],
+	"thirdPartyComponents": [
+		{
+			"name": "@veevoy/dcmjs-dimse",
+			"version": "0.3.4-veevoy.16",
+			"license": "MIT",
+			"supplier": "veevoy",
+			"pedigree": "vendor/dcmjs-dimse/PEDIGREE.md",
+			"purpose": "DIMSE SCU of the DimseClient interface: C-ECHO, C-STORE of the stored bytes, C-FIND with C-CANCEL; fork of dcmjs-dimse 0.3.4",
+			"note": "Loaded ONLY in the worker ✓ ADR-005 ř. 38–39; gate B15 enforces it. The fallback is DCMTK as a short-lived subprocess ✓ ADR-003 ř. 43.",
+			"source": "✓ ADR-017, ADR-003 ř. 26, 29"
+		},
+		{
+			"name": "@veevoy/dcmjs",
+			"version": "0.52.2-veevoy.2",
+			"license": "MIT",
+			"supplier": "veevoy",
+			"pedigree": "vendor/dcmjs/PEDIGREE.md",
+			"purpose": "DICOM data layer of the DIMSE fork; fork of dcmjs 0.52.2",
+			"source": "✓ ADR-017, ADR-003 ř. 26"
+		}
+	],
+	"source": "✓ ADR-003 ř. 28–29"
+}

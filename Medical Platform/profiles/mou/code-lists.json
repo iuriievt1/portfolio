@@ -1,0 +1,193 @@
+{
+	"$schema": "../code-lists.schema.json",
+	"description": "Výchozí číselníky MOÚ: typy ran a fáze hojení podle návrhu v Figma (05 · A.5 Typ rány, A.6 Fáze hojení), názvy dokumentů prázdné — zdravotník píše vlastní název. Anglické názvy přeložila veevoy.",
+	"source": "✓ CAP-017-R06, CAP-017-R07, CAP-018-R15 ⚠ Q-004 ⚠ Q-133 — pracovní předpoklad do upřesnění klinickým garantem MOÚ",
+	"codeLists": [
+		{
+			"code": "wound-type",
+			"name": "Typ rány",
+			"items": [
+				{
+					"code": "leg-ulcer",
+					"names": [
+						{
+							"language": "cs",
+							"name": "Bércový vřed"
+						},
+						{
+							"language": "en",
+							"name": "Leg ulcer"
+						}
+					]
+				},
+				{
+					"code": "pressure-ulcer",
+					"names": [
+						{
+							"language": "cs",
+							"name": "Dekubitus"
+						},
+						{
+							"language": "en",
+							"name": "Pressure ulcer"
+						}
+					]
+				},
+				{
+					"code": "surgical-wound",
+					"names": [
+						{
+							"language": "cs",
+							"name": "Chirurgická rána"
+						},
+						{
+							"language": "en",
+							"name": "Surgical wound"
+						}
+					]
+				},
+				{
+					"code": "diabetic-foot",
+					"names": [
+						{
+							"language": "cs",
+							"name": "Diabetická noha"
+						},
+						{
+							"language": "en",
+							"name": "Diabetic foot"
+						}
+					]
+				},
+				{
+					"code": "malignant-wound",
+					"names": [
+						{
+							"language": "cs",
+							"name": "Maligní rána"
+						},
+						{
+							"language": "en",
+							"name": "Malignant wound"
+						}
+					]
+				},
+				{
+					"code": "radiation-dermatitis",
+					"names": [
+						{
+							"language": "cs",
+							"name": "Radiační dermatitida"
+						},
+						{
+							"language": "en",
+							"name": "Radiation dermatitis"
+						}
+					]
+				},
+				{
+					"code": "traumatic-wound",
+					"names": [
+						{
+							"language": "cs",
+							"name": "Traumatická rána"
+						},
+						{
+							"language": "en",
+							"name": "Traumatic wound"
+						}
+					]
+				},
+				{
+					"code": "burn",
+					"names": [
+						{
+							"language": "cs",
+							"name": "Popálenina"
+						},
+						{
+							"language": "en",
+							"name": "Burn"
+						}
+					]
+				}
+			]
+		},
+		{
+			"code": "healing-phase",
+			"name": "Fáze hojení",
+			"items": [
+				{
+					"code": "necrotic",
+					"names": [
+						{
+							"language": "cs",
+							"name": "Nekrotická"
+						},
+						{
+							"language": "en",
+							"name": "Necrotic"
+						}
+					]
+				},
+				{
+					"code": "sloughy",
+					"names": [
+						{
+							"language": "cs",
+							"name": "Povleklá"
+						},
+						{
+							"language": "en",
+							"name": "Sloughy"
+						}
+					]
+				},
+				{
+					"code": "inflammatory",
+					"names": [
+						{
+							"language": "cs",
+							"name": "Zánětlivá"
+						},
+						{
+							"language": "en",
+							"name": "Inflammatory"
+						}
+					]
+				},
+				{
+					"code": "granulating",
+					"names": [
+						{
+							"language": "cs",
+							"name": "Granulační"
+						},
+						{
+							"language": "en",
+							"name": "Granulating"
+						}
+					]
+				},
+				{
+					"code": "epithelializing",
+					"names": [
+						{
+							"language": "cs",
+							"name": "Epitelizační"
+						},
+						{
+							"language": "en",
+							"name": "Epithelializing"
+						}
+					]
+				}
+			]
+		},
+		{
+			"code": "document-title",
+			"name": "Název dokumentu",
+			"items": []
+		}
+	]
+}

@@ -1,0 +1,30 @@
+{
+    "name": "@veevoy/dcmjs",
+    "version": "0.52.2-veevoy.2",
+    "private": true,
+    "description": "Fork of dcmjs 0.52.2 for Ansora Vulna, consumed from source; see PEDIGREE.md",
+    "type": "module",
+    "exports": {
+        ".": "./src/index.js"
+    },
+    "engines": {
+        "node": ">=22.13"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dcmjs-org/dcmjs.git"
+    },
+    "author": "Steve Pieper",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/dcmjs-org/dcmjs/issues"
+    },
+    "homepage": "https://github.com/dcmjs-org/dcmjs#readme",
+    "dependencies": {
+        "gl-matrix": "3.4.4",
+        "lodash.clonedeep": "4.5.0",
+        "loglevel": "1.9.2",
+        "ndarray": "1.0.19",
+        "pako": "2.1.0"
+    }
+}

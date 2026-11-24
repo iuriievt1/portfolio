@@ -1,0 +1,33 @@
+{
+	"name": "@ansora/core-server",
+	"version": "0.0.0",
+	"private": true,
+	"description": "Server core: identity, devices, sessions, audit, configuration, queue, BinaryStore ✓ ADR-007 ř. 24.",
+	"license": "UNLICENSED",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		},
+		"./ports": {
+			"types": "./dist/ports/index.d.ts",
+			"default": "./dist/ports/index.js"
+		}
+	},
+	"scripts": {
+		"build": "tsc --build",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"@ansora/contracts": "workspace:*",
+		"@veevoy/postgres": "workspace:*"
+	},
+	"nx": {
+		"tags": [
+			"layer:core",
+			"process:shared"
+		]
+	}
+}

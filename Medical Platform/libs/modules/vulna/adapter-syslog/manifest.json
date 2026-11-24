@@ -1,0 +1,85 @@
+{
+	"$schema": "../../../../profiles/adapter-manifest.schema.json",
+	"description": "Closed adapter manifest ✓ ADR-003 ř. 26. Whatever is not here, the adapter must not do.",
+	"name": "@ansora/vulna-adapter-syslog",
+	"ports": [
+		"AuditSink"
+	],
+	"processes": [
+		"worker"
+	],
+	"outboundCommunication": [
+		{
+			"target": "log-management",
+			"protocol": "syslog/tls",
+			"source": "✓ NAB-052, NAB-307, NAB-450"
+		},
+		{
+			"target": "log-management",
+			"protocol": "syslog/tcp",
+			"source": "✓ NAB-450, NAB-452, CAP-025-R08"
+		},
+		{
+			"target": "log-management",
+			"protocol": "syslog/udp",
+			"source": "✓ NAB-450, NAB-452, CAP-025-R08"
+		}
+	],
+	"inboundCommunication": [],
+	"configurationSchema": {
+		"SYSLOG_HOST": {
+			"type": [
+				"string",
+				"null"
+			],
+			"default": null,
+			"outboundTarget": true,
+			"description": "The customer's log management system; null leaves the export waiting ✓ NAB-052, NAB-338."
+		},
+		"SYSLOG_PORT": {
+			"type": "integer",
+			"default": 6514,
+			"minimum": 1,
+			"maximum": 65535,
+			"outboundTarget": true,
+			"description": "Port of the log management system ✓ NAB-338."
+		},
+		"SYSLOG_FORMAT": {
+			"type": "string",
+			"default": "rfc5424",
+			"enum": [
+				"rfc5424",
+				"rfc3164"
+			],
+			"description": "✓ CAP-025-R08, NAB-448, NAB-449."
+		},
+		"SYSLOG_TRANSPORT": {
+			"type": "string",
+			"default": "tls",
+			"enum": [
+				"tls",
+				"tcp",
+				"udp"
+			],
+			"description": "✓ CAP-025-R08, NAB-450."
+		},
+		"SYSLOG_FRAMING": {
+			"type": "string",
+			"default": "octet_counting",
+			"enum": [
+				"octet_counting",
+				"non_transparent"
+			],
+			"description": "Framing over TCP without TLS ✓ CAP-025-R08, RFC 6587."
+		},
+		"SYSLOG_ENTERPRISE_NUMBER": {
+			"type": "integer",
+			"default": 32473,
+			"minimum": 1,
+			"description": "IANA Private Enterprise Number of the structured data ID; 32473 is the documentation number until veevoy holds its own ✓ RFC 5424, RFC 5612, Q-045."
+		}
+	},
+	"secrets": [],
+	"thirdPartyComponents": [],
+	"source": "✓ ADR-003 ř. 31"
+}

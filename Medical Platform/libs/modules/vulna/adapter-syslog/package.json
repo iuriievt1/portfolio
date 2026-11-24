@@ -1,0 +1,32 @@
+{
+	"name": "@ansora/vulna-adapter-syslog",
+	"version": "0.0.0",
+	"private": true,
+	"description": "Adapter for the AuditSink port — audit trail export to Syslog ✓ ADR-003 ř. 31, NAB-052.",
+	"license": "UNLICENSED",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "tsc --build",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"@ansora/core-server": "workspace:*"
+	},
+	"files": [
+		"dist",
+		"manifest.json"
+	],
+	"nx": {
+		"tags": [
+			"layer:adapter",
+			"process:worker"
+		]
+	}
+}

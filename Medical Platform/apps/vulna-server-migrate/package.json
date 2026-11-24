@@ -1,0 +1,32 @@
+{
+	"name": "@ansora/server-migrate",
+	"version": "0.0.0",
+	"private": true,
+	"description": "Migration step: applies the SQL migrations from db/migrations before both processes start ✓ ADR-021.",
+	"license": "UNLICENSED",
+	"main": "./dist/main.js",
+	"scripts": {
+		"start": "node dist/main.js",
+		"dev": "node --require @swc-node/register --env-file-if-exists=../../.env src/main.ts",
+		"build": "tsc --build",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"@ansora/core-server": "workspace:*",
+		"@ansora/vulna-domain": "workspace:*",
+		"@veevoy/postgres": "workspace:*"
+	},
+	"nx": {
+		"tags": [
+			"layer:app",
+			"process:shared"
+		],
+		"targets": {
+			"start": {
+				"dependsOn": [
+					"build"
+				]
+			}
+		}
+	}
+}

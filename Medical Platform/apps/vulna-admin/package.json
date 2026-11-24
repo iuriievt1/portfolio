@@ -1,0 +1,47 @@
+{
+	"name": "@ansora/admin",
+	"version": "0.0.0",
+	"private": true,
+	"description": "Ansora Vulna Admin — web administration hosted by the API process ✓ NAB-305, NAB-324, ADR-001 ř. 33.",
+	"license": "UNLICENSED",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc --noEmit && vite build",
+		"preview": "vite preview",
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"@ansora/contracts": "workspace:*",
+		"@ansora/core-admin": "workspace:*",
+		"@base-ui/react": "^1.8.0",
+		"@hookform/resolvers": "^5.2.3",
+		"@phosphor-icons/react": "^2.1.10",
+		"@tanstack/react-table": "^8.21.3",
+		"class-variance-authority": "^0.7.1",
+		"cn": "^0.4.0",
+		"qrcode-generator": "~2.0.4",
+		"react": "19.3.0",
+		"react-dom": "19.3.0",
+		"react-hook-form": "^7.71.1",
+		"react-router": "^7.11.0",
+		"tw-animate-css": "^1.4.0",
+		"zod": "^4.6.7"
+	},
+	"devDependencies": {
+		"@tailwindcss/vite": "4.3.3",
+		"@types/react": "~19.3.0",
+		"@types/react-dom": "~19.3.0",
+		"@vitejs/plugin-react": "^6.1.1",
+		"shadcn": "4.16.1",
+		"tailwindcss": "4.3.3",
+		"vite": "^8.3.0"
+	},
+	"nx": {
+		"tags": [
+			"layer:app",
+			"process:admin"
+		]
+	}
+}

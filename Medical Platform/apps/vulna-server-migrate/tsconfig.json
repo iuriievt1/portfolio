@@ -1,0 +1,22 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"rootDir": "src",
+		"outDir": "dist",
+		"tsBuildInfoFile": "dist/.tsbuildinfo"
+	},
+	"include": [
+		"src/**/*.ts"
+	],
+	"exclude": [
+		"**/*.test.ts"
+	],
+	"references": [
+		{
+			"path": "../../libs/core/server"
+		},
+		{
+			"path": "../../libs/modules/vulna/domain"
+		}
+	]
+}

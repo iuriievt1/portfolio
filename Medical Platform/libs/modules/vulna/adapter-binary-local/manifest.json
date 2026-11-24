@@ -1,0 +1,24 @@
+{
+	"$schema": "../../../../profiles/adapter-manifest.schema.json",
+	"description": "Closed adapter manifest ✓ ADR-003 ř. 26. Whatever is not here, the adapter must not do.",
+	"name": "@ansora/vulna-adapter-binary-local",
+	"ports": [
+		"BinaryStore"
+	],
+	"processes": [
+		"api",
+		"worker"
+	],
+	"outboundCommunication": [],
+	"inboundCommunication": [],
+	"configurationSchema": {
+		"BINARY_STORE_PATH": {
+			"type": "string",
+			"required": true,
+			"description": "Directory of the server's own storage. Data stay exclusively with the customer ✓ NAB-022."
+		}
+	},
+	"secrets": [],
+	"thirdPartyComponents": [],
+	"source": "✓ ADR-003 ř. 31"
+}

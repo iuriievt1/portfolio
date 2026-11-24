@@ -1,0 +1,23 @@
+{
+	"screen": 24,
+	"android-system-bar-gap": 10,
+	"thumbnail": 56,
+	"thumbnail-gap": 12,
+	"mark": 22,
+	"grid-tile": 76,
+	"grid-gap": 12,
+	"grid-row-gap": 16,
+	"page-number": 24,
+	"page-corner": 24,
+	"file-mark": 20,
+	"search": 48,
+	"search-clear-gap": 12,
+	"photo": {
+		"width": 3,
+		"height": 4
+	},
+	"page": {
+		"width": 210,
+		"height": 297
+	}
+}

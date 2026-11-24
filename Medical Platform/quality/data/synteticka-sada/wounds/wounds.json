@@ -1,0 +1,41 @@
+{
+	"description": "Synthetic printed wounds; every wound is invented.",
+	"wounds": [
+		{
+			"id": "R01",
+			"shape": "ellipse",
+			"width_mm": 20,
+			"height_mm": 12
+		},
+		{
+			"id": "R02",
+			"shape": "ellipse",
+			"width_mm": 35,
+			"height_mm": 22
+		},
+		{
+			"id": "R03",
+			"shape": "ellipse",
+			"width_mm": 15,
+			"height_mm": 15
+		},
+		{
+			"id": "R04",
+			"shape": "ellipse",
+			"width_mm": 50,
+			"height_mm": 30
+		},
+		{
+			"id": "R05",
+			"shape": "polygon",
+			"width_mm": 40,
+			"height_mm": 25
+		},
+		{
+			"id": "R06",
+			"shape": "ellipse",
+			"width_mm": 60,
+			"height_mm": 38
+		}
+	]
+}

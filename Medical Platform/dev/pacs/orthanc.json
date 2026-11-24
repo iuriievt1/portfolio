@@ -1,0 +1,22 @@
+{
+	"Name": "Ansora Vulna dev PACS",
+	"StorageDirectory": "/var/lib/orthanc/db",
+	"IndexDirectory": "/var/lib/orthanc/db",
+	"RemoteAccessAllowed": true,
+	"AuthenticationEnabled": true,
+	"RegisteredUsers": {
+		"vulna": "vulna"
+	},
+	"DicomAet": "ORTHANC",
+	"DicomPort": 4242,
+	"DicomCheckCalledAet": true,
+	"DicomAlwaysAllowStore": true,
+	"DicomAlwaysAllowFind": true,
+	"DicomAlwaysAllowFindWorklist": true,
+	"Worklists": {
+		"Enable": true,
+		"Database": "/var/lib/orthanc/worklist",
+		"DeleteWorklistsOnStableStudy": false
+	},
+	"StorageCommitmentReportsSize": 100
+}

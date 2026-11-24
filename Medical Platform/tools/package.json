@@ -1,0 +1,60 @@
+{
+	"name": "@ansora/tools",
+	"version": "0.0.0",
+	"private": true,
+	"description": "CI gates ✓ ADR-020 ř. 58–62, docs/spec/vydani-sbom-a-brany.md. Build tools are not in the image ✓ ADR-011 ř. 39.",
+	"license": "UNLICENSED",
+	"scripts": {
+		"gate:audit": "tsx gates/audit-permissions/run.ts",
+		"gate:boundaries": "tsx gates/boundaries.ts",
+		"gate:image": "tsx gates/image/run.ts",
+		"gate:sbom": "tsx gates/sbom/run.ts",
+		"gate:trace": "tsx gates/trace/run.ts",
+		"gate:trace:release": "tsx gates/trace/run.ts --release",
+		"trace:write": "tsx gates/trace/run.ts --write",
+		"profile:build": "tsx profile/build.ts",
+		"pinning:fingerprint": "tsx pinning/fingerprint.ts",
+		"hpke:keygen": "tsx hpke/keygen.ts",
+		"qr:keygen": "tsx qr/keygen.ts",
+		"scan:mobile": "tsx gates/scan/mobile.ts",
+		"release:record": "tsx release/record.ts",
+		"registry:seed": "tsx --env-file-if-exists=../.env registry/seed.ts",
+		"synthetic-set:print": "tsx synthetic-set/write-print-sheet.ts",
+		"clinical-record:install": "tsx --env-file-if-exists=../.env clinical-record/install.ts",
+		"build": "tsc --build",
+		"test": "vitest run",
+		"test:system": "vitest run --config vitest.system.config.ts",
+		"typecheck:system": "tsc -p tsconfig.system.json"
+	},
+	"dependencies": {
+		"@ansora/contracts": "workspace:*",
+		"@ansora/core-server": "workspace:*",
+		"@ansora/vulna-adapter-clinical-record-medplum": "workspace:*",
+		"@ansora/vulna-adapter-dicom-dimse": "workspace:*",
+		"@ansora/vulna-domain": "workspace:*",
+		"@ansora/vulna-projection-dicom": "workspace:*",
+		"@veevoy/dcmjs-dimse": "workspace:*",
+		"@veevoy/postgres": "workspace:*",
+		"typescript": "^5.9.3"
+	},
+	"nx": {
+		"targets": {
+			"profile:build": {
+				"dependsOn": [
+					"^build"
+				]
+			},
+			"test": {
+				"dependsOn": [
+					"^build"
+				],
+				"inputs": [
+					"default",
+					"^production",
+					"{workspaceRoot}/db/migrations/**/*",
+					"{workspaceRoot}/quality/data/synteticka-sada/**/*"
+				]
+			}
+		}
+	}
+}

@@ -1,0 +1,1163 @@
+{
+	"signIn": {
+		"retry": "Try again",
+		"restart": "Start again",
+		"back": "Back",
+		"errors": {
+			"noConnection": {
+				"heading": "Cannot sign in right now",
+				"body": "The device cannot reach the hospital server. Check the connection and try again. Unsent records will wait."
+			},
+			"providerUnavailable": {
+				"heading": "Sign-in cannot be completed right now",
+				"body": "The hospital sign-in service is not responding. Try again in a moment."
+			},
+			"loginFailed": {
+				"heading": "Sign-in failed",
+				"body": "Try again, or use another way to sign in."
+			},
+			"accountInactive": {
+				"heading": "Account is not active",
+				"body": "Contact the hospital IT administrator."
+			},
+			"incomplete": {
+				"heading": "Sign-in has not finished",
+				"body": "Finish signing in in the organisation window, or start again."
+			},
+			"completionInvalid": {
+				"heading": "Sign-in did not complete",
+				"body": "Sign-in took too long or has already happened. Start it again."
+			},
+			"deviceMismatch": {
+				"heading": "Sign-in failed",
+				"body": "This sign-in does not belong to this device. Start it again on the device you are holding. If you did not start a sign-in, tell the application administrator."
+			},
+			"identityMismatch": {
+				"heading": "Sign-in failed",
+				"body": "The credentials entered in the sign-in window do not belong to the account {name}. Sign in with that account's credentials, or choose Change."
+			},
+			"stale": {
+				"heading": "Sign-in failed",
+				"body": "The hospital sign-in service did not ask for credentials again. Start signing in again; if it repeats, contact the application administrator."
+			},
+			"personalNumberMissing": {
+				"heading": "Sign-in failed",
+				"body": "The hospital sign-in service did not return the personal number of your account. Contact the hospital IT."
+			},
+			"authorizationMismatch": {
+				"heading": "Sign-in cannot start",
+				"body": "The sign-in service the server points to does not match the setup of this device. Do not sign in anywhere and contact the hospital IT.",
+				"forIt": "For IT",
+				"serverEndpoint": "Authorization address from the server",
+				"providerEndpoint": "Authorization address of the provider",
+				"discoveryUrl": "Discovery address on the device",
+				"providerIssuerMismatch": "the issuer of discovery differs from the issuer the server names"
+			}
+		},
+		"pinSetup": {
+			"heading": "Choose a PIN",
+			"body": "You will use the PIN to sign in on this device next time. It has 4 to 8 digits.",
+			"replaces": "Choose a new PIN. The previous PIN no longer works on this device.",
+			"violation": {
+				"length": {
+					"one": "The PIN must have at least {n} digit. Choose another PIN.",
+					"other": "The PIN must have at least {n} digits. Choose another PIN."
+				},
+				"complexity": {
+					"one": "The PIN must have at least {n} digit and follow the hospital rules: {rules}. Choose another PIN.",
+					"other": "The PIN must have at least {n} digits and follow the hospital rules: {rules}. Choose another PIN."
+				},
+				"rules": "no repeated or consecutive digits"
+			},
+			"action": "Continue"
+		}
+	},
+	"bootstrap": {
+		"heading": "The app is not configured",
+		"missing": {
+			"serverUrl": "A valid integration server address is missing.",
+			"oidcDiscoveryUrl": "A valid OIDC discovery address is missing.",
+			"pinningFingerprints": "Valid certificate pinning fingerprints of the server are missing."
+		},
+		"contactIt": "Contact your IT department."
+	},
+	"device": {
+		"checking": {
+			"heading": "Connecting and verifying",
+			"body": "The device is connecting to the hospital."
+		},
+		"unregistered": {
+			"heading": "Welcome",
+			"body": "Vulna is used to photograph wounds and scan documents at the bedside. The device registers with the hospital first.",
+			"action": "Register device",
+			"note": "There is nothing to set up. After registration you sign in with your hospital account."
+		},
+		"pending_approval": {
+			"heading": "The device is waiting for approval",
+			"body": "Ask your IT administrator to approve this device and show them this code.",
+			"codeLabel": "Code of this device",
+			"note": "You can close the app. We check the approval again when you come back.",
+			"noteChecked": "The device is still waiting for IT approval. You can close the app; we check the state again when you come back.",
+			"action": "Check the approval",
+			"actionAgain": "Check again",
+			"details": "Information for IT"
+		},
+		"approved": {
+			"heading": "Sign in",
+			"body": "Sign in with your hospital account. The hospital opens its secure sign-in window.",
+			"action": "Sign in with hospital account"
+		},
+		"revoked": {
+			"heading": "The device is revoked",
+			"body": "An administrator revoked this device and the app data on it was deleted. Contact the IT department."
+		},
+		"blocked": {
+			"heading": "The app cannot be used on this device",
+			"body": "A change to the operating system was found. The device will not be registered. Ask the application administrator."
+		},
+		"unreachable": {
+			"heading": "No connection",
+			"body": "Check the connection to the hospital network or its VPN. Then try again.",
+			"note": "If the trouble lasts, ask your IT administrator.",
+			"action": "Try again"
+		},
+		"itInformation": {
+			"heading": "Information for IT",
+			"body": "These details help the IT administrator sort out access to the app.",
+			"model": "Model",
+			"system": "System",
+			"version": "App version",
+			"close": "Close"
+		},
+		"blockedRegistered": {
+			"heading": "The app is blocked on this device",
+			"body": "A change to the operating system was found. The data of the app was deleted.",
+			"bodyWithUnsent": {
+				"one": "A change to the operating system was found. The data of the app including {n} unsent record was deleted.",
+				"other": "A change to the operating system was found. The data of the app including {n} unsent records was deleted."
+			},
+			"detected": "Found",
+			"reported": {
+				"advice": {
+					"heading": "What to do",
+					"body": "Ask the application administrator. After a review they unblock the device and you register the app again. The administrator has to approve the new registration even on a device managed through MDM."
+				},
+				"delivery": "reported to the server"
+			},
+			"awaiting": {
+				"advice": {
+					"heading": "The hospital server could not be told yet",
+					"body": "Tell the application administrator which device this is. After a review they unblock the device and you register the app again."
+				},
+				"delivery": "the report leaves once there is a connection"
+			},
+			"unreported": {
+				"delivery": "not reported to the server"
+			}
+		}
+	},
+	"permissions": {
+		"heading": "Permissions",
+		"body": "To photograph wounds, scan documents and sign in with a card, the app needs the camera and NFC. The device asks for both now.",
+		"camera": {
+			"title": "Camera",
+			"body": "To photograph wounds and scan documents at the bedside."
+		},
+		"nfc": {
+			"title": "NFC",
+			"body": "To sign in with a staff card and read the patient tag."
+		},
+		"note": "If you refuse something, the app tells you when you reach that task. You can change it any time in device settings.",
+		"action": "Allow access"
+	},
+	"language": "en",
+	"languageName": "English",
+	"unlock": {
+		"heading": "Enter PIN",
+		"hint": "Enter the PIN on the keypad.",
+		"unlock": "Unlock",
+		"signIn": "Sign in",
+		"changeAccount": "Change",
+		"methods": {
+			"qrCode": "QR code",
+			"barcode": "Barcode",
+			"card": "Card",
+			"account": "Account"
+		},
+		"verifying": {
+			"heading": {
+				"pin": "Checking PIN",
+				"card": "Checking card",
+				"qrCode": "Checking QR code",
+				"barcode": "Checking barcode"
+			},
+			"body": "Checking your sign-in…",
+			"action": "Checking…"
+		},
+		"wrongPin": {
+			"delay": "Sign-in failed.\nWait a moment before the next attempt.",
+			"retry": "Sign-in failed. Try again, or use another way to sign in."
+		},
+		"challenge": "Please try again.",
+		"changeUser": "Change user",
+		"offline": {
+			"heading": "Unlocking waits for a connection",
+			"body": "The device cannot reach the hospital server, so the app cannot be unlocked and no other user can sign in now. The record in progress waits on the server and unsent files stay on the device.",
+			"action": "Try again"
+		},
+		"blocked": {
+			"heading": "Sign-in is blocked on this device",
+			"body": "Too many failed attempts. Sign in with your account and choose a new PIN. Queued records stay.",
+			"unlockNote": "The sign-in has ended. The record in progress stays on the server with the person who made it; they can continue on any device.",
+			"action": "Sign in with account"
+		},
+		"sessionEnded": {
+			"heading": "Sign in again",
+			"body": "The sign-in has ended. Files in progress keep uploading and closed records stay in the queue.",
+			"closingQueued": "The record whose summary you confirmed will close only after you sign in again on this device.",
+			"action": "Sign in again"
+		},
+		"fullLogin": {
+			"heading": "Sign in with your account",
+			"body": {
+				"one": "More than {n} day has passed since you last signed in with your account. Afterwards you can sign in with your card, QR code or your current PIN again.",
+				"other": "More than {n} days have passed since you last signed in with your account. Afterwards you can sign in with your card, QR code or your current PIN again."
+			},
+			"bodyWithoutInterval": "Afterwards you can sign in with your card, QR code or your current PIN again.",
+			"action": "Sign in with account"
+		},
+		"providerUnavailable": {
+			"heading": "Sign-in cannot be completed right now",
+			"body": "The hospital sign-in service is not responding. Try again in a moment.",
+			"action": "Try again"
+		},
+		"accountInactive": {
+			"heading": "Account is not active",
+			"body": "Contact the hospital IT administrator."
+		},
+		"account": {
+			"title": "Change user",
+			"body": "Enter the personal number of an account used on this device. This ends the current user's sign-in; their files keep uploading and their record in progress stays on the server.",
+			"field": "Personal number",
+			"unknown": "This user is not signed in on this device.\nCheck the number or sign in with your account.",
+			"action": "Continue",
+			"signInWithAccount": "Sign in with account",
+			"close": "Close"
+		},
+		"card": {
+			"instruction": "Hold your device near your employee card.",
+			"heading": "Reading the card",
+			"body": "Hold your employee card to the back of the device.",
+			"cancel": "Cancel"
+		},
+		"cardUnreadable": {
+			"heading": "The card could not be read",
+			"body": "Use a QR code or a PIN.",
+			"action": "Try the card again",
+			"secondary": "Enter PIN"
+		},
+		"nfcDisabled": {
+			"heading": "NFC is off",
+			"body": "To sign in with a card, turn on NFC in the device settings.",
+			"action": "Open NFC settings",
+			"secondary": "Enter PIN"
+		},
+		"cameraDenied": {
+			"heading": "Camera access is off",
+			"body": "To read your personal QR code, allow Vulna to use the camera in Settings. You can also continue with your PIN.",
+			"action": "Enter PIN",
+			"secondary": "Open Settings"
+		},
+		"methodDisabled": "This sign-in method is turned off on this device.",
+		"technicalError": "Sign-in failed because of a technical error. Try again; if that does not help, contact the application administrator."
+	},
+	"codeScan": {
+		"cancel": "Cancel"
+	},
+	"cameraUnavailable": {
+		"title": "The camera can't start",
+		"body": "The camera could not be started right now. Try again, and if it keeps happening, contact the app administrator.",
+		"retry": "Try again"
+	},
+	"cardBinding": {
+		"title": "Card assignment",
+		"scanCode": {
+			"text": "Scan the code the administrator issued in the admin console."
+		},
+		"tapCard": {
+			"text": "Tap the user's card."
+		},
+		"done": {
+			"text": "Card assigned. The user can now sign in by tapping the card.",
+			"action": "Done"
+		},
+		"codeInvalid": {
+			"text": "The code is no longer valid. Ask the administrator for a new one."
+		},
+		"cardTaken": {
+			"text": "This card is assigned to another user. The administrator must remove the existing assignment first."
+		},
+		"nfcDisabled": {
+			"heading": "NFC is off",
+			"body": "To assign a card, turn on NFC in the device settings. Then come back to the app and hold the card to the device.",
+			"action": "Open NFC settings"
+		},
+		"cameraDenied": {
+			"body": "Allow the camera in the device settings."
+		},
+		"cancel": "Cancel"
+	},
+	"appUpdate": {
+		"heading": "The app needs to be updated",
+		"body": "This version of the app can no longer connect to the hospital server. Unsent records stay on the device and will be sent after the update. If no update is offered, contact the app administrator.",
+		"inSession": "The hospital server no longer accepts this version of the app. You can still complete and close the draft record you have already started; you cannot start a new record, and the app will offer other work only after the update. Closed records will wait.",
+		"version": "Version on this device {version}",
+		"finishDraft": "Complete and close the record",
+		"waitingFiles": {
+			"one": "{n} file is waiting to be sent.",
+			"other": "{n} files are waiting to be sent."
+		},
+		"nothingDeleted": "Nothing is deleted."
+	},
+	"access": {
+		"noRole": {
+			"heading": "You do not have access yet",
+			"body": "Contact the app administrator."
+		}
+	},
+	"session": {
+		"lock": "Lock the app",
+		"signOut": {
+			"action": "Sign out",
+			"offline": {
+				"heading": "You cannot sign out now",
+				"body": "The device cannot connect to the hospital server, so you cannot be signed out now. Your draft record on the server stays as it is.",
+				"action": "Try again"
+			},
+			"rejected": {
+				"heading": "Sign-out failed",
+				"body": "Try again."
+			},
+			"unclosed": {
+				"title": "The record is not closed",
+				"files": {
+					"photo": {
+						"one": "with {n} image",
+						"other": "with {n} images"
+					},
+					"scan": {
+						"one": "with {n} page",
+						"other": "with {n} pages"
+					}
+				},
+				"noFiles": {
+					"photo": "with no images",
+					"scan": "with no pages"
+				},
+				"body": "The record {files} is not closed yet. The server has it and it stays yours — close it through the summary, leave and continue later, or discard it.",
+				"bodyWithoutDiscard": "The record {files} is not closed yet. The server has it and it stays yours — close it through the summary, or leave and continue later.",
+				"close": "Close through the summary",
+				"discard": "Discard"
+			},
+			"unclosedMany": {
+				"title": "The records are not closed",
+				"body": {
+					"one": "You have {n} record that is not closed. The server has it and it stays yours.",
+					"other": "You have {n} records that are not closed. The server has them and they stay yours."
+				},
+				"show": "Show the records"
+			},
+			"leave": "Leave and continue later",
+			"closingQueuedTitle": "The record has not closed yet",
+			"cancel": "Cancel",
+			"uploading": {
+				"title": "Your files are still uploading",
+				"body": {
+					"one": "The server has not yet received {n} file that is uploading from this device. You can sign out once it receives it.",
+					"other": "The server has not yet received {n} files that are uploading from this device. You can sign out once it receives them."
+				},
+				"leaving": "Let the device lock. You will be signed out automatically when the session expires or when a colleague signs in. The files keep uploading even then.",
+				"closingQueued": "The record whose summary you confirmed will then close only after you sign in again on this device.",
+				"continue": "Continue working",
+				"queue": "Show the queue"
+			}
+		}
+	},
+	"settings": {
+		"close": "Close",
+		"title": "Account settings",
+		"language": {
+			"title": "App language",
+			"intro": "The language is saved to your account and applies on every device you sign in on.",
+			"selected": "selected",
+			"offline": {
+				"heading": "The language cannot be changed now",
+				"body": "The device cannot connect to the hospital server, so the language cannot be changed now. Your draft record on the server stays as it is.",
+				"action": "Try again"
+			},
+			"unsupported": "This language cannot be chosen now. We have refreshed the list of languages."
+		}
+	},
+	"patientIdentity": {
+		"sex": {
+			"female": "female",
+			"male": "male"
+		}
+	},
+	"remote": {
+		"retry": "Try again",
+		"serverError": "The server answered with an error. Try again; if that does not help, contact the application administrator.",
+		"noConnection": {
+			"heading": "No connection to the server",
+			"body": "The device cannot reach the hospital server. Without a connection nothing new is started and nothing is changed. A record in progress stays on the server as it is."
+		},
+		"documentationUnavailable": {
+			"heading": "Documentation is unavailable right now",
+			"body": "Documentation is not available right now. Try again in a moment."
+		},
+		"notFound": {
+			"heading": "We do not have this history",
+			"body": "The server keeps no history for this finding."
+		}
+	},
+	"textCase": {
+		"phaseAfterType": "lower"
+	},
+	"files": {
+		"photo": {
+			"one": "{n} image",
+			"other": "{n} images"
+		},
+		"scan": {
+			"one": "{n} page",
+			"other": "{n} pages"
+		},
+		"counter": "{count}/{limit}"
+	},
+	"queue": {
+		"title": "Queue status",
+		"close": "Close",
+		"empty": "Nothing is waiting in the queue.",
+		"uploading": "Uploading",
+		"failed": "Failed",
+		"detail": "{files} · {captured}",
+		"others": {
+			"one": "{n} record of another user",
+			"other": "{n} records of another user"
+		},
+		"othersWaiting": "waiting to be sent",
+		"othersFailed": {
+			"one": "{n} of them failed",
+			"other": "{n} of them failed"
+		}
+	},
+	"overview": {
+		"started": "In progress",
+		"planned": "Planned",
+		"today": "Today",
+		"recent": "Recent",
+		"tag": "Hold the NFC tag",
+		"code": "Scan a code",
+		"timeUnknown": "time not set",
+		"todayAt": "today {time}",
+		"draftDetail": "{files} · {changed}",
+		"draftDetailNote": "{files} · {changed} · {note}",
+		"unfinishedVisit": "Unfinished visit · {changed}",
+		"allDrafts": "Show all records in progress",
+		"noScheduled": "No visit is planned for you today.",
+		"nothingStarted": {
+			"heading": "You have no record in progress",
+			"body": "Find a patient below: with an NFC tag, by scanning a code or by searching."
+		},
+		"loadFailed": "The overview could not be loaded",
+		"waitingSince": "Waiting since {date}"
+	},
+	"drafts": {
+		"title": "Records in progress",
+		"close": "Close",
+		"menu": "Record options",
+		"empty": "You have no record in progress.",
+		"loadFailed": "The records in progress could not be loaded",
+		"discard": {
+			"action": "Discard",
+			"title": "Discard the record?",
+			"body": {
+				"photo": "The photos will be deleted on the server and nothing will be sent to PACS. This cannot be undone.",
+				"scan": "The pages will be deleted on the server and nothing will be sent to PACS. This cannot be undone."
+			},
+			"confirm": "Discard",
+			"cancel": "Cancel",
+			"failed": "The record could not be discarded"
+		}
+	},
+	"queueNotices": {
+		"openRecord": "Open the record",
+		"openSummary": "Open the summary",
+		"rejected": {
+			"title": "The server rejected your photo",
+			"titleScan": "The server rejected your page",
+			"body": "The server did not accept the photo from {time}. The record stays in progress: take the photo again in this record.",
+			"bodyScan": "The server did not accept the page from {time}. The record stays in progress: scan the page again in this record."
+		},
+		"unreadable": {
+			"title": "A photo cannot be read",
+			"titleScan": "A page cannot be read",
+			"body": "The photo from {time} cannot be read on this device, so it will not be sent. Take it again in this record.",
+			"bodyScan": "The page from {time} cannot be read on this device, so it will not be sent. Scan it again in this record."
+		},
+		"unused": {
+			"title": "The photo was not used",
+			"titleScan": "The page was not used",
+			"body": "The record has already been decided. The photo from {time} was therefore not used and we will not send it again. You do not need to take it again.",
+			"bodyScan": "The record has already been decided. The page from {time} was therefore not used and we will not send it again. You do not need to scan it again."
+		},
+		"unknownRecord": {
+			"title": "The server rejected the photo for good",
+			"titleScan": "The server rejected the page for good",
+			"body": "The server rejected the photo from {time} for good and it will not reach the PACS. Take the documentation again.",
+			"bodyScan": "The server rejected the page from {time} for good and it will not reach the PACS. Take the documentation again."
+		},
+		"slowed": {
+			"title": "The photo has not been sent yet",
+			"titleScan": "The page has not been sent yet",
+			"body": "Your photo from {time} could not be sent yet. We keep trying, just less often.",
+			"bodyScan": "Your page from {time} could not be sent yet. We keep trying, just less often."
+		},
+		"closure": {
+			"title": "We did not close the record",
+			"changed": "You changed the record on another device in the meantime. Check the summary and confirm it again.",
+			"fileRejected": "The server did not accept one photo — take it again. Check the summary and confirm it again.",
+			"fileRejectedScan": "The server did not accept one page — scan it again. Check the summary and confirm it again.",
+			"fileUnreadable": "One photo cannot be read on this device — take it again. Check the summary and confirm it again.",
+			"fileUnreadableScan": "One page cannot be read on this device — scan it again. Check the summary and confirm it again.",
+			"refused": "The server did not close the record. Check the summary and confirm it again."
+		},
+		"storageLost": {
+			"title": "Unsent photos cannot be read",
+			"body": "The photos that were waiting to be sent from this device cannot be read. Take them again."
+		}
+	},
+	"operatorNotices": {
+		"acknowledge": "Got it",
+		"discarded": {
+			"title": "Records in progress were discarded",
+			"body": {
+				"one": "{n} of your records in progress was discarded with the administrator's consent on {time}. Nothing from it was sent to PACS.",
+				"other": "{n} of your records in progress were discarded with the administrator's consent on {time}. Nothing from them was sent to PACS."
+			}
+		},
+		"reminder": {
+			"title": "Record in progress waiting since {date}",
+			"titleUndated": "Record in progress waiting",
+			"body": "The record of patient {patient} ({files}) is not closed yet. Close it, or discard it.",
+			"bodyUnknown": "Your record in progress is not closed yet. Close it, or discard it.",
+			"show": "Show"
+		},
+		"other": {
+			"title": "Notice",
+			"body": "The server has a notice for you."
+		}
+	},
+	"search": {
+		"placeholder": "Find a patient",
+		"clear": "Cancel search",
+		"tooShort": "Enter at least 3 characters.",
+		"notFound": {
+			"heading": "Patient not found",
+			"body": "No patient has an identifier that starts with the characters entered. Check the spelling, or scan the patient's wristband."
+		},
+		"tooBroad": {
+			"heading": "Narrow down the search",
+			"body": "There are more matches than can be shown. Type more characters of the identifier."
+		},
+		"rateLimited": {
+			"heading": "Search is temporarily limited",
+			"body": "You searched for and identified patients too often. Try again in {n} s."
+		},
+		"failed": "The search did not work"
+	},
+	"identification": {
+		"back": "Back to identification",
+		"cancel": "Cancel",
+		"tag": {
+			"instruction": "Hold the device near the patient's NFC tag.",
+			"heading": "Reading the NFC tag",
+			"body": "Hold the patient's NFC tag to the back of the device."
+		},
+		"codeNotSet": {
+			"heading": "The patient code is not set up",
+			"body": "The administrator has not yet set up how to read the patient code."
+		},
+		"tagNotMapped": {
+			"heading": "The tag does not identify the patient",
+			"body": "The tag does not carry a patient identifier as the hospital has set it up.",
+			"action": "Scan a code"
+		},
+		"tagUnreadable": {
+			"heading": "The tag could not be read",
+			"body": "Hold the tag again."
+		},
+		"nfcDisabled": {
+			"heading": "NFC is off",
+			"body": "To read the patient's tag, turn on NFC in the device settings.",
+			"action": "Open NFC settings"
+		},
+		"cameraDenied": {
+			"heading": "Camera access is off",
+			"body": "To read the patient code, allow Vulna to use the camera in Settings.",
+			"action": "Open Settings"
+		},
+		"notFound": {
+			"heading": "Patient not found",
+			"body": "The code read is not a patient identifier as the hospital has set it up. Check that you are scanning the patient's wristband and try again."
+		},
+		"tooBroad": {
+			"heading": "The identifier matches too many patients",
+			"body": "The server shows none of them. Contact the app administrator."
+		},
+		"rateLimited": {
+			"heading": "Identification is temporarily limited",
+			"body": "You identified patients too often. Try again in {n} s."
+		},
+		"failed": "The identification did not work"
+	},
+	"patient": {
+		"back": "Back",
+		"visits": "Visits",
+		"wounds": "All wounds",
+		"documents": "Documents",
+		"newVisit": "New visit",
+		"todayAt": "Today {time}",
+		"todayTimeUnknown": "Today · time not set",
+		"status": {
+			"planned": "Planned",
+			"inProgress": "In progress"
+		},
+		"noRecords": "no records",
+		"records": {
+			"one": "{n} record",
+			"other": "{n} records"
+		},
+		"start": "Start",
+		"continue": "Continue",
+		"loadFailed": "The patient detail could not be loaded",
+		"matches": {
+			"title": "Choose the patient",
+			"code": "The code matches more than one patient. Choose the patient by the issuer of the identifier.",
+			"tag": "The tag matches more than one patient. Choose the patient by the issuer of the identifier.",
+			"close": "Close"
+		}
+	},
+	"history": {
+		"title": "Visits",
+		"today": "Today",
+		"inProgress": "In progress",
+		"timeUnknown": "time not set",
+		"loadFailed": "The visits could not be loaded right now",
+		"empty": {
+			"heading": "The patient has no visits yet",
+			"body": "Start a new visit on the patient detail with the “New visit” button."
+		},
+		"completed": "The visit is finished and read only. Add further documentation in a new visit."
+	},
+	"wounds": {
+		"title": "Wounds",
+		"place": "{region} · {side}",
+		"unknownPlace": "Wound",
+		"typeAndPhase": "{type} · {phase}",
+		"period": "since {since} · last {last}",
+		"hint": "Take new photos in a visit with the Wound action. You choose which wound they belong to on the body diagram after taking them.",
+		"loadFailed": "The wounds could not be loaded right now",
+		"empty": {
+			"heading": "The patient has no wounds yet",
+			"body": "A wound appears with the first closed photo record in a visit."
+		},
+		"detail": {
+			"menu": "More options",
+			"tracked": "Tracked since {date} · {sessions}",
+			"sessions": {
+				"one": "{n} photo session",
+				"other": "{n} photo sessions"
+			},
+			"place": "{region} · {detail}",
+			"timeline": "Timeline",
+			"moment": "{date} · {time}",
+			"entry": "{phase} · {files}",
+			"typeChanged": "Wound type changed to {type}",
+			"typeChangedDetail": "{date} · previously {previous}",
+			"empty": "The wound has no closed photo record yet.",
+			"historyUnavailable": "The history cannot be loaded right now. Try again in a moment.",
+			"loadFailed": "The wound history could not be loaded right now"
+		},
+		"changeType": {
+			"action": "Change wound type",
+			"title": "Wound type",
+			"close": "Close",
+			"confirm": {
+				"title": "Change the wound type?",
+				"conflictTitle": "The wound type has changed meanwhile",
+				"body": "Wound type: {previous} → {next}. The change applies to records closed from now on; records already sent and images in PACS stay unchanged. It is written to the audit trail.",
+				"change": "Change",
+				"cancel": "Cancel"
+			},
+			"failed": "The wound type could not be changed right now",
+			"failedClose": "Close"
+		}
+	},
+	"documents": {
+		"title": "Documents",
+		"untitled": "Document",
+		"visit": "visit {date} · {time}",
+		"visitWithoutTime": "visit {date}",
+		"pacsOnly": "the server no longer keeps the image data",
+		"loadFailed": "The documents could not be loaded right now",
+		"empty": {
+			"heading": "The patient has no scanned documents yet",
+			"body": "Scan a document in a visit with the Document action."
+		}
+	},
+	"record": {
+		"title": "{place} · {date}",
+		"documentTitle": "Document",
+		"visit": "Visit",
+		"closedAt": "record closed at {time}",
+		"wound": "Wound",
+		"typeAndPhase": "Wound type · healing phase",
+		"note": "Note",
+		"pages": "Pages",
+		"page": "Page {index} {from} {count}",
+		"loadFailed": "The record could not be loaded right now",
+		"pacsOnly": "The server no longer keeps the image data. The images are in the hospital PACS.",
+		"study": "Study Instance UID {uid}",
+		"accession": "Accession Number {number}",
+		"viewer": {
+			"close": "Close",
+			"caption": "{date} · {region} · {detail}",
+			"captionWithoutRegion": "{date} · {detail}",
+			"viewingCopy": "A reduced copy is shown. The full-resolution original is in the hospital PACS.",
+			"originalInPacs": {
+				"title": "The original is in PACS only",
+				"photo": "The server no longer keeps the full image. The original is in the hospital PACS.",
+				"page": "The server no longer keeps the full page. The original is in the hospital PACS."
+			},
+			"unavailable": {
+				"label": "The image cannot be loaded right now",
+				"text": "The image is saved but cannot be shown right now. Try again later. You can keep taking and saving photos.",
+				"retry": "Try again"
+			},
+			"failed": "The image could not be loaded right now"
+		}
+	},
+	"visit": {
+		"title": "Visit {date} · {time}",
+		"titleWithoutTime": "Visit {date}",
+		"when": "{date} {time}",
+		"moment": "{date} · {time}",
+		"empty": {
+			"heading": "The visit is empty so far",
+			"body": "Choose below what to add: a wound or a document."
+		},
+		"photo": "Take photo",
+		"scan": "Scan",
+		"finish": "Finish visit",
+		"later": "Continue later",
+		"menu": "More options",
+		"record": {
+			"kind": {
+				"photo": "Wound",
+				"scan": "Document"
+			},
+			"menu": "Record options",
+			"move": "Change patient or visit",
+			"status": {
+				"draft": "In progress",
+				"received": "Done",
+				"unknown": "Unknown state"
+			},
+			"detail": "{files} · {time}",
+			"draftDetail": "{missing} · {files} · {time}"
+		},
+		"missing": {
+			"images": "images missing",
+			"pages": "pages missing",
+			"bodySite": "wound location missing",
+			"woundType": "wound type missing",
+			"healingPhase": "healing phase missing",
+			"documentTitle": "document title missing",
+			"image": "an image is missing",
+			"page": "a page is missing",
+			"summary": "summary not confirmed",
+			"closingQueued": "closes after the upload",
+			"onOtherDevice": "waiting on another device",
+			"unknown": "another step is missing"
+		},
+		"earlier": "The visit is {from} {date}. Nothing new can be added to it: finish your own record in progress and then finish the visit. New images belong to a new visit.",
+		"earlierFrom": {
+			"other": "from"
+		},
+		"earlierPlanned": "The visit was planned for {date} and never started. Read only; new photos belong to a new visit.",
+		"readOnly": {
+			"caption": "The visit is finished · read only. Add further documentation in a new visit.",
+			"close": "Close"
+		},
+		"confirmFinish": {
+			"title": "Finish the visit?",
+			"body": "{patient} · visit {when} · {records}. Nothing can be added to a finished visit and this cannot be undone. Nothing is sent by this — the records are already on the server.",
+			"confirm": "Finish visit",
+			"cancel": "Cancel"
+		},
+		"ownDraft": {
+			"title": "The visit cannot be finished yet",
+			"body": "The visit has your record in progress: {record} · {missing}. Close it with a summary or discard it; then finish the visit.",
+			"close": "Cancel"
+		},
+		"othersWorking": {
+			"title": "Someone is still working in the visit",
+			"body": "The visit can be finished once their record is closed. Try again later.",
+			"close": "OK"
+		},
+		"finishFailed": "The visit could not be finished",
+		"loadFailed": "The visit could not be loaded",
+		"cancel": {
+			"action": "Cancel visit",
+			"unavailable": "The visit already has a completed record.",
+			"confirm": {
+				"title": "Cancel the visit?",
+				"body": "The visit {when} will be cancelled. Its records in progress are discarded too and this cannot be undone.",
+				"confirm": "Cancel visit",
+				"keep": "Keep"
+			},
+			"refused": {
+				"title": "The visit cannot be cancelled",
+				"closedRecord": "The visit already has a completed record.",
+				"completed": "The visit has meanwhile been finished."
+			},
+			"failed": "The visit could not be cancelled",
+			"close": "Close"
+		},
+		"draft": {
+			"failed": "The record could not be started right now",
+			"limit": {
+				"title": "No new record for now",
+				"show": "Show records in progress",
+				"body": {
+					"one": "You have {n} record in progress, the most the hospital settings allow. All devices count. Close it or discard it.",
+					"other": "You have {n} records in progress, the most the hospital settings allow. All devices count. Close them or discard some."
+				},
+				"bodyWithoutCount": "You have as many records in progress as the hospital settings allow. All devices count. Close them or discard some."
+			},
+			"completed": {
+				"title": "The visit is finished",
+				"body": "Nothing more can be added to a finished visit. Start a new visit for further documentation."
+			},
+			"closed": {
+				"title": "Nothing more can be added to this visit",
+				"cancelled": "The visit was cancelled. Start a new visit for further documentation.",
+				"earlier": "The visit is from an earlier day. Start a new visit for further documentation."
+			},
+			"newVisit": "New visit",
+			"close": "Close"
+		}
+	},
+	"move": {
+		"title": "Move record",
+		"findPatient": "Find the patient the record belongs to: by NFC tag or by scanning the code.",
+		"chooseVisit": "Choose a visit",
+		"choose": "Choose",
+		"noOtherVisit": "The patient has no other open visit today. You move the record to a new visit.",
+		"newVisit": "New visit",
+		"loadFailed": "The patient's visits could not be loaded",
+		"back": "Back",
+		"confirm": {
+			"title": "Move the record?",
+			"otherPatient": "The record {record} ({files}) moves to another patient. From: {from}. To: {to}.",
+			"otherVisit": "The record {record} ({files}) moves to another visit. From: {from}. To: {to}.",
+			"woundAgain": "You choose the wound again on the new patient's body diagram.",
+			"patientAtVisit": "{patient} · {visit}",
+			"visit": "visit {when}",
+			"newVisit": "new visit",
+			"move": "Move",
+			"cancel": "Cancel"
+		},
+		"refused": {
+			"title": "The record cannot be moved here",
+			"otherPatient": "The visit or the wound belongs to another patient. The record stayed as it was.",
+			"closedVisit": "Nothing more can be added to this visit. Choose another visit or start a new one.",
+			"chooseVisit": "Choose visit"
+		},
+		"closed": {
+			"title": "The record is closed",
+			"body": "The assignment of a closed record cannot be changed, even if it has not reached PACS yet. Report the mistake to the application administrator."
+		},
+		"failed": "The record could not be moved right now",
+		"close": "Close"
+	},
+	"recordChanged": {
+		"title": "The record has changed meanwhile",
+		"body": "You have meanwhile changed the record on another device. We show its current state; if the change is still needed, make it again.",
+		"close": "OK"
+	},
+	"capture": {
+		"title": "Wound photo",
+		"close": "Close",
+		"closeEmpty": {
+			"title": "Close without a photo?",
+			"body": "There is no photo in the record yet.",
+			"cancelRecord": "Cancel record",
+			"keepDraft": "Keep draft",
+			"failed": "The record could not be cancelled right now"
+		},
+		"torch": "Light",
+		"shutter": "Take photo",
+		"continue": "Continue",
+		"addSlot": "Add photo",
+		"photo": "Photo {index}",
+		"counter": "Photos taken: {count} {from} {limit}",
+		"review": {
+			"title": "Photo {index} {from} {count}",
+			"from": {
+				"other": "of"
+			},
+			"back": "Back",
+			"delete": "Delete",
+			"rotate": "Rotate",
+			"crop": "Crop",
+			"close": "Close",
+			"retake": {
+				"action": "Take again",
+				"rejected": "The server did not accept the photo — take it again.",
+				"unreadable": "The photo cannot be read — take it again."
+			},
+			"confirmDelete": {
+				"title": "Delete the photo?",
+				"body": "The photo will be removed from the series. This cannot be undone.",
+				"confirm": "Delete",
+				"cancel": "Cancel"
+			}
+		},
+		"denied": {
+			"heading": "You cannot take photos without the camera",
+			"body": "Allow the camera in the device settings.",
+			"settings": "Open settings"
+		},
+		"failure": {
+			"queueFull": {
+				"title": "The queue is full",
+				"body": "Too many files on this device are waiting to be sent, so no more photos can be taken right now. Everything waiting stays on the device and will be sent once there is a connection."
+			},
+			"storageFull": {
+				"title": "The photo was not taken",
+				"body": "The device has no space left, so the photo was not taken. Nothing is deleted from the queue or from copies the server has not confirmed yet. Free up space on the device or contact the app administrator."
+			},
+			"unreadable": {
+				"title": "The photo cannot be sent",
+				"body": "The photo could not be prepared for sending. Please take it again."
+			},
+			"editFailed": "The change could not be made right now",
+			"close": "OK"
+		},
+		"crop": {
+			"title": "Crop",
+			"cancel": "Cancel",
+			"done": "Done"
+		},
+		"earlier": {
+			"caption": "{date} · {region} · {detail}",
+			"captionWithoutRegion": "{date} · {detail}"
+		},
+		"step": {
+			"back": "Back"
+		},
+		"save": {
+			"close": "Close"
+		},
+		"location": {
+			"title": "Wound location",
+			"map": "Body diagram",
+			"side": {
+				"R": "patient's right side",
+				"L": "patient's left side"
+			},
+			"view": {
+				"anterior": "from the front",
+				"posterior": "from the back",
+				"right_lateral": "from the right side",
+				"left_lateral": "from the left side",
+				"plantar": "from below",
+				"dorsal": "from above"
+			},
+			"detail": "{side} · {view}",
+			"detailUnpaired": "{view}",
+			"newWound": "New wound",
+			"existingWound": "Wound {number}",
+			"existingWoundLast": "Wound {number} · last photographed {date}",
+			"earlierPhotos": "Earlier photos of the wound",
+			"hint": {
+				"heading": "Tap the figure to add a new wound.",
+				"body": "Tap a number to choose a wound the patient already has and take its follow-up photos."
+			},
+			"clear": "Clear the selected spot",
+			"continue": "Continue",
+			"loadFailed": "The body diagram could not be loaded right now",
+			"saveFailed": "The wound location could not be saved right now"
+		},
+		"woundType": {
+			"title": "Wound type",
+			"saveFailed": "The wound type could not be saved right now"
+		},
+		"healingPhase": {
+			"title": "Healing phase",
+			"lastBadge": "last time {date}",
+			"saveFailed": "The healing phase could not be saved right now"
+		},
+		"choice": {
+			"loadFailed": "The code list could not be loaded right now"
+		},
+		"summary": {
+			"title": "Summary",
+			"visit": "Visit",
+			"wound": "Wound",
+			"newWound": "New wound",
+			"typeAndPhase": "Wound type · healing phase",
+			"note": "Note (optional)",
+			"addNote": "Add a note",
+			"addTile": "Add",
+			"serverFile": {
+				"remove": "Remove",
+				"cancel": "Cancel",
+				"rejected": {
+					"photo": "The server did not accept this photo. Take it again or remove it from the record.",
+					"scan": "The server did not accept this page. Scan it again or remove it from the record."
+				},
+				"unreadable": {
+					"photo": "The photo cannot be read on this device. Take it again or remove it from the record.",
+					"scan": "The page cannot be read on this device. Scan it again or remove it from the record."
+				}
+			},
+			"confirm": "Confirm and close",
+			"loadFailed": "The summary could not be loaded right now"
+		},
+		"note": {
+			"title": "Note",
+			"placeholder": "Write a note about the wound",
+			"save": "Save",
+			"close": "Close",
+			"saveFailed": "The note could not be saved right now"
+		},
+		"closing": {
+			"closing": "Closing…",
+			"ok": "OK",
+			"close": "Close",
+			"rejectedMark": "The server did not accept this file",
+			"unreadableMark": "This file cannot be read",
+			"otherDeviceMark": "This file is waiting on another device",
+			"queued": {
+				"title": "The record will close after the upload",
+				"body": "You confirmed the summary. The record closes by itself once the server receives the remaining files ({n}). You can keep working in the meantime.",
+				"bodyOffline": "You confirmed the summary. The record closes by itself once there is a connection."
+			},
+			"noResponse": {
+				"title": "The record could not be closed right now",
+				"body": "The server is not responding. The photos are saved and the record stays in progress.",
+				"bodyScan": "The server is not responding. The pages are saved and the record stays in progress.",
+				"retry": "Try again",
+				"later": "Finish later"
+			},
+			"rejected": {
+				"title": "The photo was not accepted",
+				"body": "The server did not accept one photo. Remove it or take a new one, then confirm the record again.",
+				"titleScan": "The page was not accepted",
+				"bodyScan": "The server did not accept one page. Remove it or scan a new one, then confirm the record again."
+			},
+			"unreadable": {
+				"title": "A photo cannot be read",
+				"body": "One photo cannot be read on this device. Take it again or remove it, then confirm the record again.",
+				"titleScan": "A page cannot be read",
+				"bodyScan": "One page cannot be read on this device. Scan it again or remove it, then confirm the record again."
+			},
+			"changed": {
+				"body": "The record changed on another device. Check the summary and confirm it again."
+			},
+			"otherDevice": {
+				"title": "A photo is waiting on another device",
+				"body": "The record has a photo that has not been uploaded from another device yet. Close the record once the photo arrives, or remove it from the record.",
+				"titleScan": "A page is waiting on another device",
+				"bodyScan": "The record has a page that has not been uploaded from another device yet. Close the record once the page arrives, or remove it from the record."
+			},
+			"missing": {
+				"title": "The record cannot be closed yet",
+				"body": "Missing: {missing}. Fill them in and you can confirm the summary.",
+				"markLocation": "Mark the wound location",
+				"addHealingPhase": "Add the healing phase",
+				"separator": " · ",
+				"steps": {
+					"bodySite": "wound location",
+					"woundType": "wound type",
+					"healingPhase": "healing phase",
+					"documentTitle": "document title",
+					"images": "photos",
+					"pages": "pages",
+					"other": "another step"
+				}
+			}
+		}
+	},
+	"scan": {
+		"title": "Document scan",
+		"close": "Close",
+		"closeEmpty": {
+			"title": "Close without a page?",
+			"body": "There is no page in the record yet."
+		},
+		"shutter": "Scan page",
+		"addSlot": "Next page",
+		"page": "Page {index}",
+		"counter": "Pages scanned: {count} {from} {limit}",
+		"failure": {
+			"unreadable": {
+				"title": "The page was not scanned",
+				"body": "The page could not be prepared for sending. Please scan it again."
+			}
+		},
+		"edgesNotFound": {
+			"title": "No edges found",
+			"body": "Outline the document by hand, or keep the page without correction.",
+			"crop": "Outline by hand",
+			"keep": "Keep without correction"
+		},
+		"review": {
+			"title": "Page {index} {from} {count}",
+			"removeTitle": "Remove the page?",
+			"removeBody": "The page will be deleted on the server and not replaced. This cannot be undone.",
+			"remove": "Remove page",
+			"cancel": "Cancel",
+			"retake": {
+				"action": "Scan again",
+				"rejected": "The server did not accept the page — scan it again.",
+				"unreadable": "The page cannot be read — scan it again."
+			}
+		},
+		"crop": {
+			"title": "Crop page",
+			"whole": "Whole page",
+			"apply": "Apply",
+			"corner": "Page corner {index}"
+		},
+		"documentTitle": {
+			"title": "Document title",
+			"custom": "Custom title…",
+			"continue": "Continue",
+			"saveFailed": "The document title could not be saved right now"
+		},
+		"customTitle": {
+			"title": "Custom title",
+			"placeholder": "Type the document title",
+			"save": "Save",
+			"close": "Close"
+		},
+		"summary": {
+			"documentTitle": "Document title",
+			"addTile": "Add"
+		}
+	}
+}

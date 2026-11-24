@@ -1,0 +1,162 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"title": "Adapter manifest",
+	"description": "Closed adapter manifest ✓ ADR-003 ř. 26. Whatever is not in the manifest, the adapter must not do. Gates B2 (package inventory) and B3 (per-process network test) read it ✓ ADR-001 ř. 26–27.",
+	"type": "object",
+	"required": [
+		"name",
+		"ports",
+		"processes",
+		"outboundCommunication",
+		"inboundCommunication",
+		"configurationSchema",
+		"secrets",
+		"thirdPartyComponents",
+		"source"
+	],
+	"additionalProperties": true,
+	"properties": {
+		"name": {
+			"type": "string",
+			"pattern": "^@ansora/[a-z0-9]+-adapter-[a-z0-9-]+$"
+		},
+		"description": {
+			"type": "string"
+		},
+		"ports": {
+			"type": "array",
+			"description": "Porty z katalogu ✓ docs/spec/architektura.md kap. 3.",
+			"items": {
+				"enum": [
+					"ImageArchive",
+					"DocumentArchive",
+					"PatientDirectory",
+					"EncounterContext",
+					"RegistrySource",
+					"ClinicalRecordStore",
+					"ImageHistory",
+					"IdentityProvider",
+					"AuditSink",
+					"BinaryStore"
+				]
+			}
+		},
+		"processes": {
+			"type": "array",
+			"description": "Processes the adapter is loaded in. MOÚ profile adapters add no further image, long-running process or listening port ✓ ADR-003 ř. 42.",
+			"items": {
+				"enum": [
+					"api",
+					"worker"
+				]
+			}
+		},
+		"outboundCommunication": {
+			"type": "array",
+			"description": "Outbound targets. Their union across all adapters must not exceed the PACS, the identity provider and the log management system, plus the database ✓ ADR-001 ř. 27, NAB-050 až NAB-052, and the clinical record store on the loopback of the host when the profile carries it ✓ ADR-042 bod 7, ADR-054 bod 3.",
+			"items": {
+				"type": "object",
+				"required": [
+					"target",
+					"protocol",
+					"source"
+				],
+				"properties": {
+					"target": {
+						"enum": [
+							"pacs",
+							"identity-provider",
+							"log-management",
+							"database",
+							"clinical-record-store"
+						]
+					},
+					"protocol": {
+						"type": "string"
+					},
+					"role": {
+						"type": "string"
+					},
+					"source": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"inboundCommunication": {
+			"type": "array",
+			"description": "Listening ports. A MOÚ profile adapter adds none ✓ ADR-003 ř. 42.",
+			"items": {
+				"type": "object"
+			}
+		},
+		"configurationSchema": {
+			"type": "object",
+			"description": "Configuration items of the adapter. Per deployment only value tables, addresses and parameters change ✓ ADR-003 ř. 27, SML-094.",
+			"additionalProperties": {
+				"type": "object",
+				"required": [
+					"type"
+				],
+				"additionalProperties": false,
+				"properties": {
+					"type": {
+						"anyOf": [
+							{
+								"type": "string"
+							},
+							{
+								"type": "array",
+								"items": {
+									"type": "string"
+								}
+							}
+						]
+					},
+					"required": {
+						"type": "boolean"
+					},
+					"outboundTarget": {
+						"type": "boolean"
+					},
+					"default": {},
+					"enum": {
+						"type": "array"
+					},
+					"minimum": {
+						"type": "number"
+					},
+					"maximum": {
+						"type": "number"
+					},
+					"pattern": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"secrets": {
+			"type": "array",
+			"description": "Secret names. Secrets live outside the code ✓ NAB-465.",
+			"items": {
+				"type": "string"
+			}
+		},
+		"thirdPartyComponents": {
+			"type": "array",
+			"description": "Each one is in the SBOM ✓ NAB-471 and under the 24-hour vulnerability regime ✓ TS-113, SML-056.",
+			"items": {
+				"type": "object"
+			}
+		},
+		"source": {
+			"type": "string"
+		},
+		"note": {
+			"type": "string"
+		}
+	}
+}

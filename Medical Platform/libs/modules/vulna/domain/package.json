@@ -1,0 +1,32 @@
+{
+	"name": "@ansora/vulna-domain",
+	"version": "0.0.0",
+	"private": true,
+	"description": "Vulna domain: subject, encounter, finding, acquisition, assessment, document, artifact, delivery ✓ ADR-004.",
+	"license": "UNLICENSED",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		},
+		"./ports": {
+			"types": "./dist/ports/index.d.ts",
+			"default": "./dist/ports/index.js"
+		}
+	},
+	"scripts": {
+		"build": "tsc --build",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"@ansora/contracts": "workspace:*"
+	},
+	"nx": {
+		"tags": [
+			"layer:domain",
+			"process:shared"
+		]
+	}
+}

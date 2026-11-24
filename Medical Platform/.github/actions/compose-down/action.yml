@@ -1,0 +1,9 @@
+# ✓ Q-051
+name: compose down
+description: Containers, networks and volumes of the compose project of this repository, all profiles
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: docker compose --profile '*' down --volumes --remove-orphans --timeout 10

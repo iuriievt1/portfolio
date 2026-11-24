@@ -1,0 +1,10 @@
+import { CONFIGURATION_KEY, type ConfigurationKey } from "@ansora/contracts"
+
+export { CONFIGURATION_KEY, type ConfigurationKey }
+
+export const QUICK_LOGIN_METHOD_KEYS: readonly ConfigurationKey[] = [
+	CONFIGURATION_KEY.LOGIN_METHOD_CARD,
+	CONFIGURATION_KEY.LOGIN_METHOD_QR,
+	CONFIGURATION_KEY.LOGIN_METHOD_BARCODE,
+	CONFIGURATION_KEY.LOGIN_METHOD_PIN,
+]

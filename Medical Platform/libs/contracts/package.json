@@ -1,0 +1,32 @@
+{
+	"name": "@ansora/contracts",
+	"version": "0.0.0",
+	"private": true,
+	"description": "Types generated from OpenAPI, API version, error codes ✓ ADR-012.",
+	"license": "UNLICENSED",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "tsc --build",
+		"test": "vitest run",
+		"bundle": "redocly bundle ../../docs/spec/api/mobile/index.yaml -o bundled/mobile.yaml && redocly bundle ../../docs/spec/api/administration.yaml -o bundled/administration.yaml",
+		"generate": "pnpm bundle && openapi-typescript bundled/mobile.yaml -o src/generated/mobile.ts && openapi-typescript bundled/administration.yaml -o src/generated/administration.ts",
+		"gate": "redocly lint ../../docs/spec/api/mobile/index.yaml ../../docs/spec/api/administration.yaml && pnpm generate && git diff --exit-code -- src/generated"
+	},
+	"devDependencies": {
+		"@redocly/cli": "^2.5.0",
+		"openapi-typescript": "^7.9.1"
+	},
+	"nx": {
+		"tags": [
+			"layer:contracts",
+			"process:shared"
+		]
+	}
+}

@@ -1,0 +1,1198 @@
+{
+	"signIn": {
+		"retry": "Zkusit znovu",
+		"restart": "Začít znovu",
+		"back": "Zpět",
+		"errors": {
+			"noConnection": {
+				"heading": "Teď se nelze přihlásit",
+				"body": "Zařízení se nespojí se serverem nemocnice. Zkontrolujte připojení a zkuste to znovu. Neodeslané záznamy počkají."
+			},
+			"providerUnavailable": {
+				"heading": "Přihlášení teď nejde dokončit",
+				"body": "Přihlašovací služba nemocnice neodpovídá. Zkuste to za chvíli."
+			},
+			"loginFailed": {
+				"heading": "Přihlášení se nepovedlo",
+				"body": "Zkuste to znovu, nebo použijte jiný způsob přihlášení."
+			},
+			"accountInactive": {
+				"heading": "Účet není aktivní",
+				"body": "Obraťte se na správce IT nemocnice."
+			},
+			"incomplete": {
+				"heading": "Přihlášení ještě neskončilo",
+				"body": "Dokončete přihlášení v okně organizace, nebo začněte znovu."
+			},
+			"completionInvalid": {
+				"heading": "Přihlášení se nedokončilo",
+				"body": "Přihlášení trvalo příliš dlouho nebo už proběhlo. Začněte ho znovu."
+			},
+			"deviceMismatch": {
+				"heading": "Přihlášení se nepovedlo",
+				"body": "Přihlášení nepatří k tomuto zařízení. Začněte ho znovu na zařízení, které držíte. Pokud jste přihlášení nezahajovali, řekněte to správci aplikace."
+			},
+			"identityMismatch": {
+				"heading": "Přihlášení se nepovedlo",
+				"body": "Údaje, které jste zadali v přihlašovacím okně, nepatří k účtu {name}. Přihlaste se údaji tohoto účtu, nebo zvolte Změnit."
+			},
+			"stale": {
+				"heading": "Přihlášení se nepovedlo",
+				"body": "Přihlašovací služba nemocnice údaje znovu nevyžádala. Začněte přihlášení znovu; pokud se to opakuje, obraťte se na správce aplikace."
+			},
+			"personalNumberMissing": {
+				"heading": "Přihlášení se nepovedlo",
+				"body": "Přihlašovací služba nemocnice nevrátila osobní číslo vašeho účtu. Obraťte se na IT nemocnice."
+			},
+			"authorizationMismatch": {
+				"heading": "Přihlášení nelze zahájit",
+				"body": "Přihlašovací služba, na kterou server odkazuje, neodpovídá nastavení tohoto zařízení. Nikam se nepřihlašujte a obraťte se na IT nemocnice.",
+				"forIt": "Pro IT",
+				"serverEndpoint": "Adresa autorizace od serveru",
+				"providerEndpoint": "Adresa autorizace poskytovatele",
+				"discoveryUrl": "Adresa discovery na zařízení",
+				"providerIssuerMismatch": "vydavatel discovery se liší od vydavatele, kterého uvádí server"
+			}
+		},
+		"pinSetup": {
+			"heading": "Zvolte PIN",
+			"body": "PINem se na tomto zařízení přihlásíte příště. Má 4 až 8 číslic.",
+			"replaces": "Zvolte nový PIN. Dosavadní PIN už na tomto zařízení neplatí.",
+			"violation": {
+				"length": {
+					"one": "PIN musí mít nejméně {n} číslici. Zvolte jiný PIN.",
+					"few": "PIN musí mít nejméně {n} číslice. Zvolte jiný PIN.",
+					"other": "PIN musí mít nejméně {n} číslic. Zvolte jiný PIN."
+				},
+				"complexity": {
+					"one": "PIN musí mít nejméně {n} číslici a splnit pravidla nemocnice: {rules}. Zvolte jiný PIN.",
+					"few": "PIN musí mít nejméně {n} číslice a splnit pravidla nemocnice: {rules}. Zvolte jiný PIN.",
+					"other": "PIN musí mít nejméně {n} číslic a splnit pravidla nemocnice: {rules}. Zvolte jiný PIN."
+				},
+				"rules": "bez stejných ani po sobě jdoucích číslic"
+			},
+			"action": "Pokračovat"
+		}
+	},
+	"bootstrap": {
+		"heading": "Aplikace není nakonfigurovaná",
+		"missing": {
+			"serverUrl": "Chybí platná adresa integračního serveru.",
+			"oidcDiscoveryUrl": "Chybí platná adresa OIDC discovery.",
+			"pinningFingerprints": "Chybí platné otisky pro pinning certifikátu serveru."
+		},
+		"contactIt": "Obraťte se na IT oddělení."
+	},
+	"device": {
+		"checking": {
+			"heading": "Spojování a ověřování",
+			"body": "Zařízení se připojuje k nemocnici."
+		},
+		"unregistered": {
+			"heading": "Vítejte",
+			"body": "Vulna slouží k pořízení fotodokumentace ran a ke skenování dokumentů u lůžka. Zařízení se nejdřív zaregistruje u nemocnice.",
+			"action": "Zaregistrovat zařízení",
+			"note": "Nic nenastavujete. Po registraci se přihlásíte svým nemocničním účtem."
+		},
+		"pending_approval": {
+			"heading": "Zařízení čeká na schválení",
+			"body": "Požádejte správce IT o schválení tohoto zařízení a ukažte mu tento kód.",
+			"codeLabel": "Kód tohoto zařízení",
+			"note": "Aplikaci můžete zavřít. Při návratu schválení znovu ověříme.",
+			"noteChecked": "Zařízení stále čeká na schválení IT. Aplikaci můžete zavřít; při návratu stav znovu ověříme.",
+			"action": "Zkontrolovat schválení",
+			"actionAgain": "Zkontrolovat znovu",
+			"details": "Informace pro IT"
+		},
+		"approved": {
+			"heading": "Přihlášení",
+			"body": "Přihlaste se svým nemocničním účtem. Otevře se zabezpečené přihlašovací okno nemocnice.",
+			"action": "Přihlásit nemocničním účtem"
+		},
+		"revoked": {
+			"heading": "Zařízení je zneplatněné",
+			"body": "Správce toto zařízení zneplatnil a data aplikace v něm byla smazána. Obraťte se na IT oddělení."
+		},
+		"blocked": {
+			"heading": "Aplikaci na tomto zařízení nelze použít",
+			"body": "Byl zjištěn zásah do operačního systému. Zařízení se proto nezaregistruje. Obraťte se na správce aplikace."
+		},
+		"unreachable": {
+			"heading": "Připojení není dostupné",
+			"body": "Zkontrolujte připojení k síti nemocnice nebo její VPN. Potom to zkuste znovu.",
+			"note": "Pokud potíže trvají, obraťte se na správce IT.",
+			"action": "Zkusit znovu"
+		},
+		"itInformation": {
+			"heading": "Informace pro IT",
+			"body": "Tyto údaje pomohou správci IT při řešení přístupu k aplikaci.",
+			"model": "Model",
+			"system": "Systém",
+			"version": "Verze aplikace",
+			"close": "Zavřít"
+		},
+		"blockedRegistered": {
+			"heading": "Aplikace je na tomto zařízení zablokovaná",
+			"body": "Byl zjištěn zásah do operačního systému. Data aplikace byla smazána.",
+			"bodyWithUnsent": {
+				"one": "Byl zjištěn zásah do operačního systému. Data aplikace včetně {n} neodeslaného záznamu byla smazána.",
+				"few": "Byl zjištěn zásah do operačního systému. Data aplikace včetně {n} neodeslaných záznamů byla smazána.",
+				"other": "Byl zjištěn zásah do operačního systému. Data aplikace včetně {n} neodeslaných záznamů byla smazána."
+			},
+			"detected": "Zjištěno",
+			"reported": {
+				"advice": {
+					"heading": "Co dělat",
+					"body": "Obraťte se na správce aplikace. Po přezkoumání zařízení odblokuje a aplikaci znovu zaregistrujete. Novou registraci musí správce schválit, i když je zařízení spravované přes MDM."
+				},
+				"delivery": "serveru ohlášeno"
+			},
+			"awaiting": {
+				"advice": {
+					"heading": "Serveru nemocnice se to zatím nepodařilo ohlásit",
+					"body": "Řekněte správci aplikace, které zařízení to je. Po přezkoumání zařízení odblokuje a aplikaci znovu zaregistrujete."
+				},
+				"delivery": "hlášení odejde, jakmile bude spojení"
+			},
+			"unreported": {
+				"delivery": "serveru neohlášeno"
+			}
+		}
+	},
+	"permissions": {
+		"heading": "Oprávnění",
+		"body": "Pro focení ran, skenování dokumentů a přihlášení kartou potřebuje aplikace přístup ke kameře a k NFC. Zařízení se teď zeptá na obojí.",
+		"camera": {
+			"title": "Kamera",
+			"body": "Pro focení ran a skenování dokumentů u lůžka."
+		},
+		"nfc": {
+			"title": "NFC",
+			"body": "Pro přihlášení zaměstnaneckou kartou a načtení štítku pacienta."
+		},
+		"note": "Když něco nepovolíte, aplikace vás na to upozorní až u dané činnosti. Změnit to jde kdykoli v Nastavení zařízení.",
+		"action": "Povolit přístup"
+	},
+	"language": "cs",
+	"languageName": "Čeština",
+	"unlock": {
+		"heading": "Zadejte PIN",
+		"hint": "Zadejte PIN na číselníku.",
+		"unlock": "Odemknout",
+		"signIn": "Přihlásit",
+		"changeAccount": "Změnit",
+		"methods": {
+			"qrCode": "QR kód",
+			"barcode": "Čárový kód",
+			"card": "Karta",
+			"account": "Účet"
+		},
+		"verifying": {
+			"heading": {
+				"pin": "Ověřujeme PIN",
+				"card": "Ověřujeme kartu",
+				"qrCode": "Ověřujeme QR kód",
+				"barcode": "Ověřujeme čárový kód"
+			},
+			"body": "Ověřujeme vaše přihlášení…",
+			"action": "Ověřování…"
+		},
+		"wrongPin": {
+			"delay": "Přihlášení se nepovedlo.\nPřed dalším pokusem chvíli počkejte.",
+			"retry": "Přihlášení se nepovedlo. Zkuste to znovu, nebo použijte jiný způsob přihlášení."
+		},
+		"challenge": "Zkuste to prosím znovu.",
+		"changeUser": "Změnit uživatele",
+		"offline": {
+			"heading": "Odemknutí čeká na spojení",
+			"body": "Zařízení se nespojí se serverem nemocnice, a proto aplikaci teď neodemkneme ani nepřihlásíme jiného uživatele. Rozpracovaný záznam čeká na serveru a neodeslané soubory v zařízení zůstávají.",
+			"action": "Zkusit znovu"
+		},
+		"blocked": {
+			"heading": "Přihlášení je na tomto zařízení zablokované",
+			"body": "Příliš mnoho neúspěšných pokusů. Přihlaste se účtem a zvolte nový PIN. Záznamy ve frontě zůstávají.",
+			"unlockNote": "Přihlášení skončilo. Rozpracovaný záznam zůstává na serveru tomu, kdo ho pořídil; pokračovat v něm může na kterémkoli zařízení.",
+			"action": "Přihlásit účtem"
+		},
+		"sessionEnded": {
+			"heading": "Přihlaste se znovu",
+			"body": "Přihlášení skončilo. Rozpracované soubory se dál nahrávají a uzavřené záznamy ve frontě zůstávají.",
+			"closingQueued": "Záznam, jehož souhrn jste potvrdili, se uzavře až po vašem dalším přihlášení na tomto zařízení.",
+			"action": "Znovu se přihlásit"
+		},
+		"fullLogin": {
+			"heading": "Přihlaste se účtem",
+			"body": {
+				"one": "Od posledního přihlášení účtem uplynul víc než {n} den. Potom se zase přihlásíte i kartou, QR kódem nebo svým dosavadním PINem.",
+				"few": "Od posledního přihlášení účtem uplynuly víc než {n} dny. Potom se zase přihlásíte i kartou, QR kódem nebo svým dosavadním PINem.",
+				"other": "Od posledního přihlášení účtem uplynulo víc než {n} dnů. Potom se zase přihlásíte i kartou, QR kódem nebo svým dosavadním PINem."
+			},
+			"bodyWithoutInterval": "Potom se zase přihlásíte i kartou, QR kódem nebo svým dosavadním PINem.",
+			"action": "Přihlásit účtem"
+		},
+		"providerUnavailable": {
+			"heading": "Přihlášení teď nejde dokončit",
+			"body": "Přihlašovací služba nemocnice neodpovídá. Zkuste to za chvíli.",
+			"action": "Zkusit znovu"
+		},
+		"accountInactive": {
+			"heading": "Účet není aktivní",
+			"body": "Obraťte se na správce IT nemocnice."
+		},
+		"account": {
+			"title": "Změnit uživatele",
+			"body": "Zadejte osobní číslo účtu používaného na tomto zařízení. Přihlášení současného uživatele tím skončí; jeho soubory se dál nahrávají a rozpracovaný záznam zůstane na serveru.",
+			"field": "Osobní číslo",
+			"unknown": "Tento uživatel není na zařízení přihlášený.\nZkontrolujte číslo nebo se přihlaste účtem.",
+			"action": "Pokračovat",
+			"signInWithAccount": "Přihlásit účtem",
+			"close": "Zavřít"
+		},
+		"card": {
+			"instruction": "Podržte zařízení u zaměstnanecké karty.",
+			"heading": "Čtení karty",
+			"body": "Přiložte zaměstnaneckou kartu k zadní straně zařízení.",
+			"cancel": "Zrušit"
+		},
+		"cardUnreadable": {
+			"heading": "Kartu se nepodařilo přečíst",
+			"body": "Použijte QR kód nebo PIN.",
+			"action": "Zkusit kartu znovu",
+			"secondary": "Zadat PIN"
+		},
+		"nfcDisabled": {
+			"heading": "NFC je vypnuté",
+			"body": "Pro přihlášení kartou zapněte v nastavení zařízení NFC.",
+			"action": "Otevřít nastavení NFC",
+			"secondary": "Zadat PIN"
+		},
+		"cameraDenied": {
+			"heading": "Kamera není povolená",
+			"body": "Pro načtení osobního QR kódu povolte Vulně kameru v Nastavení. Pokračovat můžete také PINem.",
+			"action": "Zadat PIN",
+			"secondary": "Otevřít nastavení"
+		},
+		"methodDisabled": "Tento způsob přihlášení je na tomto zařízení vypnutý.",
+		"technicalError": "Přihlášení se nepovedlo kvůli technické chybě. Zkuste to znovu; když to nepomůže, obraťte se na správce aplikace."
+	},
+	"codeScan": {
+		"cancel": "Zrušit"
+	},
+	"cameraUnavailable": {
+		"title": "Fotoaparát nejde spustit",
+		"body": "Fotoaparát se teď nepodařilo spustit. Zkuste to znovu, a pokud se to opakuje, obraťte se na správce aplikace.",
+		"retry": "Zkusit znovu"
+	},
+	"cardBinding": {
+		"title": "Přiřazení karty",
+		"scanCode": {
+			"text": "Naskenujte kód, který správce vydal v administraci."
+		},
+		"tapCard": {
+			"text": "Přiložte kartu uživatele."
+		},
+		"done": {
+			"text": "Karta přiřazena. Uživatel se od teď přihlásí přiložením karty.",
+			"action": "Hotovo"
+		},
+		"codeInvalid": {
+			"text": "Kód už neplatí. Požádejte správce o nový."
+		},
+		"cardTaken": {
+			"text": "Tuto kartu má přiřazenou jiný uživatel. Správce musí původní přiřazení zrušit."
+		},
+		"nfcDisabled": {
+			"heading": "NFC je vypnuté",
+			"body": "Pro přiřazení karty zapněte v nastavení zařízení NFC. Po návratu do aplikace kartu přiložte.",
+			"action": "Otevřít nastavení NFC"
+		},
+		"cameraDenied": {
+			"body": "Povolte kameru v nastavení zařízení."
+		},
+		"cancel": "Zrušit"
+	},
+	"appUpdate": {
+		"heading": "Aplikaci je potřeba aktualizovat",
+		"body": "Tato verze aplikace se se serverem nemocnice už nespojí. Neodeslané záznamy v zařízení zůstanou a odešlou se po aktualizaci. Když se aktualizace nenabídne, obraťte se na správce aplikace.",
+		"inSession": "Server nemocnice tuto verzi aplikace přestal přijímat. Už založený rozpracovaný záznam můžete doplnit a uzavřít; nový záznam nezaložíte a další práci aplikace nabídne až po aktualizaci. Uzavřené záznamy počkají.",
+		"version": "Verze v zařízení {version}",
+		"finishDraft": "Doplnit a uzavřít záznam",
+		"waitingFiles": {
+			"one": "{n} soubor čeká na odeslání.",
+			"few": "{n} soubory čekají na odeslání.",
+			"other": "{n} souborů čeká na odeslání."
+		},
+		"nothingDeleted": "Nic se nemaže."
+	},
+	"access": {
+		"noRole": {
+			"heading": "Zatím nemáte přístup",
+			"body": "Obraťte se na správce aplikace."
+		}
+	},
+	"session": {
+		"lock": "Zamknout aplikaci",
+		"signOut": {
+			"action": "Odhlásit",
+			"offline": {
+				"heading": "Teď se nelze odhlásit",
+				"body": "Zařízení se nespojí se serverem nemocnice, a proto vás teď neodhlásíme. Rozpracovaný záznam na serveru zůstává, jak je.",
+				"action": "Zkusit znovu"
+			},
+			"rejected": {
+				"heading": "Odhlášení se nepovedlo",
+				"body": "Zkuste to znovu."
+			},
+			"unclosed": {
+				"title": "Záznam není uzavřený",
+				"files": {
+					"photo": {
+						"one": "s {n} snímkem",
+						"few": "s {n} snímky",
+						"other": "s {n} snímky"
+					},
+					"scan": {
+						"one": "s {n} stranou",
+						"few": "s {n} stranami",
+						"other": "s {n} stranami"
+					}
+				},
+				"noFiles": {
+					"photo": "bez snímků",
+					"scan": "bez stran"
+				},
+				"body": "Záznam {files} ještě není uzavřený. Server ho má a zůstane vám — uzavřete ho přes souhrn, odejděte a pokračujte později, nebo ho zahoďte.",
+				"bodyWithoutDiscard": "Záznam {files} ještě není uzavřený. Server ho má a zůstane vám — uzavřete ho přes souhrn, nebo odejděte a pokračujte později.",
+				"close": "Uzavřít přes souhrn",
+				"discard": "Zahodit"
+			},
+			"unclosedMany": {
+				"title": "Záznamy nejsou uzavřené",
+				"body": {
+					"one": "Máte {n} neuzavřený záznam. Server ho má a zůstane vám.",
+					"few": "Máte {n} neuzavřené záznamy. Server je má a zůstanou vám.",
+					"other": "Máte {n} neuzavřených záznamů. Server je má a zůstanou vám."
+				},
+				"show": "Zobrazit záznamy"
+			},
+			"leave": "Odejít a pokračovat později",
+			"closingQueuedTitle": "Záznam se ještě neuzavřel",
+			"cancel": "Zrušit",
+			"uploading": {
+				"title": "Vaše soubory se stále nahrávají",
+				"body": {
+					"one": "Server ještě nepřijal {n} soubor, který se z tohoto zařízení nahrává. Odhlásit se můžete, až ho přijme.",
+					"few": "Server ještě nepřijal {n} soubory, které se z tohoto zařízení nahrávají. Odhlásit se můžete, až je přijme.",
+					"other": "Server ještě nepřijal {n} souborů, které se z tohoto zařízení nahrávají. Odhlásit se můžete, až je přijme."
+				},
+				"leaving": "Nechte zařízení zamknout. Přihlášení skončí samo po uplynutí délky relace, nebo když se přihlásí kolega. Soubory se nahrávají dál i potom.",
+				"closingQueued": "Záznam, jehož souhrn jste potvrdili, se pak uzavře až po vašem dalším přihlášení na tomto zařízení.",
+				"continue": "Pokračovat v práci",
+				"queue": "Zobrazit frontu"
+			}
+		}
+	},
+	"settings": {
+		"close": "Zavřít",
+		"title": "Nastavení účtu",
+		"language": {
+			"title": "Jazyk aplikace",
+			"intro": "Jazyk se uloží k vašemu účtu a platí na každém zařízení, na kterém se přihlásíte.",
+			"selected": "zvoleno",
+			"offline": {
+				"heading": "Jazyk teď nezměníme",
+				"body": "Zařízení se nespojí se serverem nemocnice, a proto jazyk teď nezměníme. Rozpracovaný záznam na serveru zůstává, jak je.",
+				"action": "Zkusit znovu"
+			},
+			"unsupported": "Tento jazyk teď zvolit nelze. Seznam jazyků jsme obnovili."
+		}
+	},
+	"patientIdentity": {
+		"sex": {
+			"female": "žena",
+			"male": "muž"
+		}
+	},
+	"remote": {
+		"retry": "Zkusit znovu",
+		"serverError": "Server odpověděl chybou. Zkuste to znovu; když to nepomůže, obraťte se na správce aplikace.",
+		"noConnection": {
+			"heading": "Bez spojení se serverem",
+			"body": "Zařízení se nespojí se serverem nemocnice. Bez spojení nic nového nezačneme a nic nezměníme. Rozpracovaný záznam zůstává na serveru, jak je."
+		},
+		"documentationUnavailable": {
+			"heading": "Dokumentace je teď nedostupná",
+			"body": "Dokumentace teď není dostupná. Zkuste to za chvíli."
+		},
+		"notFound": {
+			"heading": "Tuto historii nemáme",
+			"body": "Historii k tomuto nálezu server nevede."
+		}
+	},
+	"textCase": {
+		"phaseAfterType": "lower"
+	},
+	"files": {
+		"photo": {
+			"one": "{n} snímek",
+			"few": "{n} snímky",
+			"other": "{n} snímků"
+		},
+		"scan": {
+			"one": "{n} strana",
+			"few": "{n} strany",
+			"other": "{n} stran"
+		},
+		"counter": "{count}/{limit}"
+	},
+	"queue": {
+		"title": "Stav fronty",
+		"close": "Zavřít",
+		"empty": "Ve frontě nic nečeká.",
+		"uploading": "Nahrává se",
+		"failed": "Selhalo",
+		"detail": "{files} · {captured}",
+		"others": {
+			"one": "{n} záznam jiného uživatele",
+			"few": "{n} záznamy jiného uživatele",
+			"other": "{n} záznamů jiného uživatele"
+		},
+		"othersWaiting": "čeká na odeslání",
+		"othersFailed": {
+			"one": "z toho {n} selhal",
+			"few": "z toho {n} selhaly",
+			"other": "z toho {n} selhalo"
+		}
+	},
+	"overview": {
+		"started": "Rozpracované",
+		"planned": "V plánu",
+		"today": "Dnes",
+		"recent": "Naposledy",
+		"tag": "Přiložit štítek NFC",
+		"code": "Skenovat kód",
+		"timeUnknown": "čas neurčen",
+		"todayAt": "dnes {time}",
+		"draftDetail": "{files} · {changed}",
+		"draftDetailNote": "{files} · {changed} · {note}",
+		"unfinishedVisit": "Nedokončená návštěva · {changed}",
+		"allDrafts": "Zobrazit všechny rozpracované záznamy",
+		"noScheduled": "Na dnešek pro vás není naplánovaná žádná návštěva.",
+		"nothingStarted": {
+			"heading": "Nemáte rozpracovaný záznam",
+			"body": "Pacienta najdete dole: štítkem NFC, naskenováním kódu nebo hledáním."
+		},
+		"loadFailed": "Přehled se teď nepodařilo načíst",
+		"waitingSince": "Čeká od {date}"
+	},
+	"drafts": {
+		"title": "Rozpracované záznamy",
+		"close": "Zavřít",
+		"menu": "Možnosti záznamu",
+		"empty": "Nemáte rozpracovaný záznam.",
+		"loadFailed": "Rozpracované záznamy se teď nepodařilo načíst",
+		"discard": {
+			"action": "Zahodit",
+			"title": "Zahodit záznam?",
+			"body": {
+				"photo": "Snímky se na serveru smažou a nic se neodešle do PACS. Vrátit to nejde.",
+				"scan": "Stránky se na serveru smažou a nic se neodešle do PACS. Vrátit to nejde."
+			},
+			"confirm": "Zahodit",
+			"cancel": "Zrušit",
+			"failed": "Záznam se teď nepodařilo zahodit"
+		}
+	},
+	"queueNotices": {
+		"openRecord": "Otevřít záznam",
+		"openSummary": "Otevřít souhrn",
+		"rejected": {
+			"title": "Server odmítl váš snímek",
+			"titleScan": "Server odmítl vaši stránku",
+			"body": "Snímek z {time} server nepřijal. Záznam zůstává rozpracovaný: pořiďte snímek znovu v tomto záznamu.",
+			"bodyScan": "Stránku z {time} server nepřijal. Záznam zůstává rozpracovaný: pořiďte stránku znovu v tomto záznamu."
+		},
+		"unreadable": {
+			"title": "Snímek nejde přečíst",
+			"titleScan": "Stránku nejde přečíst",
+			"body": "Snímek z {time} nejde na tomto zařízení přečíst, a proto se neodešle. Pořiďte ho v tomto záznamu znovu.",
+			"bodyScan": "Stránku z {time} nejde na tomto zařízení přečíst, a proto se neodešle. Pořiďte ji v tomto záznamu znovu."
+		},
+		"unused": {
+			"title": "Snímek se nepoužil",
+			"titleScan": "Stránka se nepoužila",
+			"body": "O záznamu už bylo rozhodnuto. Snímek z {time} se proto nepoužil a znovu ho neodešleme. Pořizovat ho znovu nemusíte.",
+			"bodyScan": "O záznamu už bylo rozhodnuto. Stránka z {time} se proto nepoužila a znovu ji neodešleme. Pořizovat ji znovu nemusíte."
+		},
+		"unknownRecord": {
+			"title": "Server snímek trvale odmítl",
+			"titleScan": "Server stránku trvale odmítl",
+			"body": "Snímek z {time} server trvale odmítl a do PACS se nedostane. Dokumentaci pořiďte znovu.",
+			"bodyScan": "Stránku z {time} server trvale odmítl a do PACS se nedostane. Dokumentaci pořiďte znovu."
+		},
+		"slowed": {
+			"title": "Snímek se zatím neodeslal",
+			"titleScan": "Stránka se zatím neodeslala",
+			"body": "Váš snímek z {time} se zatím nepodařilo odeslat. Zkoušíme to dál, jen méně často.",
+			"bodyScan": "Vaši stránku z {time} se zatím nepodařilo odeslat. Zkoušíme to dál, jen méně často."
+		},
+		"closure": {
+			"title": "Záznam jsme neuzavřeli",
+			"changed": "Záznam jste mezitím změnili na jiném zařízení. Zkontrolujte souhrn a potvrďte ho znovu.",
+			"fileRejected": "Jeden snímek server nepřijal — pořiďte ho znovu. Zkontrolujte souhrn a potvrďte ho znovu.",
+			"fileRejectedScan": "Jednu stránku server nepřijal — pořiďte ji znovu. Zkontrolujte souhrn a potvrďte ho znovu.",
+			"fileUnreadable": "Jeden snímek nejde na tomto zařízení přečíst — pořiďte ho znovu. Zkontrolujte souhrn a potvrďte ho znovu.",
+			"fileUnreadableScan": "Jednu stránku nejde na tomto zařízení přečíst — pořiďte ji znovu. Zkontrolujte souhrn a potvrďte ho znovu.",
+			"refused": "Server záznam neuzavřel. Zkontrolujte souhrn a potvrďte ho znovu."
+		},
+		"storageLost": {
+			"title": "Neodeslané snímky nejdou přečíst",
+			"body": "Snímky, které čekaly na odeslání z tohoto zařízení, nejdou přečíst. Pořiďte je znovu."
+		}
+	},
+	"operatorNotices": {
+		"acknowledge": "Beru na vědomí",
+		"discarded": {
+			"title": "Rozpracované záznamy byly zahozeny",
+			"body": {
+				"one": "{n} váš rozpracovaný záznam byl {time} se souhlasem správce aplikace zahozen. Nic z něj neodešlo do PACS.",
+				"few": "{n} vaše rozpracované záznamy byly {time} se souhlasem správce aplikace zahozeny. Nic z nich neodešlo do PACS.",
+				"other": "{n} vašich rozpracovaných záznamů bylo {time} se souhlasem správce aplikace zahozeno. Nic z nich neodešlo do PACS."
+			}
+		},
+		"reminder": {
+			"title": "Rozpracovaný záznam čeká od {date}",
+			"titleUndated": "Rozpracovaný záznam čeká",
+			"body": "Záznam pacienta {patient} ({files}) ještě není uzavřený. Uzavřete ho, nebo ho zahoďte.",
+			"bodyUnknown": "Váš rozpracovaný záznam ještě není uzavřený. Uzavřete ho, nebo ho zahoďte.",
+			"show": "Zobrazit"
+		},
+		"other": {
+			"title": "Upozornění",
+			"body": "Server pro vás má upozornění."
+		}
+	},
+	"search": {
+		"placeholder": "Hledat pacienta",
+		"clear": "Zrušit hledání",
+		"tooShort": "Zadejte aspoň 3 znaky.",
+		"notFound": {
+			"heading": "Pacient nenalezen",
+			"body": "Žádný pacient nemá identifikátor, který začíná zadanými znaky. Zkontrolujte zápis, nebo načtěte náramek pacienta."
+		},
+		"tooBroad": {
+			"heading": "Upřesněte hledání",
+			"body": "Shod je víc, než kolik můžeme ukázat. Dopište další znaky identifikátoru."
+		},
+		"rateLimited": {
+			"heading": "Hledání je teď dočasně omezené",
+			"body": "Pacienty jste hledali a identifikovali příliš často. Zkuste to znovu za {n} s."
+		},
+		"failed": "Hledání se teď nepodařilo"
+	},
+	"identification": {
+		"back": "Zpět na identifikaci",
+		"cancel": "Zrušit",
+		"tag": {
+			"instruction": "Přiložte zařízení ke štítku NFC pacienta.",
+			"heading": "Čtení štítku NFC",
+			"body": "Přiložte štítek NFC pacienta k zadní straně zařízení."
+		},
+		"codeNotSet": {
+			"heading": "Kód pacienta není nastavený",
+			"body": "Správce zatím nenastavil, jak číst kód pacienta."
+		},
+		"tagNotMapped": {
+			"heading": "Ze štítku nelze zjistit pacienta",
+			"body": "Štítek nenese identifikátor pacienta tak, jak ho nemocnice nastavila.",
+			"action": "Skenovat kód"
+		},
+		"tagUnreadable": {
+			"heading": "Štítek se nepodařilo přečíst",
+			"body": "Přiložte štítek znovu."
+		},
+		"nfcDisabled": {
+			"heading": "NFC je vypnuté",
+			"body": "Pro načtení štítku pacienta zapněte v nastavení zařízení NFC.",
+			"action": "Otevřít nastavení NFC"
+		},
+		"cameraDenied": {
+			"heading": "Kamera není povolená",
+			"body": "Pro načtení kódu pacienta povolte Vulně kameru v Nastavení.",
+			"action": "Otevřít nastavení"
+		},
+		"notFound": {
+			"heading": "Pacienta jsme nenašli",
+			"body": "Načtený kód není identifikátor pacienta tak, jak ho nemocnice nastavila. Zkontrolujte, že načítáte náramek pacienta, a zkuste to znovu."
+		},
+		"tooBroad": {
+			"heading": "Identifikátor odpovídá příliš mnoha pacientům",
+			"body": "Server žádného z nich neukáže. Obraťte se na správce aplikace."
+		},
+		"rateLimited": {
+			"heading": "Identifikace je teď dočasně omezená",
+			"body": "Pacienty jste identifikovali příliš často. Zkuste to znovu za {n} s."
+		},
+		"failed": "Identifikace se teď nepodařila"
+	},
+	"patient": {
+		"back": "Zpět",
+		"visits": "Návštěvy",
+		"wounds": "Všechny rány",
+		"documents": "Dokumenty",
+		"newVisit": "Nová návštěva",
+		"todayAt": "Dnes {time}",
+		"todayTimeUnknown": "Dnes · čas neurčen",
+		"status": {
+			"planned": "Plánovaná",
+			"inProgress": "Rozpracovaná"
+		},
+		"noRecords": "bez záznamů",
+		"records": {
+			"one": "{n} záznam",
+			"few": "{n} záznamy",
+			"other": "{n} záznamů"
+		},
+		"start": "Zahájit",
+		"continue": "Pokračovat",
+		"loadFailed": "Detail pacienta se teď nepodařilo načíst",
+		"matches": {
+			"title": "Vyberte pacienta",
+			"code": "Kód odpovídá víc pacientům. Vyberte pacienta podle vydavatele identifikátoru.",
+			"tag": "Štítek odpovídá víc pacientům. Vyberte pacienta podle vydavatele identifikátoru.",
+			"close": "Zavřít"
+		}
+	},
+	"history": {
+		"title": "Návštěvy",
+		"today": "Dnes",
+		"inProgress": "Rozpracované",
+		"timeUnknown": "čas neurčen",
+		"loadFailed": "Návštěvy se teď nepodařilo načíst",
+		"empty": {
+			"heading": "Pacient zatím nemá žádnou návštěvu",
+			"body": "Novou návštěvu založíte na detailu pacienta tlačítkem „Nová návštěva“."
+		},
+		"completed": "Návštěva je dokončená, jen ke čtení. Další dokumentaci přidáte v nové návštěvě."
+	},
+	"wounds": {
+		"title": "Rány",
+		"place": "{region} · {side}",
+		"unknownPlace": "Rána",
+		"typeAndPhase": "{type} · {phase}",
+		"period": "od {since} · naposledy {last}",
+		"hint": "Nové snímky pořídíte v návštěvě akcí Rána. Ke které ráně patří, určíte po focení na postavě.",
+		"loadFailed": "Rány se teď nepodařilo načíst",
+		"empty": {
+			"heading": "Pacient zatím nemá žádnou ránu",
+			"body": "Rána přibude s prvním uzavřeným focením v návštěvě."
+		},
+		"detail": {
+			"menu": "Další možnosti",
+			"tracked": "Sledováno od {date} · {sessions}",
+			"sessions": {
+				"one": "{n} focení",
+				"few": "{n} focení",
+				"other": "{n} focení"
+			},
+			"place": "{region} · {detail}",
+			"timeline": "Časová osa",
+			"moment": "{date} · {time}",
+			"entry": "{phase} · {files}",
+			"typeChanged": "Typ rány změněn na {type}",
+			"typeChangedDetail": "{date} · dříve {previous}",
+			"empty": "Rána zatím nemá žádné uzavřené focení.",
+			"historyUnavailable": "Historii teď nelze načíst. Zkuste to za chvíli.",
+			"loadFailed": "Historii rány se teď nepodařilo načíst"
+		},
+		"changeType": {
+			"action": "Změnit typ rány",
+			"title": "Typ rány",
+			"close": "Zavřít",
+			"confirm": {
+				"title": "Změnit typ rány?",
+				"conflictTitle": "Typ rány se mezitím změnil",
+				"body": "Typ rány: {previous} → {next}. Změna platí pro pořízení uzavřená od teď; už odeslaná pořízení a snímky v PACS se nezmění. Zapíše se do auditní stopy.",
+				"change": "Změnit",
+				"cancel": "Zrušit"
+			},
+			"failed": "Typ rány se teď nepodařilo změnit",
+			"failedClose": "Zavřít"
+		}
+	},
+	"documents": {
+		"title": "Dokumenty",
+		"untitled": "Dokument",
+		"visit": "návštěva {date} · {time}",
+		"visitWithoutTime": "návštěva {date}",
+		"pacsOnly": "obrazová data server už nedrží",
+		"loadFailed": "Dokumenty se teď nepodařilo načíst",
+		"empty": {
+			"heading": "Pacient zatím nemá žádný naskenovaný dokument",
+			"body": "Dokument naskenujete v návštěvě akcí Dokument."
+		}
+	},
+	"record": {
+		"title": "{place} · {date}",
+		"documentTitle": "Dokument",
+		"visit": "Návštěva",
+		"closedAt": "záznam uzavřen v {time}",
+		"wound": "Rána",
+		"typeAndPhase": "Typ rány · fáze hojení",
+		"note": "Poznámka",
+		"pages": "Stránky",
+		"page": "Strana {index} {from} {count}",
+		"loadFailed": "Záznam se teď nepodařilo načíst",
+		"pacsOnly": "Obrazová data server už nedrží. Snímky jsou v PACS nemocnice.",
+		"study": "Study Instance UID {uid}",
+		"accession": "Accession Number {number}",
+		"viewer": {
+			"close": "Zavřít",
+			"caption": "{date} · {region} · {detail}",
+			"captionWithoutRegion": "{date} · {detail}",
+			"viewingCopy": "Zobrazena zmenšená kopie. Originál v plném rozlišení je v PACS nemocnice.",
+			"originalInPacs": {
+				"title": "Originál je už jen v PACS",
+				"photo": "Plný snímek server už nedrží. Originál je v PACS nemocnice.",
+				"page": "Plnou stránku server už nedrží. Originál je v PACS nemocnice."
+			},
+			"unavailable": {
+				"label": "Snímek teď nelze načíst",
+				"text": "Snímek je uložený, ale teď ho nejde zobrazit. Zkuste to později. Fotit a ukládat můžete dál.",
+				"retry": "Zkusit znovu"
+			},
+			"failed": "Snímek se teď nepodařilo načíst"
+		}
+	},
+	"visit": {
+		"title": "Návštěva {date} · {time}",
+		"titleWithoutTime": "Návštěva {date}",
+		"when": "{date} {time}",
+		"moment": "{date} · {time}",
+		"empty": {
+			"heading": "Návštěva je zatím prázdná",
+			"body": "Dole vyberte, co chcete přidat: ránu, nebo dokument."
+		},
+		"photo": "Vyfotit",
+		"scan": "Skenovat",
+		"finish": "Dokončit návštěvu",
+		"later": "Pokračovat později",
+		"menu": "Další možnosti",
+		"record": {
+			"kind": {
+				"photo": "Rána",
+				"scan": "Dokument"
+			},
+			"menu": "Možnosti záznamu",
+			"move": "Změnit pacienta nebo návštěvu",
+			"status": {
+				"draft": "Rozpracováno",
+				"received": "Hotovo",
+				"unknown": "Neznámý stav"
+			},
+			"detail": "{files} · {time}",
+			"draftDetail": "{missing} · {files} · {time}"
+		},
+		"missing": {
+			"images": "chybí snímky",
+			"pages": "chybí stránky",
+			"bodySite": "chybí poloha rány",
+			"woundType": "chybí typ rány",
+			"healingPhase": "chybí fáze hojení",
+			"documentTitle": "chybí název dokumentu",
+			"image": "chybí snímek",
+			"page": "chybí stránka",
+			"summary": "chybí potvrzení souhrnu",
+			"closingQueued": "uzavře se po nahrání",
+			"onOtherDevice": "čeká na jiném zařízení",
+			"unknown": "chybí další krok"
+		},
+		"earlier": "Návštěva je {from} {date} Přidat do ní nic nového nejde: vlastní rozpracovaný záznam v ní dokončete a návštěvu dokončete. Nové snímky patří do nové návštěvy.",
+		"earlierFrom": {
+			"1": "z",
+			"5": "z",
+			"8": "z",
+			"9": "z",
+			"10": "z",
+			"11": "z",
+			"15": "z",
+			"18": "z",
+			"19": "z",
+			"other": "ze"
+		},
+		"earlierPlanned": "Návštěva byla naplánovaná na {date} a nezačala. Jen ke čtení; nové focení patří do nové návštěvy.",
+		"readOnly": {
+			"caption": "Návštěva je dokončená · jen ke čtení. Další dokumentaci přidáte v nové návštěvě.",
+			"close": "Zavřít"
+		},
+		"confirmFinish": {
+			"title": "Dokončit návštěvu?",
+			"body": "{patient} · návštěva {when} · {records}. Do dokončené návštěvy už nepůjde nic přidat a vrátit to nejde. Nic se tím neodesílá — záznamy už na serveru jsou.",
+			"confirm": "Dokončit návštěvu",
+			"cancel": "Zrušit"
+		},
+		"ownDraft": {
+			"title": "Návštěvu zatím nejde dokončit",
+			"body": "V návštěvě máte rozpracovaný záznam: {record} · {missing}. Uzavřete ho souhrnem, nebo ho zahoďte; potom návštěvu dokončíte.",
+			"close": "Zrušit"
+		},
+		"othersWorking": {
+			"title": "V návštěvě ještě někdo pracuje",
+			"body": "Návštěvu půjde dokončit, až bude jeho záznam uzavřený. Zkuste to později.",
+			"close": "Rozumím"
+		},
+		"finishFailed": "Návštěvu se teď nepodařilo dokončit",
+		"loadFailed": "Návštěvu se teď nepodařilo načíst",
+		"cancel": {
+			"action": "Zrušit návštěvu",
+			"unavailable": "V návštěvě už je dokončený záznam.",
+			"confirm": {
+				"title": "Zrušit návštěvu?",
+				"body": "Návštěva {when} se zruší. Zahodí se i rozpracované záznamy v ní a vrátit to nejde.",
+				"confirm": "Zrušit návštěvu",
+				"keep": "Ponechat"
+			},
+			"refused": {
+				"title": "Návštěvu nejde zrušit",
+				"closedRecord": "V návštěvě už je dokončený záznam.",
+				"completed": "Návštěva je mezitím dokončená."
+			},
+			"failed": "Návštěvu se teď nepodařilo zrušit",
+			"close": "Zavřít"
+		},
+		"draft": {
+			"failed": "Záznam se teď nepodařilo založit",
+			"limit": {
+				"title": "Další pořízení teď nezačneme",
+				"show": "Zobrazit rozpracované záznamy",
+				"body": {
+					"one": "Máte {n} rozpracovaný záznam, což je nejvíc, kolik jich nastavení nemocnice dovoluje. Počítají se všechna zařízení. Uzavřete ho, nebo ho zahoďte.",
+					"few": "Máte {n} rozpracované záznamy, což je nejvíc, kolik jich nastavení nemocnice dovoluje. Počítají se všechna zařízení. Uzavřete je, nebo některé zahoďte.",
+					"other": "Máte {n} rozpracovaných záznamů, což je nejvíc, kolik jich nastavení nemocnice dovoluje. Počítají se všechna zařízení. Uzavřete je, nebo některé zahoďte."
+				},
+				"bodyWithoutCount": "Máte nejvíc rozpracovaných záznamů, kolik jich nastavení nemocnice dovoluje. Počítají se všechna zařízení. Uzavřete je, nebo některé zahoďte."
+			},
+			"completed": {
+				"title": "Návštěva je dokončená",
+				"body": "Do dokončené návštěvy už nejde nic přidat. Pro další pořízení založte novou návštěvu."
+			},
+			"closed": {
+				"title": "Do této návštěvy už nejde nic přidat",
+				"cancelled": "Návštěva byla zrušena. Pro další pořízení založte novou návštěvu.",
+				"earlier": "Návštěva je z dřívějšího dne. Pro další pořízení založte novou návštěvu."
+			},
+			"newVisit": "Nová návštěva",
+			"close": "Zavřít"
+		}
+	},
+	"move": {
+		"title": "Přesunout záznam",
+		"findPatient": "Najděte pacienta, ke kterému záznam patří: štítkem NFC nebo naskenováním kódu.",
+		"chooseVisit": "Vyberte návštěvu",
+		"choose": "Vybrat",
+		"noOtherVisit": "Pacient dnes nemá jinou otevřenou návštěvu. Záznam přesunete do nové návštěvy.",
+		"newVisit": "Nová návštěva",
+		"loadFailed": "Návštěvy pacienta se teď nepodařilo načíst",
+		"back": "Zpět",
+		"confirm": {
+			"title": "Přesunout záznam?",
+			"otherPatient": "Záznam {record} ({files}) se přesune k jinému pacientovi. Z: {from}. Do: {to}.",
+			"otherVisit": "Záznam {record} ({files}) se přesune do jiné návštěvy. Z: {from}. Do: {to}.",
+			"woundAgain": "Ránu zvolíte znovu na schématu nového pacienta.",
+			"patientAtVisit": "{patient} · {visit}",
+			"visit": "návštěva {when}",
+			"newVisit": "nová návštěva",
+			"move": "Přesunout",
+			"cancel": "Zrušit"
+		},
+		"refused": {
+			"title": "Sem záznam přesunout nejde",
+			"otherPatient": "Návštěva nebo rána patří jinému pacientovi. Záznam zůstal, jak byl.",
+			"closedVisit": "Do této návštěvy už nejde nic přidat. Vyberte jinou návštěvu, nebo založte novou.",
+			"chooseVisit": "Vybrat návštěvu"
+		},
+		"closed": {
+			"title": "Záznam je uzavřený",
+			"body": "Přiřazení uzavřeného záznamu už nejde změnit, ani když ještě nedošel do PACS. Chybu nahlaste správci aplikace."
+		},
+		"failed": "Záznam se teď nepodařilo přesunout",
+		"close": "Zavřít"
+	},
+	"recordChanged": {
+		"title": "Záznam se mezitím změnil",
+		"body": "Záznam jste mezitím upravili na jiném zařízení. Ukazujeme jeho aktuální podobu; je-li úprava ještě potřeba, proveďte ji znovu.",
+		"close": "Rozumím"
+	},
+	"capture": {
+		"title": "Vyfocení rány",
+		"close": "Zavřít",
+		"closeEmpty": {
+			"title": "Zavřít bez snímku?",
+			"body": "V záznamu zatím není žádný snímek.",
+			"cancelRecord": "Zrušit záznam",
+			"keepDraft": "Ponechat rozpracovaný",
+			"failed": "Záznam se teď nepodařilo zrušit"
+		},
+		"torch": "Světlo",
+		"shutter": "Vyfotit",
+		"continue": "Pokračovat",
+		"addSlot": "Další snímek",
+		"photo": "Snímek {index}",
+		"counter": "Pořízeno snímků: {count} {from} {limit}",
+		"review": {
+			"title": "Snímek {index} {from} {count}",
+			"from": {
+				"1": "z",
+				"5": "z",
+				"8": "z",
+				"9": "z",
+				"10": "z",
+				"11": "z",
+				"15": "z",
+				"18": "z",
+				"19": "z",
+				"other": "ze"
+			},
+			"back": "Zpět",
+			"delete": "Smazat",
+			"rotate": "Otočit",
+			"crop": "Oříznout",
+			"close": "Zavřít",
+			"retake": {
+				"action": "Pořídit znovu",
+				"rejected": "Server snímek nepřijal — pořiďte ho znovu.",
+				"unreadable": "Snímek nejde přečíst — pořiďte ho znovu."
+			},
+			"confirmDelete": {
+				"title": "Smazat snímek?",
+				"body": "Snímek se ze série odstraní. Vrátit to nejde.",
+				"confirm": "Smazat",
+				"cancel": "Zrušit"
+			}
+		},
+		"denied": {
+			"heading": "Bez kamery nelze fotit",
+			"body": "Povolte kameru v nastavení zařízení.",
+			"settings": "Otevřít nastavení"
+		},
+		"failure": {
+			"queueFull": {
+				"title": "Fronta je plná",
+				"body": "V zařízení čeká na odeslání příliš mnoho souborů, a proto další snímek teď nepořídíme. Co čeká, v zařízení zůstává a odešle se, jakmile bude spojení."
+			},
+			"storageFull": {
+				"title": "Snímek se nepořídil",
+				"body": "V zařízení není místo, a proto jsme snímek nepořídili. Z fronty ani z kopií, které server dosud nepotvrdil, nic nemažeme. Uvolněte místo v zařízení, nebo se obraťte na správce aplikace."
+			},
+			"unreadable": {
+				"title": "Snímek nelze odeslat",
+				"body": "Snímek se nepodařilo připravit k odeslání. Pořiďte ho prosím znovu."
+			},
+			"editFailed": "Úpravu se teď nepodařilo provést",
+			"close": "Rozumím"
+		},
+		"crop": {
+			"title": "Oříznout",
+			"cancel": "Zrušit",
+			"done": "Hotovo"
+		},
+		"earlier": {
+			"caption": "{date} · {region} · {detail}",
+			"captionWithoutRegion": "{date} · {detail}"
+		},
+		"step": {
+			"back": "Zpět"
+		},
+		"save": {
+			"close": "Zavřít"
+		},
+		"location": {
+			"title": "Poloha rány",
+			"map": "Schéma postavy",
+			"side": {
+				"R": "pravá strana pacienta",
+				"L": "levá strana pacienta"
+			},
+			"view": {
+				"anterior": "zepředu",
+				"posterior": "zezadu",
+				"right_lateral": "z pravého boku",
+				"left_lateral": "z levého boku",
+				"plantar": "zespodu",
+				"dorsal": "shora"
+			},
+			"detail": "{side} · {view}",
+			"detailUnpaired": "{view}",
+			"newWound": "Nová rána",
+			"existingWound": "Rána {number}",
+			"existingWoundLast": "Rána {number} · naposledy vyfocena {date}",
+			"earlierPhotos": "Dřívější snímky rány",
+			"hint": {
+				"heading": "Klepnutím do postavy přidáte novou ránu.",
+				"body": "Klepnutím na číslo vyberete ránu, kterou už pacient má, a pořídíte její kontrolní snímky."
+			},
+			"clear": "Zrušit výběr místa",
+			"continue": "Pokračovat",
+			"loadFailed": "Schéma postavy se teď nepodařilo načíst",
+			"saveFailed": "Polohu rány se teď nepodařilo uložit"
+		},
+		"woundType": {
+			"title": "Typ rány",
+			"saveFailed": "Typ rány se teď nepodařilo uložit"
+		},
+		"healingPhase": {
+			"title": "Fáze hojení",
+			"lastBadge": "naposledy {date}",
+			"saveFailed": "Fázi hojení se teď nepodařilo uložit"
+		},
+		"choice": {
+			"loadFailed": "Číselník se teď nepodařilo načíst"
+		},
+		"summary": {
+			"title": "Souhrn",
+			"visit": "Návštěva",
+			"wound": "Rána",
+			"newWound": "Nová rána",
+			"typeAndPhase": "Typ rány · fáze hojení",
+			"note": "Poznámka (nepovinné)",
+			"addNote": "Přidat poznámku",
+			"addTile": "Přidat",
+			"serverFile": {
+				"remove": "Odebrat",
+				"cancel": "Zrušit",
+				"rejected": {
+					"photo": "Server tento snímek nepřijal. Pořiďte ho znovu, nebo ho ze záznamu odeberte.",
+					"scan": "Server tuto stránku nepřijal. Naskenujte ji znovu, nebo ji ze záznamu odeberte."
+				},
+				"unreadable": {
+					"photo": "Snímek nejde na tomto zařízení přečíst. Pořiďte ho znovu, nebo ho ze záznamu odeberte.",
+					"scan": "Stránku nejde na tomto zařízení přečíst. Naskenujte ji znovu, nebo ji ze záznamu odeberte."
+				}
+			},
+			"confirm": "Potvrdit a uzavřít",
+			"loadFailed": "Souhrn se teď nepodařilo načíst"
+		},
+		"note": {
+			"title": "Poznámka",
+			"placeholder": "Napište poznámku k ráně",
+			"save": "Uložit",
+			"close": "Zavřít",
+			"saveFailed": "Poznámku se teď nepodařilo uložit"
+		},
+		"closing": {
+			"closing": "Uzavírá se…",
+			"ok": "OK",
+			"close": "Zavřít",
+			"rejectedMark": "Server tento soubor nepřijal",
+			"unreadableMark": "Tento soubor nejde přečíst",
+			"otherDeviceMark": "Tento soubor čeká na jiném zařízení",
+			"queued": {
+				"title": "Záznam se uzavře po nahrání",
+				"body": "Souhrn jste potvrdili. Záznam se uzavře sám, jakmile server přijme zbývající soubory ({n}). Mezitím můžete pracovat dál.",
+				"bodyOffline": "Souhrn jste potvrdili. Záznam se uzavře sám, jakmile bude spojení."
+			},
+			"noResponse": {
+				"title": "Záznam se teď nepodařilo uzavřít",
+				"body": "Server neodpovídá. Snímky jsou uložené a záznam zůstává rozpracovaný.",
+				"bodyScan": "Server neodpovídá. Stránky jsou uložené a záznam zůstává rozpracovaný.",
+				"retry": "Zkusit znovu",
+				"later": "Dokončit později"
+			},
+			"rejected": {
+				"title": "Snímek se nepřijal",
+				"body": "Server jeden snímek nepřijal. Odeberte ho, nebo nafoťte nový, a záznam potvrďte znovu.",
+				"titleScan": "Stránka se nepřijala",
+				"bodyScan": "Server jednu stránku nepřijal. Odeberte ji, nebo naskenujte novou, a záznam potvrďte znovu."
+			},
+			"unreadable": {
+				"title": "Snímek nejde přečíst",
+				"body": "Jeden snímek nejde na tomto zařízení přečíst. Pořiďte ho znovu, nebo ho odeberte, a záznam potvrďte znovu.",
+				"titleScan": "Stránku nejde přečíst",
+				"bodyScan": "Jednu stránku nejde na tomto zařízení přečíst. Naskenujte ji znovu, nebo ji odeberte, a záznam potvrďte znovu."
+			},
+			"changed": {
+				"body": "Na jiném zařízení se záznam změnil. Zkontrolujte souhrn a potvrďte ho znovu."
+			},
+			"otherDevice": {
+				"title": "Snímek čeká na jiném zařízení",
+				"body": "V záznamu je snímek, který se ještě nenahrál z jiného zařízení. Záznam uzavřete, až snímek dorazí, nebo ho ze záznamu odeberte.",
+				"titleScan": "Stránka čeká na jiném zařízení",
+				"bodyScan": "V záznamu je stránka, která se ještě nenahrála z jiného zařízení. Záznam uzavřete, až stránka dorazí, nebo ji ze záznamu odeberte."
+			},
+			"missing": {
+				"title": "Záznam ještě nejde uzavřít",
+				"body": "Chybí: {missing}. Doplňte je a souhrn potvrdíte.",
+				"markLocation": "Označit polohu rány",
+				"addHealingPhase": "Doplnit fázi hojení",
+				"separator": " · ",
+				"steps": {
+					"bodySite": "poloha rány",
+					"woundType": "typ rány",
+					"healingPhase": "fáze hojení",
+					"documentTitle": "název dokumentu",
+					"images": "snímky",
+					"pages": "stránky",
+					"other": "další krok"
+				}
+			}
+		}
+	},
+	"scan": {
+		"title": "Skenování dokumentu",
+		"close": "Zavřít",
+		"closeEmpty": {
+			"title": "Zavřít bez stránky?",
+			"body": "V záznamu zatím není žádná stránka."
+		},
+		"shutter": "Naskenovat stránku",
+		"addSlot": "Další stránka",
+		"page": "Stránka {index}",
+		"counter": "Naskenováno stránek: {count} {from} {limit}",
+		"failure": {
+			"unreadable": {
+				"title": "Stránka se nenaskenovala",
+				"body": "Stránku se nepodařilo připravit k odeslání. Naskenujte ji prosím znovu."
+			}
+		},
+		"edgesNotFound": {
+			"title": "Okraje se nenašly",
+			"body": "Ohraničte dokument ručně, nebo uložte stránku bez úpravy.",
+			"crop": "Ohraničit ručně",
+			"keep": "Uložit bez úpravy"
+		},
+		"review": {
+			"title": "Stránka {index} {from} {count}",
+			"removeTitle": "Odebrat stránku?",
+			"removeBody": "Stránka se na serveru smaže a nenahradí. Vrátit to nejde.",
+			"remove": "Odebrat stránku",
+			"cancel": "Zrušit",
+			"retake": {
+				"action": "Naskenovat znovu",
+				"rejected": "Server stránku nepřijal — naskenujte ji znovu.",
+				"unreadable": "Stránku nejde přečíst — naskenujte ji znovu."
+			}
+		},
+		"crop": {
+			"title": "Oříznutí stránky",
+			"whole": "Celá stránka",
+			"apply": "Použít",
+			"corner": "Roh stránky {index}"
+		},
+		"documentTitle": {
+			"title": "Název dokumentu",
+			"custom": "Vlastní název…",
+			"continue": "Pokračovat",
+			"saveFailed": "Název dokumentu se teď nepodařilo uložit"
+		},
+		"customTitle": {
+			"title": "Vlastní název",
+			"placeholder": "Napište název dokumentu",
+			"save": "Uložit",
+			"close": "Zavřít"
+		},
+		"summary": {
+			"documentTitle": "Název dokumentu",
+			"addTile": "Přidat"
+		}
+	}
+}

@@ -1,0 +1,15 @@
+.git
+.nx
+.data
+**/node_modules
+**/dist
+**/coverage
+apps/vulna-mobile/ios
+apps/vulna-mobile/android
+apps/vulna-mobile/.expo
+docs
+quality
+db
+/dev
+.env
+.env.*

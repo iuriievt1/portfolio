@@ -1,0 +1,23 @@
+[
+	{
+		"name": "tesseract",
+		"version": "5.5.4",
+		"type": "application",
+		"purl": "pkg:github/tesseract-ocr/tesseract@5.5.4",
+		"cpe": "cpe:2.3:a:tesseract_project:tesseract:5.5.4:*:*:*:*:*:*:*",
+		"license": "Apache-2.0",
+		"source": "https://github.com/tesseract-ocr/tesseract/archive/refs/tags/5.5.4.tar.gz",
+		"location": "/usr/local/bin/tesseract"
+	},
+	{
+		"name": "leptonica",
+		"version": "1.87.0",
+		"type": "library",
+		"purl": "pkg:github/danbloomberg/leptonica@1.87.0",
+		"cpe": "cpe:2.3:a:leptonica:leptonica:1.87.0:*:*:*:*:*:*:*",
+		"license": "BSD-2-Clause",
+		"source": "https://github.com/DanBloomberg/leptonica/releases/download/1.87.0/leptonica-1.87.0.tar.gz",
+		"description": "statically linked into tesseract",
+		"location": "/usr/local/bin/tesseract"
+	}
+]

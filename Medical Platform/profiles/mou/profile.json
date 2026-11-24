@@ -1,0 +1,139 @@
+{
+	"$schema": "../profile.schema.json",
+	"id": "mou",
+	"nameTowardsCustomer": "Ansora Vulna",
+	"description": "The Masaryk Memorial Cancer Institute profile. An instance is assembled and deployed from a signed profile; server images and mobile packages contain only the transitive closure of the profile ✓ ADR-001 ř. 21.",
+
+	"corePackages": [
+		"@ansora/contracts",
+		"@ansora/core-server",
+		"@ansora/core-admin",
+		"@ansora/core-mobile"
+	],
+	"domainPackages": [
+		"@ansora/vulna-domain",
+		"@ansora/vulna-projection-dicom"
+	],
+	"adapters": [
+		"@ansora/vulna-adapter-dicom-dimse",
+		"@ansora/vulna-adapter-registry-local",
+		"@ansora/vulna-adapter-oidc",
+		"@ansora/vulna-adapter-syslog",
+		"@ansora/vulna-adapter-binary-local",
+		"@ansora/vulna-adapter-clinical-record-medplum"
+	],
+	"applications": [
+		"@ansora/server-api",
+		"@ansora/server-worker",
+		"@ansora/server-migrate",
+		"@ansora/admin",
+		"@ansora/mobile"
+	],
+
+	"vendoredPackages": [
+		{
+			"name": "@veevoy/dcmjs-dimse",
+			"pedigree": "vendor/dcmjs-dimse/PEDIGREE.md",
+			"source": "✓ ADR-017, ADR-003 ř. 26 — the DIMSE library of @ansora/vulna-adapter-dicom-dimse, loaded only in the worker ✓ ADR-005 ř. 38–39"
+		},
+		{
+			"name": "@veevoy/dcmjs",
+			"pedigree": "vendor/dcmjs/PEDIGREE.md",
+			"source": "✓ ADR-017 — the DICOM data layer of @veevoy/dcmjs-dimse"
+		},
+		{
+			"name": "@veevoy/postgres",
+			"pedigree": "vendor/postgres/PEDIGREE.md",
+			"source": "✓ ADR-041 bod a, CAP-028-S08 — the PostgreSQL client of the server processes and the migration step"
+		}
+	],
+
+	"bannedPackages": [],
+
+	"projections": [
+		"dicom"
+	],
+	"projectionsSource": "✓ ADR-004 ř. 25 — DICOM only in the MOÚ profile",
+
+	"signIn": {
+		"methods": [
+			"oidc"
+		],
+		"note": "OAuth2/OIDC over Active Directory. LDAPS and SAML only by a contract amendment.",
+		"source": "✓ ADR-003 ř. 33, SML-094"
+	},
+
+	"communicationTargets": [
+		{
+			"target": "pacs",
+			"source": "✓ NAB-050"
+		},
+		{
+			"target": "identity-provider",
+			"source": "✓ NAB-051"
+		},
+		{
+			"target": "log-management",
+			"source": "✓ NAB-052"
+		},
+		{
+			"target": "database",
+			"source": "✓ ADR-001 ř. 27"
+		},
+		{
+			"target": "clinical-record-store",
+			"source": "✓ ADR-042 bod 7, ADR-054 bod 3 — on the loopback of the host, carried since the numbered amendment took effect, CAP-012-R04"
+		}
+	],
+
+	"thirdPartyImages": [
+		{
+			"name": "clinical-record-store",
+			"image": "medplum/medplum-server",
+			"version": "5.2.18",
+			"digest": "sha256:5061141d2a0f30b3ae7486608d21d500f1b873d352fed1720004d5d6fa085954",
+			"license": "Apache-2.0",
+			"note": "Configured by clinical-record/medplum.config.json; listens on the loopback only.",
+			"source": "✓ ADR-042 bod 7, ADR-054 bod 1, CAP-012-R04"
+		}
+	],
+
+	"builtImages": [
+		{
+			"name": "clinical-record-cache",
+			"dockerfile": "deploy/images/valkey/Dockerfile",
+			"image": "ansora-vulna-valkey",
+			"baseImage": {
+				"image": "gcr.io/distroless/static-debian13",
+				"digest": "sha256:448810357cc8e67b7208988abdba0f5ec3d3aebee0a5b13eb624979792cffc0f"
+			},
+			"sourceImage": {
+				"image": "valkey/valkey",
+				"version": "9.1.3-alpine",
+				"digest": "sha256:bf09d58e96d6b4524a15396b65b242bbe18beebbcc15a04d8ee75ddac62fae0b",
+				"license": "BSD-3-Clause"
+			},
+			"note": "The official image carries a shell and fails B11; the release copies valkey-server and its libraries onto a distroless base. Without persistence, with a password, on the loopback only.",
+			"source": "✓ CAP-029-R30, CAP-029-S20, ADR-042 bod 7, konfigurace-a-profily.md 2.1, Q-113"
+		}
+	],
+
+	"dataLocation": {
+		"where": "exclusively in the customer's infrastructure, inside the EU",
+		"vendorCloud": false,
+		"source": "✓ NAB-022, NAB-023, NAB-660"
+	},
+
+	"mobileRelease": {
+		"serverUrl": null,
+		"oidcDiscoveryUrl": null,
+		"pinningFingerprints": null
+	},
+
+	"baseImage": {
+		"image": "gcr.io/distroless/nodejs24-debian13",
+		"digest": "sha256:ba59ac9916b424cdfaaa8299695530251535843623a6d8f93d40b0a2ef69e390",
+		"note": "Referenced by DIGEST with a verified signature; the build takes it from here and gate B7 checks the built image against it.",
+		"source": "✓ ADR-011 ř. 39"
+	}
+}

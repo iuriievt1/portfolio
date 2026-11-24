@@ -1,0 +1,214 @@
+/* ADR-041, DESIGN.md 3–5 */
+
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@font-face {
+	font-family: "InterVariable";
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+	src: url("../assets/fonts/InterVariable.woff2") format("woff2-variations");
+}
+
+:root {
+	/* DESIGN.md 3.2–3.4 */
+	--teal-50: oklch(0.978 0.012 186.39);
+	--teal-100: oklch(0.952 0.022 186.39);
+	--teal-200: oklch(0.91 0.038 186.39);
+	--teal-300: oklch(0.855 0.057 186.39);
+	--teal-400: oklch(0.775 0.076 186.39);
+	--teal-500: oklch(0.69 0.088 186.39);
+	--teal-600: oklch(0.61 0.091 186.39);
+	--teal-700: oklch(0.5109 0.0861 186.39);
+	--teal-800: oklch(0.44 0.076 186.39);
+	--teal-900: oklch(0.372 0.064 186.39);
+	--teal-950: oklch(0.268 0.045 186.39);
+	--gray-50: oklch(0.985 0 0);
+	--gray-100: oklch(0.967 0 0);
+	--gray-200: oklch(0.922 0 0);
+	--gray-400: oklch(0.708 0 0);
+	--gray-500: oklch(0.6 0 0);
+	--gray-700: oklch(0.371 0 0);
+	--gray-800: oklch(0.269 0 0);
+	--gray-900: oklch(0.205 0 0);
+	--gray-950: oklch(0.145 0 0);
+	--amber-100: oklch(0.962 0.059 95);
+	--amber-700: oklch(0.52 0.105 75);
+	--red-100: oklch(0.945 0.025 25);
+	--red-400: oklch(0.7 0.15 27);
+	--red-600: oklch(0.505 0.185 27);
+	--red-950: oklch(0.2 0.06 27);
+	--blue-100: oklch(0.945 0.025 250);
+	--blue-700: oklch(0.47 0.15 255);
+
+	/* DESIGN.md 3.5 */
+	--background: var(--gray-50);
+	--foreground: var(--gray-950);
+	--card: #ffffff;
+	--card-foreground: var(--gray-950);
+	--muted: var(--gray-100);
+	--muted-foreground: var(--gray-700);
+	--border: var(--gray-200);
+	--primary: var(--teal-700);
+	--primary-foreground: #ffffff;
+	--destructive: var(--red-600);
+	--destructive-foreground: #ffffff;
+	--accent: var(--gray-100);
+	--accent-foreground: var(--gray-950);
+	--secondary: var(--gray-100);
+	--secondary-foreground: var(--gray-950);
+	--popover: #ffffff;
+	--popover-foreground: var(--gray-950);
+	--input: var(--gray-200);
+	--ring: var(--teal-700);
+	--status-ok: var(--gray-100);
+	--status-ok-fg: var(--gray-700);
+	--status-warn: var(--amber-100);
+	--status-warn-fg: var(--amber-700);
+	--status-crit: var(--red-100);
+	--status-crit-fg: var(--red-600);
+	--status-info: var(--blue-100);
+	--status-info-fg: var(--blue-700);
+	--sidebar: var(--gray-100);
+	--sidebar-foreground: var(--gray-700);
+	--sidebar-accent: #ffffff;
+	--sidebar-accent-foreground: var(--gray-950);
+	--sidebar-border: var(--gray-200);
+	--sidebar-ring: var(--teal-700);
+
+	/* DESIGN.md 4.3, 5.1 */
+	--row-py: 0.6875rem;
+	--section-gap: 1.5rem;
+	--card-p: 1rem;
+	--nav-row-h: 2rem;
+	--fs-xs: 0.75rem;
+	--fs-sm: 0.875rem;
+	--fs-base: 0.875rem;
+	--fs-2xl: 1.5rem;
+	--line-height: 1.5;
+
+	/* DESIGN.md 5.2, 5.3 */
+	--radius: 0.625rem;
+	--sidebar-width: 15rem;
+	--sidebar-width-icon: 3rem;
+	--sidebar-width-mobile: 18rem;
+	--topbar-height: 3.5rem;
+
+	/* DESIGN.md 4.1, 4.2 */
+	--ff-base: "cv05" 1, "cv08" 1, "calt" 1;
+	font-feature-settings: var(--ff-base);
+	font-variation-settings: "opsz" 14;
+}
+
+@theme inline {
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-border: var(--border);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-destructive: var(--destructive);
+	--color-destructive-foreground: var(--destructive-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+	--color-status-ok: var(--status-ok);
+	--color-status-ok-fg: var(--status-ok-fg);
+	--color-status-warn: var(--status-warn);
+	--color-status-warn-fg: var(--status-warn-fg);
+	--color-status-crit: var(--status-crit);
+	--color-status-crit-fg: var(--status-crit-fg);
+	--color-status-info: var(--status-info);
+	--color-status-info-fg: var(--status-info-fg);
+	--color-sidebar: var(--sidebar);
+	--color-sidebar-foreground: var(--sidebar-foreground);
+	--color-sidebar-accent: var(--sidebar-accent);
+	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+	--color-sidebar-border: var(--sidebar-border);
+	--color-sidebar-ring: var(--sidebar-ring);
+
+	--radius-sm: calc(var(--radius) * 0.6);
+	--radius-md: calc(var(--radius) * 0.8);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) * 1.4);
+	--radius-2xl: calc(var(--radius) * 1.8);
+	--radius-3xl: calc(var(--radius) * 2.2);
+	--radius-4xl: calc(var(--radius) * 2.6);
+
+	--font-sans: "InterVariable", ui-sans-serif, system-ui, sans-serif;
+	--font-heading: "InterVariable", ui-sans-serif, system-ui, sans-serif;
+	--font-mono: "InterVariable", ui-sans-serif, system-ui, sans-serif;
+
+	--text-xs: var(--fs-xs);
+	--text-sm: var(--fs-sm);
+	--text-base: var(--fs-base);
+	--text-base--line-height: var(--line-height);
+	--text-2xl: var(--fs-2xl);
+}
+
+@layer base {
+	*,
+	::after,
+	::before {
+		border-color: var(--border);
+		outline-color: var(--ring);
+	}
+
+	body {
+		background-color: var(--background);
+		color: var(--foreground);
+		font-size: var(--fs-base);
+		line-height: var(--line-height);
+	}
+}
+
+@layer components {
+	.num {
+		font-feature-settings:
+			var(--ff-base),
+			"tnum" 1;
+		font-variant-numeric: tabular-nums;
+		text-align: right;
+	}
+
+	.identifier {
+		font-feature-settings:
+			var(--ff-base),
+			"tnum" 1,
+			"zero" 1;
+		font-variant-numeric: tabular-nums;
+	}
+
+	tbody tr,
+	.row {
+		line-height: 1.32;
+	}
+
+	.label-caps {
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+}
+
+/* DESIGN.md 6 */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	::before,
+	::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}

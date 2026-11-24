@@ -1,0 +1,442 @@
+{
+	"description": "Mock, remove later. Synthetic registry; every person is invented.",
+	"patientIdSystem": "urn:vulna:synthetic:patient-id",
+	"admissionIdSystem": "urn:vulna:synthetic:admission-id",
+	"patients": [
+		{
+			"key": "novakova-jana",
+			"id": "1000101",
+			"issuer": "MOU",
+			"familyName": "Nováková",
+			"givenName": "Jana",
+			"birthDate": "1950-02-01",
+			"sex": "female"
+		},
+		{
+			"key": "novakova-marie",
+			"id": "1000102",
+			"issuer": "MOU",
+			"familyName": "Nováková",
+			"givenName": "Marie",
+			"birthDate": "1946-11-12",
+			"sex": "female"
+		},
+		{
+			"key": "novakova-eva",
+			"id": "1000103",
+			"issuer": "MOU",
+			"familyName": "Nováková",
+			"givenName": "Eva",
+			"birthDate": "1972-03-03",
+			"sex": "female"
+		},
+		{
+			"key": "novakova-hana",
+			"id": "1000104",
+			"issuer": "MOU",
+			"familyName": "Nováková",
+			"givenName": "Hana",
+			"birthDate": "1958-07-19",
+			"sex": "female"
+		},
+		{
+			"key": "novakova-anna",
+			"id": "1000105",
+			"issuer": "MOU",
+			"familyName": "Nováková",
+			"givenName": "Anna",
+			"birthDate": "1989-01-27",
+			"sex": "female"
+		},
+		{
+			"key": "novakova-lenka",
+			"id": "1000106",
+			"issuer": "MOU",
+			"familyName": "Nováková",
+			"givenName": "Lenka",
+			"birthDate": "1975-05-08",
+			"sex": "female"
+		},
+		{
+			"key": "novakova-katerina",
+			"id": "1000107",
+			"issuer": "MOU",
+			"familyName": "Nováková",
+			"givenName": "Kateřina",
+			"birthDate": "1981-09-30",
+			"sex": "female"
+		},
+		{
+			"key": "novakova-lucie",
+			"id": "1000108",
+			"issuer": "MOU",
+			"familyName": "Nováková",
+			"givenName": "Lucie",
+			"birthDate": "1993-12-02",
+			"sex": "female"
+		},
+		{
+			"key": "novakova-petra",
+			"id": "1000109",
+			"issuer": "MOU",
+			"familyName": "Nováková",
+			"givenName": "Petra",
+			"birthDate": "1968-04-14",
+			"sex": "female"
+		},
+		{
+			"key": "novakova-vera",
+			"id": "1000110",
+			"issuer": "MOU",
+			"familyName": "Nováková",
+			"givenName": "Věra",
+			"birthDate": "1941-08-23",
+			"sex": "female"
+		},
+		{
+			"key": "novakova-alena",
+			"id": "1000111",
+			"issuer": "MOU",
+			"familyName": "Nováková",
+			"givenName": "Alena",
+			"birthDate": "1955-10-11",
+			"sex": "female"
+		},
+		{
+			"key": "novakova-jaroslava",
+			"id": "1000112",
+			"issuer": "MOU",
+			"familyName": "Nováková",
+			"givenName": "Jaroslava",
+			"birthDate": "1949-06-05",
+			"sex": "female"
+		},
+		{
+			"key": "novakova-ludmila",
+			"id": "1000113",
+			"issuer": "MOU",
+			"familyName": "Nováková",
+			"givenName": "Ludmila",
+			"birthDate": "1944-02-17",
+			"sex": "female"
+		},
+		{
+			"key": "novakova-zdenka",
+			"id": "1000114",
+			"issuer": "MOU",
+			"familyName": "Nováková",
+			"givenName": "Zdeňka",
+			"birthDate": "1962-03-29",
+			"sex": "female"
+		},
+		{
+			"key": "novakova-ivana",
+			"id": "1000115",
+			"issuer": "MOU",
+			"familyName": "Nováková",
+			"givenName": "Ivana",
+			"birthDate": "1970-11-21",
+			"sex": "female"
+		},
+		{
+			"key": "novakova-martina",
+			"id": "1000116",
+			"issuer": "MOU",
+			"familyName": "Nováková",
+			"givenName": "Martina",
+			"birthDate": "1984-07-07",
+			"sex": "female"
+		},
+		{
+			"key": "novakova-jitka",
+			"id": "1000117",
+			"issuer": "MOU",
+			"familyName": "Nováková",
+			"givenName": "Jitka",
+			"birthDate": "1966-01-15",
+			"sex": "female"
+		},
+		{
+			"key": "novakova-monika",
+			"id": "1000118",
+			"issuer": "MOU",
+			"familyName": "Nováková",
+			"givenName": "Monika",
+			"birthDate": "1979-09-09",
+			"sex": "female"
+		},
+		{
+			"key": "novakova-tereza",
+			"id": "1000119",
+			"issuer": "MOU",
+			"familyName": "Nováková",
+			"givenName": "Tereza",
+			"birthDate": "1997-05-25",
+			"sex": "female"
+		},
+		{
+			"key": "novakova-michaela",
+			"id": "1000120",
+			"issuer": "MOU",
+			"familyName": "Nováková",
+			"givenName": "Michaela",
+			"birthDate": "1991-02-28",
+			"sex": "female"
+		},
+		{
+			"key": "novakova-helena",
+			"id": "1000121",
+			"issuer": "MOU",
+			"familyName": "Nováková",
+			"givenName": "Helena",
+			"birthDate": "1938-12-31",
+			"sex": "female"
+		},
+		{
+			"key": "dvorak-petr",
+			"id": "1000201",
+			"issuer": "MOU",
+			"familyName": "Dvořák",
+			"givenName": "Petr",
+			"birthDate": "1961-07-15",
+			"sex": "male"
+		},
+		{
+			"key": "svoboda-jiri",
+			"id": "1000202",
+			"issuer": "MOU",
+			"familyName": "Svoboda",
+			"givenName": "Jiří",
+			"birthDate": "1955-03-02",
+			"sex": "male"
+		},
+		{
+			"key": "svobodova-marie",
+			"id": "1000203",
+			"issuer": "MOU",
+			"familyName": "Svobodová",
+			"givenName": "Marie",
+			"birthDate": "1950-02-01",
+			"sex": "female"
+		},
+		{
+			"key": "cerny-tomas",
+			"id": "1000204",
+			"issuer": "MOU",
+			"familyName": "Černý",
+			"givenName": "Tomáš",
+			"birthDate": "1972-11-30",
+			"sex": "male"
+		},
+		{
+			"key": "kucera-zdenek",
+			"id": "1000205",
+			"issuer": "MOU",
+			"familyName": "Kučera",
+			"givenName": "Zdeněk",
+			"birthDate": "1948-06-21",
+			"sex": "male"
+		},
+		{
+			"key": "prochazka-jaroslav",
+			"id": "1000206",
+			"issuer": "MOU",
+			"familyName": "Procházka",
+			"givenName": "Jaroslav",
+			"birthDate": "1966-09-09",
+			"sex": "male"
+		},
+		{
+			"key": "rehorova-eliska",
+			"id": "1000207",
+			"issuer": "MOU",
+			"familyName": "Řehořová",
+			"givenName": "Eliška",
+			"birthDate": "1983-04-17",
+			"sex": "female"
+		},
+		{
+			"key": "nova-mala-sarka",
+			"id": "1000208",
+			"issuer": "MOU",
+			"familyName": "Nová-Malá",
+			"givenName": "Šárka",
+			"birthDate": "1979-12-24",
+			"sex": "female"
+		},
+		{
+			"key": "stastny-vaclav",
+			"id": "1000209",
+			"issuer": "MOU",
+			"familyName": "Šťastný",
+			"givenName": "Václav",
+			"birthDate": "1944-01-05",
+			"sex": "male"
+		},
+		{
+			"key": "horakova-ludmila",
+			"id": "1000210",
+			"issuer": "MOU",
+			"familyName": "Horáková",
+			"givenName": "Ludmila",
+			"birthDate": "1939-08-28",
+			"sex": "female"
+		},
+		{
+			"key": "vesely-ondrej",
+			"id": "1000211",
+			"issuer": "MOU",
+			"familyName": "Veselý",
+			"givenName": "Ondřej",
+			"birthDate": "1990-05-13",
+			"sex": "male"
+		},
+		{
+			"key": "pokorna-kristyna",
+			"id": "1000212",
+			"issuer": "MOU",
+			"familyName": "Pokorná",
+			"givenName": "Kristýna",
+			"birthDate": "1995-10-10",
+			"sex": "female"
+		},
+		{
+			"key": "marek-alex",
+			"id": "1000213",
+			"issuer": "MOU",
+			"familyName": "Marek",
+			"givenName": "Alex",
+			"birthDate": "1987-03-18",
+			"sex": "other"
+		},
+		{
+			"key": "kralova-dana",
+			"id": "1000214",
+			"issuer": "MOU",
+			"familyName": "Králová",
+			"givenName": "Dana",
+			"birthDate": "1959-06-30",
+			"sex": null
+		},
+		{
+			"key": "benes",
+			"id": "1000215",
+			"issuer": "MOU",
+			"familyName": "Beneš",
+			"givenName": null,
+			"birthDate": "1952-10-03",
+			"sex": "male"
+		},
+		{
+			"key": "prochazkova-eva",
+			"id": "0098812",
+			"issuer": "MOU",
+			"familyName": "Procházková",
+			"givenName": "Eva",
+			"birthDate": "1964-09-05",
+			"sex": "female"
+		},
+		{
+			"key": "hruska-jan",
+			"id": "1000101",
+			"issuer": "FNBRNO",
+			"familyName": "Hruška",
+			"givenName": "Jan",
+			"birthDate": "1963-02-11",
+			"sex": "male"
+		}
+	],
+	"scheduledEncounters": [
+		{
+			"patient": "svobodova-marie",
+			"dayOffset": 0,
+			"time": "07:30:00",
+			"accessionNumber": "A2610001",
+			"admissionId": "H26-0001"
+		},
+		{
+			"patient": "dvorak-petr",
+			"dayOffset": 0,
+			"time": "08:00:00",
+			"accessionNumber": "A2610002",
+			"admissionId": "H26-0002"
+		},
+		{
+			"patient": "novakova-jana",
+			"dayOffset": 0,
+			"time": "08:45:00",
+			"accessionNumber": "A2610003",
+			"admissionId": "H26-0003"
+		},
+		{
+			"patient": "rehorova-eliska",
+			"dayOffset": 0,
+			"time": "09:30:00",
+			"accessionNumber": "A2610004",
+			"admissionId": null
+		},
+		{
+			"patient": "stastny-vaclav",
+			"dayOffset": 0,
+			"time": "10:15:00",
+			"accessionNumber": "A2610005",
+			"admissionId": "H26-0005"
+		},
+		{
+			"patient": "nova-mala-sarka",
+			"dayOffset": 0,
+			"time": "11:00:00",
+			"accessionNumber": "A2610006",
+			"admissionId": null
+		},
+		{
+			"patient": "svobodova-marie",
+			"dayOffset": 0,
+			"time": "13:00:00",
+			"accessionNumber": "A2610007",
+			"admissionId": "H26-0001"
+		},
+		{
+			"patient": "marek-alex",
+			"dayOffset": 0,
+			"time": null,
+			"accessionNumber": "A2610008",
+			"admissionId": null
+		},
+		{
+			"patient": "horakova-ludmila",
+			"dayOffset": 0,
+			"time": null,
+			"accessionNumber": null,
+			"admissionId": "H26-0009"
+		},
+		{
+			"patient": "prochazkova-eva",
+			"dayOffset": 0,
+			"time": "14:00:00",
+			"accessionNumber": "A2610013",
+			"admissionId": "H26-0013"
+		},
+		{
+			"patient": "kucera-zdenek",
+			"dayOffset": 1,
+			"time": "08:00:00",
+			"accessionNumber": "A2610010",
+			"admissionId": "H26-0010"
+		},
+		{
+			"patient": "cerny-tomas",
+			"dayOffset": 1,
+			"time": "09:15:00",
+			"accessionNumber": "A2610011",
+			"admissionId": null
+		},
+		{
+			"patient": "hruska-jan",
+			"dayOffset": 1,
+			"time": "10:30:00",
+			"accessionNumber": "A2610012",
+			"admissionId": null
+		}
+	]
+}

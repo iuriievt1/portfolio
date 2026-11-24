@@ -1,0 +1,32 @@
+node_modules/
+dist/
+out-tsc/
+*.tsbuildinfo
+coverage/
+
+.env
+.env.local
+.env.*.local
+
+# Intermediate output of the contract bundle. The generated TYPES in
+# libs/contracts/src/generated/ are committed instead: gate B16 checks that they match the
+# contract, and without a committed output it would have nothing to diff against
+# ✓ ADR-012 ř. 75–78.
+libs/contracts/bundled/
+
+.expo/
+apps/vulna-mobile/ios/
+apps/vulna-mobile/android/
+apps/vulna-mobile/expo-env.d.ts
+
+.DS_Store
+.idea/
+.vscode/
+
+# Mezipaměť Nx. Brány z ní nikdy neběží ✓ ADR-033 bod 3, CAP-029-R25.
+.nx/
+
+.data/
+dev/syslog/certs/
+dev/tls/certs/
+libs/core/mobile/android/build/

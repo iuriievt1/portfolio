@@ -1,0 +1,12 @@
+{
+	"Name": "Ansora Vulna stand PACS",
+	"StorageDirectory": "/var/lib/orthanc/db",
+	"IndexDirectory": "/var/lib/orthanc/db",
+	"RemoteAccessAllowed": false,
+	"AuthenticationEnabled": false,
+	"DicomAet": "ORTHANC",
+	"DicomPort": 4242,
+	"DicomCheckCalledAet": true,
+	"DicomAlwaysAllowStore": true,
+	"DicomAlwaysAllowFind": true
+}

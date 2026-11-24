@@ -1,0 +1,23 @@
+{
+	"port": 8103,
+	"logLevel": "info",
+	"logAuditEvents": true,
+	"saveAuditEvents": false,
+	"registerEnabled": false,
+	"introspectionEnabled": false,
+	"externalAuthProviders": [],
+	"defaultOAuthClients": [],
+	"emailProvider": "none",
+	"allowProjectSmtp": false,
+	"subscriptionsEnabled": false,
+	"serverScopedSubscriptionsEnabled": false,
+	"preCommitSubscriptionsEnabled": false,
+	"autoDownloadEnabled": false,
+	"allowUnsafeOutbound": false,
+	"botLambdaRoleArn": "",
+	"vmContextBotsEnabled": false,
+	"botCustomFunctionsEnabled": false,
+	"storeBotInput": false,
+	"mcpEnabled": false,
+	"supportEmail": ""
+}

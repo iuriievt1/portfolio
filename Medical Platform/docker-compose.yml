@@ -1,0 +1,475 @@
+# local dev only
+# NAB-553, NAB-311, ADR-011 ř. 47, ADR-002 ř. 22, Q-041
+
+# ADR-017, architektura.md 11
+x-dicom-dcmtk: &dicom-dcmtk
+  build: ./dev/dicom/dcmtk
+  image: ansora-vulna-dicom-dcmtk:dev
+  profiles: ["dicom"]
+  init: true
+
+x-dicom-python: &dicom-python
+  build: ./dev/dicom/python
+  image: ansora-vulna-dicom-python:dev
+  profiles: ["dicom"]
+  init: true
+
+# ADR-017, Q-041, integrace-dicom.md 6, 11, 11.1
+x-dicom-node-24-image: &dicom-node-24-image node:24-trixie-slim@sha256:54f84b4cf8432b21aaffd5d3ce8d41e12cea0d10d33c09d2f3c9879d49d6b446
+
+x-dicom-node-environment: &dicom-node-environment
+  DICOM_EVIDENCE: /evidence
+  DICOM_CALLING_AE_TITLE: VULNA
+
+x-dicom-node: &dicom-node
+  profiles: ["dicom-suite"]
+  init: true
+  command: ["node", "/workspace/tools/dist/dicom/suite/run.js"]
+  volumes:
+    - ./tools/dist/dicom:/workspace/tools/dist/dicom:ro
+    - ./tools/node_modules:/workspace/tools/node_modules:ro
+    - ./libs/modules/vulna/adapter-dicom-dimse/dist:/workspace/libs/modules/vulna/adapter-dicom-dimse/dist:ro
+    - ./libs/modules/vulna/adapter-dicom-dimse/package.json:/workspace/libs/modules/vulna/adapter-dicom-dimse/package.json:ro
+    - ./libs/modules/vulna/adapter-dicom-dimse/node_modules:/workspace/libs/modules/vulna/adapter-dicom-dimse/node_modules:ro
+    - ./libs/modules/vulna/domain/dist:/workspace/libs/modules/vulna/domain/dist:ro
+    - ./libs/modules/vulna/domain/package.json:/workspace/libs/modules/vulna/domain/package.json:ro
+    - ./libs/modules/vulna/domain/node_modules:/workspace/libs/modules/vulna/domain/node_modules:ro
+    - ./libs/contracts/dist:/workspace/libs/contracts/dist:ro
+    - ./libs/contracts/package.json:/workspace/libs/contracts/package.json:ro
+    - ./vendor/dcmjs/src:/workspace/vendor/dcmjs/src:ro
+    - ./vendor/dcmjs/package.json:/workspace/vendor/dcmjs/package.json:ro
+    - ./vendor/dcmjs-dimse/src:/workspace/vendor/dcmjs-dimse/src:ro
+    - ./vendor/dcmjs-dimse/package.json:/workspace/vendor/dcmjs-dimse/package.json:ro
+    - ./vendor/dcmjs-dimse/node_modules:/workspace/vendor/dcmjs-dimse/node_modules:ro
+    - ./node_modules:/workspace/node_modules:ro
+    - dicom_data:/data:ro
+    - ./dist/dicom-evidence:/evidence
+
+x-dicom-healthcheck: &dicom-healthcheck
+  interval: 5s
+  timeout: 4s
+  retries: 24
+
+services:
+  postgres:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: vulna
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d vulna"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ADR-042 bod 7, ADR-054 bod 1, provoz-a-dohled.md 7
+  clinical-record-cache:
+    build:
+      context: .
+      dockerfile: deploy/images/valkey/Dockerfile
+    image: ansora-vulna-valkey:dev
+    profiles: ["clinical-record"]
+    restart: unless-stopped
+    # konfigurace-a-profily.md 2.1, Q-113
+    command:
+      - --save
+      - ""
+      - --appendonly
+      - "no"
+      - --user
+      - default
+      - "on"
+      - ">clinical_record"
+      - "~*"
+      - "&*"
+      - +@all
+      - -@admin
+      - -flushall
+      - -flushdb
+
+  clinical-record:
+    image: medplum/medplum-server:5.2.18@sha256:5061141d2a0f30b3ae7486608d21d500f1b873d352fed1720004d5d6fa085954
+    profiles: ["clinical-record"]
+    restart: unless-stopped
+    command: ["file:/etc/medplum/medplum.config.json,env"]
+    # ADR-053 (doplnění 2026-09-24) bod 1
+    env_file:
+      - path: .data/clinical-record-storage.env
+        required: false
+    environment:
+      MEDPLUM_BASE_URL: http://localhost:8103/
+      MEDPLUM_APP_BASE_URL: http://localhost:8103/
+      MEDPLUM_DATABASE_HOST: postgres
+      MEDPLUM_DATABASE_PORT: "5432"
+      MEDPLUM_DATABASE_DBNAME: clinical_record
+      MEDPLUM_DATABASE_USERNAME: clinical_record
+      MEDPLUM_DATABASE_PASSWORD: clinical_record
+      MEDPLUM_REDIS_HOST: clinical-record-cache
+      MEDPLUM_REDIS_PORT: "6379"
+      MEDPLUM_REDIS_PASSWORD: clinical_record
+      MEDPLUM_BINARY_STORAGE: file:/var/lib/medplum/binary
+      MEDPLUM_DEFAULT_SUPER_ADMIN_EMAIL: break-glass@vulna.invalid
+      MEDPLUM_DEFAULT_SUPER_ADMIN_PASSWORD: vulna-dev-break-glass-not-for-production
+    ports:
+      - "127.0.0.1:8103:8103"
+    volumes:
+      - ./profiles/mou/clinical-record/medplum.config.json:/etc/medplum/medplum.config.json:ro
+      - clinical_record_binary:/var/lib/medplum/binary
+    depends_on:
+      postgres:
+        condition: service_healthy
+      clinical-record-cache:
+        condition: service_started
+      clinical-record-binary-init:
+        condition: service_completed_successfully
+
+  # CAP-021-R36
+  clinical-record-binary-init:
+    image: medplum/medplum-server:5.2.18@sha256:5061141d2a0f30b3ae7486608d21d500f1b873d352fed1720004d5d6fa085954
+    profiles: ["clinical-record"]
+    user: "0:0"
+    entrypoint: ["node", "-e", "require('node:fs').chownSync('/var/lib/medplum/binary', 1000, 1000)"]
+    volumes:
+      - clinical_record_binary:/var/lib/medplum/binary
+    restart: "no"
+
+  pacs:
+    image: orthancteam/orthanc:26.9.0@sha256:1ca07ad4a70f67f815e55a558e76718d572ed9d0571268a3fbc1516a9155c5ca
+    profiles: ["pacs"]
+    restart: unless-stopped
+    environment:
+      WORKLISTS_PLUGIN_ENABLED: "true"
+    ports:
+      - "4242:4242"
+      - "8042:8042"
+    volumes:
+      - ./dev/pacs/orthanc.json:/etc/orthanc/orthanc.json:ro
+      - ./dev/pacs/worklist:/var/lib/orthanc/worklist:ro
+      - pacs_data:/var/lib/orthanc/db
+
+  oidc-postgres:
+    image: postgres:17.11-alpine@sha256:f02121de6f74d30d8a94cd1d9584125e2178d7e6c377d8130112d4e52d867995
+    profiles: ["oidc"]
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: authentik
+      POSTGRES_PASSWORD: authentik
+      POSTGRES_DB: authentik
+    volumes:
+      - oidc_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U authentik -d authentik"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  oidc-redis:
+    image: valkey/valkey:9.1.3-alpine@sha256:bf09d58e96d6b4524a15396b65b242bbe18beebbcc15a04d8ee75ddac62fae0b
+    profiles: ["oidc"]
+    restart: unless-stopped
+    command: ["valkey-server", "--save", "60", "1"]
+    volumes:
+      - oidc_redis_data:/data
+
+  oidc:
+    image: ghcr.io/goauthentik/server:2026.8.3@sha256:ab9b4e8cc4ab3f8d1198d2db6aeea66bafea1963b3f2843589e0d163f97d9849
+    profiles: ["oidc"]
+    restart: unless-stopped
+    command: server
+    environment: &oidc_environment
+      AUTHENTIK_SECRET_KEY: vulna-dev-secret-key-not-for-production-0000000000
+      AUTHENTIK_POSTGRESQL__HOST: oidc-postgres
+      AUTHENTIK_POSTGRESQL__USER: authentik
+      AUTHENTIK_POSTGRESQL__NAME: authentik
+      AUTHENTIK_POSTGRESQL__PASSWORD: authentik
+      AUTHENTIK_REDIS__HOST: oidc-redis
+      AUTHENTIK_BOOTSTRAP_PASSWORD: vulna
+      AUTHENTIK_BOOTSTRAP_TOKEN: vulna-dev-bootstrap-token
+      AUTHENTIK_BOOTSTRAP_EMAIL: akadmin@vulna.invalid
+      AUTHENTIK_DISABLE_UPDATE_CHECK: "true"
+      AUTHENTIK_DISABLE_STARTUP_ANALYTICS: "true"
+      AUTHENTIK_ERROR_REPORTING__ENABLED: "false"
+      AUTHENTIK_AVATARS: none
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./dev/oidc/blueprint.yaml:/blueprints/custom/vulna.yaml:ro
+    depends_on:
+      oidc-postgres:
+        condition: service_healthy
+      oidc-redis:
+        condition: service_started
+
+  oidc-worker:
+    image: ghcr.io/goauthentik/server:2026.8.3@sha256:ab9b4e8cc4ab3f8d1198d2db6aeea66bafea1963b3f2843589e0d163f97d9849
+    profiles: ["oidc"]
+    restart: unless-stopped
+    command: worker
+    environment: *oidc_environment
+    volumes:
+      - ./dev/oidc/blueprint.yaml:/blueprints/custom/vulna.yaml:ro
+    depends_on:
+      oidc-postgres:
+        condition: service_healthy
+      oidc-redis:
+        condition: service_started
+
+  syslog:
+    image: balabit/syslog-ng:4.12.0@sha256:2a95c4491a010150416385517f9caaa5f6e8fc39643236cc4d5bdb8ed92993ea
+    profiles: ["syslog"]
+    restart: unless-stopped
+    command: ["--no-caps"]
+    ports:
+      - "6514:6514"
+      - "601:601"
+      - "514:514"
+      - "514:514/udp"
+    volumes:
+      - ./dev/syslog/syslog-ng.conf:/etc/syslog-ng/syslog-ng.conf:ro
+      - ./dev/syslog/certs:/etc/syslog-ng/certs:ro
+      - ./.data/syslog:/var/log/received
+
+  tls:
+    image: nginx:1.29.8-alpine@sha256:5616878291a2eed594aee8db4dade5878cf7edcb475e59193904b198d9b830de
+    profiles: ["tls"]
+    restart: unless-stopped
+    ports:
+      - "8443:8443"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./dev/tls/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./dev/tls/certs:/etc/nginx/certs:ro
+
+  mock-mobile-api:
+    image: stoplight/prism:5.15.10@sha256:586d1f0f94f8d0eaf20b26b8b41f985f2a2d494bea297bd3988c3de3eb87094e
+    profiles: ["mock"]
+    restart: unless-stopped
+    command: ["mock", "-h", "0.0.0.0", "-p", "4010", "-m", "false", "/specs/mobile/index.yaml"]
+    ports:
+      - "4010:4010"
+    volumes:
+      - ./docs/spec/api:/specs:ro
+
+  mock-admin-api:
+    image: stoplight/prism:5.15.10@sha256:586d1f0f94f8d0eaf20b26b8b41f985f2a2d494bea297bd3988c3de3eb87094e
+    profiles: ["mock"]
+    restart: unless-stopped
+    command: ["mock", "-h", "0.0.0.0", "-p", "4011", "-m", "false", "/specs/administration.yaml"]
+    ports:
+      - "4011:4011"
+    volumes:
+      - ./docs/spec/api:/specs:ro
+
+  # ADR-017, ADR-024, architektura.md 11, integrace-dicom.md 11.1
+  dicom-data:
+    <<: *dicom-python
+    command: ["/app/synthetic_data.py", "--registry", "/registry.json", "--output", "/data"]
+    network_mode: none
+    volumes:
+      - ./quality/data/synteticka-sada/registry.json:/registry.json:ro
+      - dicom_data:/data
+
+  dicom-client:
+    <<: *dicom-dcmtk
+    command: ["sleep", "infinity"]
+    volumes:
+      - dicom_data:/data:ro
+    networks:
+      dicom:
+        ipv4_address: 10.213.70.10
+    depends_on:
+      dicom-data:
+        condition: service_completed_successfully
+
+  dcmtk-store:
+    <<: *dicom-dcmtk
+    command: ["storescp", "--verbose", "--aetitle", "STORESCP", "--max-pdu", "16384", "+xa", "--bit-preserving", "--output-directory", "/var/lib/storescp", "11112"]
+    networks:
+      dicom:
+        ipv4_address: 10.213.70.21
+    healthcheck:
+      <<: *dicom-healthcheck
+      test: ["CMD", "echoscu", "-aet", "HEALTHCHECK", "-aec", "STORESCP", "-to", "2", "localhost", "11112"]
+
+  dcmtk-qr:
+    <<: *dicom-dcmtk
+    command: ["sh", "-c", "dcmqridx /var/lib/dcmqrscp/DCMQRSCP /data/instances/*.dcm && exec dcmqrscp --verbose --config /etc/dcmqrscp.cfg"]
+    volumes:
+      - dicom_data:/data:ro
+    networks:
+      dicom:
+        ipv4_address: 10.213.70.22
+    depends_on:
+      dicom-data:
+        condition: service_completed_successfully
+    healthcheck:
+      <<: *dicom-healthcheck
+      test: ["CMD", "echoscu", "-aet", "HEALTHCHECK", "-aec", "DCMQRSCP", "-to", "2", "localhost", "11112"]
+
+  dcmtk-mwl:
+    <<: *dicom-dcmtk
+    command: ["wlmscpfs", "--verbose", "--data-files-path", "/data/worklist", "--max-pdu", "16384", "11112"]
+    volumes:
+      - type: volume
+        source: dicom_data
+        target: /data/worklist
+        volume:
+          subpath: worklist
+    networks:
+      dicom:
+        ipv4_address: 10.213.70.23
+    depends_on:
+      dicom-data:
+        condition: service_completed_successfully
+    healthcheck:
+      <<: *dicom-healthcheck
+      test: ["CMD", "echoscu", "-aet", "HEALTHCHECK", "-aec", "WLMSCPFS", "-to", "2", "localhost", "11112"]
+
+  amis:
+    <<: *dicom-python
+    command: ["/app/amis_emulator.py"]
+    environment:
+      AMIS_AE_TITLE: AMIS
+      AMIS_DATA: /data
+      AMIS_STORAGE: /var/lib/amis
+      AMIS_REGISTRY: /registry.json
+      AMIS_MAX_MATCHES: "1000"
+      AMIS_PEERS: VULNA@10.213.70.10=storage+query;VULNA-STORE@10.213.70.10=storage;VULNA-QUERY@10.213.70.10=query;VULNA@10.213.70.11=storage+query;VULNA@10.213.70.12=storage+query;SYNTHETIC-CHECK@10.213.70.13=query;HEALTHCHECK@127.0.0.1=
+    volumes:
+      - ./quality/data/synteticka-sada/registry.json:/registry.json:ro
+      - dicom_data:/data:ro
+    networks:
+      dicom:
+        ipv4_address: 10.213.70.24
+    depends_on:
+      dicom-data:
+        condition: service_completed_successfully
+    healthcheck:
+      <<: *dicom-healthcheck
+      test: ["CMD", "python", "-I", "/app/amis_healthcheck.py"]
+
+  hostile:
+    image: *dicom-node-24-image
+    profiles: ["dicom"]
+    init: true
+    user: node
+    command: ["node", "/app/hostile/run.js"]
+    volumes:
+      - ./tools/dist/dicom:/app:ro
+    networks:
+      dicom:
+        ipv4_address: 10.213.70.25
+    healthcheck:
+      <<: *dicom-healthcheck
+      test: ["CMD", "node", "-e", "require('node:net').connect(11112, '127.0.0.1').on('connect', () => process.exit(0)).on('error', () => process.exit(1))"]
+
+  # ADR-017, Q-040, integrace-dicom.md 11
+  dicom-synthetic-check:
+    <<: *dicom-python
+    profiles: ["dicom-suite"]
+    command: ["/app/synthetic_check.py", "--registry", "/registry.json", "--data", "/data", "--evidence", "/evidence/synthetic-data.json"]
+    volumes:
+      - ./quality/data/synteticka-sada/registry.json:/registry.json:ro
+      - dicom_data:/data:ro
+      - ./dist/dicom-evidence:/evidence
+    networks:
+      dicom:
+        ipv4_address: 10.213.70.13
+
+  # ADR-017, Q-028, integrace-dicom.md 5, 11
+  dicom-validator:
+    <<: *dicom-python
+    profiles: ["dicom-suite"]
+    command: ["/app/object_validation.py", "--self-test-source", "/data/smoke/document.dcm", "--objects", "/evidence/objects", "--evidence", "/evidence/object-validation.json"]
+    network_mode: none
+    volumes:
+      - dicom_data:/data:ro
+      - ./dist/dicom-evidence:/evidence
+
+  dicom-node-24:
+    <<: *dicom-node
+    image: *dicom-node-24-image
+    environment:
+      <<: *dicom-node-environment
+      DICOM_SUITE_IMAGE: node_24-trixie-slim
+    networks:
+      dicom:
+        ipv4_address: 10.213.70.11
+
+  dicom-node-26:
+    <<: *dicom-node
+    image: node:26-trixie-slim@sha256:e4db4c914bf8ad241bd24804fc25d272d89bad97e68cdc8a1414862790a02c39
+    environment:
+      <<: *dicom-node-environment
+      DICOM_SUITE_IMAGE: node_26-trixie-slim
+    networks:
+      dicom:
+        ipv4_address: 10.213.70.12
+
+  dcm4chee-ldap:
+    image: dcm4che/slapd-dcm4chee:2.6.13-35.1@sha256:6d0a1f2bd2633af4f93edd01378c258b1ec2d9e03b43b9e0e9bd19ca00e15a0d
+    profiles: ["dicom"]
+    networks:
+      - dicom
+
+  dcm4chee-db:
+    image: dcm4che/postgres-dcm4chee:17.9-35@sha256:28bcc74f4fe0328563d41b8468465b78d10ffc53166bb7f7ca34530e42421791
+    profiles: ["dicom"]
+    environment:
+      POSTGRES_DB: pacsdb
+      POSTGRES_USER: pacs
+      POSTGRES_PASSWORD: pacs
+    networks:
+      - dicom
+
+  dcm4chee:
+    image: dcm4che/dcm4chee-arc-psql:5.35.1@sha256:897a57ef7bb1f838ac441b4a231aca02e7bd345b25243495715c54dc3c9a74ea
+    profiles: ["dicom"]
+    environment:
+      LDAP_URL: ldap://dcm4chee-ldap:389
+      POSTGRES_HOST: dcm4chee-db
+      POSTGRES_DB: pacsdb
+      POSTGRES_USER: pacs
+      POSTGRES_PASSWORD: pacs
+      WILDFLY_DEPLOY_UI: "false"
+      WILDFLY_PACSDS_USE_CCM: "false"
+      WILDFLY_CHOWN: /storage
+      WILDFLY_WAIT_FOR: dcm4chee-ldap:389 dcm4chee-db:5432
+    tmpfs:
+      - /storage
+    depends_on:
+      - dcm4chee-ldap
+      - dcm4chee-db
+    networks:
+      dicom:
+        ipv4_address: 10.213.70.26
+    healthcheck:
+      <<: *dicom-healthcheck
+      test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/127.0.0.1/11112"]
+      retries: 120
+
+networks:
+  # Q-040, Q-102, NAB-474
+  dicom:
+    name: ansora-vulna-dicom
+    internal: true
+    ipam:
+      config:
+        - subnet: 10.213.70.0/24
+          ip_range: 10.213.70.128/25
+
+volumes:
+  postgres_data:
+  clinical_record_binary:
+  pacs_data:
+  oidc_postgres_data:
+  oidc_redis_data:
+  dicom_data:
+    name: ansora-vulna-dicom-data

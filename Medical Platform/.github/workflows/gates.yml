@@ -1,0 +1,373 @@
+# Brány CI ✓ ADR-001 ř. 24–30, ADR-033 bod 3, docs/spec/vydani-sbom-a-brany.md.
+#
+# Brána je kontrola, která musí projít u KAŽDÉHO vydání včetně opravného ✓ ADR-001 ř. 24,
+# CAP-029-R03. Brány se NEOBCHÁZEJÍ ✓ ADR-001 ř. 40 a NIKDY neběží z mezipaměti sestavení
+# ✓ ADR-033 bod 3, CAP-029-R25 — brána, která může doběhnout z mezipaměti, není doklad.
+#
+# Tenhle soubor pokrývá brány nad zdrojovým stromem: B15 (hranice projektů), B16 (kontrakt API)
+# a B19 (oprávnění k auditu nad migrovanou databází), a konformní sadu DICOM ✓ ADR-024,
+# integrace-dicom.md 11.
+# Brány nad hotovým obrazem (B1 až B11) a brána sledovatelnosti B12 patří do pipeline vydání
+# a zatím nejsou postavené.
+#
+# Sestavení a brány běží na vlastním runneru pod správou veevoy uvnitř EU ✓ Q-051.
+
+name: gates
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  # Žádná cloudová služba výrobce Nx ani vzdálená mezipaměť ✓ ADR-033 bod 4.
+  # V nx.json je k tomu neverConnectToCloud a analytics: false.
+  NX_NO_CLOUD: "true"
+
+jobs:
+  gates:
+    runs-on:
+      group: default
+      labels: [self-hosted, linux]
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # Nx potřebuje historii pro --affected; brány stejně běží nad vším.
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      # Uzamčené verze všech závislostí ✓ NAB-468.
+      - run: pnpm install --frozen-lockfile
+
+      # Záznam běhu bran nese verze nástrojů ✓ CAP-029-R13, tedy i verzi Nx.
+      - name: verze nástrojů
+        run: |
+          node --version
+          pnpm --version
+          pnpm exec nx --version
+          pnpm exec tsc --version
+
+      - name: sestavení profilu
+        run: pnpm profile:build
+
+      - name: build
+        run: pnpm build
+
+      # --skip-nx-cache je opasek; cíle bran mají navíc cache:false v nx.json ✓ ADR-033 bod 3.
+      - name: B15 — hranice projektů
+        run: pnpm gate:boundaries
+
+      - name: B16 — kontrakt API
+        run: pnpm gate:contract
+
+      - name: B12 — trace nad pull requestem
+        run: pnpm gate:trace
+
+      - name: kontrola vazeb
+        run: |
+          npm --prefix tools/kontroly ci
+          node tools/kontroly/vazby-kontrola.mjs
+
+      - name: lint a formát
+        run: pnpm lint
+
+      - name: testy
+        run: pnpm test
+
+      - name: typová kontrola administrace
+        run: pnpm --filter @ansora/admin typecheck
+
+      - name: typová kontrola mobilní aplikace
+        run: pnpm --filter @ansora/mobile typecheck
+
+      # Doklad k ADR-033 bod 3: brána z mezipaměti neběží ani bez --skip-nx-cache.
+      # "Zda to Nx v CI spolehlivě vynutí, se ověří na kostře monorepa před K1."
+      - name: doklad — brána neběží z mezipaměti
+        run: |
+          pnpm exec nx run @ansora/tools:gate:boundaries 2>&1 | tee /tmp/first-run.log
+          pnpm exec nx run @ansora/tools:gate:boundaries 2>&1 | tee /tmp/second-run.log
+          if grep -q "read the output from the cache" /tmp/second-run.log; then
+            echo "CHYBA: brána doběhla z mezipaměti — to není doklad ✓ ADR-033 bod 3"
+            exit 1
+          fi
+          echo "OK: druhý běh brány mezipaměť nepoužil"
+
+  # B19 ✓ CAP-025-R19, CAP-025-S10, CAP-025-S12
+  audit-permissions:
+    runs-on:
+      group: default
+      labels: [self-hosted, linux]
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: vulna
+        ports:
+          - 5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d vulna"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: localhost
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: vulna
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: databázové role
+        run: |
+          docker exec -i ${{ job.services.postgres.id }} psql -U postgres -d vulna -v ON_ERROR_STOP=1 -f - < db/roles/roles.sql
+          docker exec ${{ job.services.postgres.id }} psql -U postgres -d vulna -v ON_ERROR_STOP=1 -c "ALTER ROLE vulna_migrate PASSWORD 'ci-only'"
+
+      - name: sestavení profilu
+        run: pnpm profile:build
+
+      - name: migrace
+        run: pnpm migrate
+        env:
+          DATABASE_URL_MIGRATE: postgres://vulna_migrate:ci-only@localhost:${{ job.services.postgres.ports['5432'] }}/vulna
+
+      - name: B19 — oprávnění k auditu a trigger
+        run: pnpm gate:audit
+        env:
+          AUDIT_GATE_DATABASE_URL: postgres://postgres:postgres@localhost:${{ job.services.postgres.ports['5432'] }}/vulna
+
+  # ADR-024, ADR-016, ADR-021
+  server-sql:
+    runs-on:
+      group: default
+      labels: [self-hosted, linux]
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: vulna
+        ports:
+          - 5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d vulna"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: localhost
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: vulna
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: databázové role
+        run: |
+          docker exec -i ${{ job.services.postgres.id }} psql -U postgres -d vulna -v ON_ERROR_STOP=1 -f - < db/roles/roles.sql
+          docker exec ${{ job.services.postgres.id }} psql -U postgres -d vulna -v ON_ERROR_STOP=1 -c "ALTER ROLE vulna_migrate PASSWORD 'ci-only'"
+
+      - name: sestavení
+        run: |
+          pnpm profile:build
+          pnpm build
+
+      - name: migrace
+        run: pnpm migrate
+        env:
+          DATABASE_URL_MIGRATE: postgres://vulna_migrate:ci-only@localhost:${{ job.services.postgres.ports['5432'] }}/vulna
+
+      - name: SQL vykonavatele pod jeho rolí
+        run: pnpm test:worker-sql
+        env:
+          WORKER_SQL_TEST_DATABASE_URL: postgres://postgres:postgres@localhost:${{ job.services.postgres.ports['5432'] }}/vulna
+
+      - name: SQL procesu API pod jeho rolí
+        if: ${{ !cancelled() }}
+        run: pnpm test:api-sql
+        env:
+          API_SQL_TEST_DATABASE_URL: postgres://postgres:postgres@localhost:${{ job.services.postgres.ports['5432'] }}/vulna
+
+  # CAP-022-R01, CAP-022-R03, ADR-018, ADR-024, ADR-011
+  ocr:
+    runs-on:
+      group: default
+      labels: [self-hosted, linux]
+    container: node:24-trixie-slim
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: Tesseract a jazykové modely jako v obrazu serveru
+        run: bash deploy/images/ocr/build.sh
+
+      - name: rozpoznání textu skutečným nástrojem
+        run: pnpm test:ocr
+
+      # ✓ Q-051
+      - name: soubory zpět uživateli runneru
+        if: always()
+        run: |
+          for path in "$GITHUB_WORKSPACE" "$HOME" "$RUNNER_TOOL_CACHE/node"; do
+            if [ -e "$path" ]; then
+              chown -R --reference="$RUNNER_TEMP" "$path"
+            fi
+          done
+
+  # ADR-017, ADR-024, Q-040, Q-041, architektura.md 11, integrace-dicom.md 11
+  dicom-suite:
+    runs-on:
+      group: default
+      labels: [self-hosted, linux]
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/docker-compose
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: konformní sada DICOM na Node.js 24 a 26
+        run: pnpm dicom:suite
+
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: dicom-evidence
+          path: dist/dicom-evidence/
+
+  # ADR-053 bod 10, CAP-003-S03, CAP-020-R16
+  clinical-record-access:
+    runs-on:
+      group: default
+      labels: [self-hosted, linux]
+    env:
+      DATABASE_URL_MIGRATE: postgres://vulna_migrate:ci-only@127.0.0.1:5432/vulna
+      DATABASE_URL_API: postgres://vulna_api:ci-only@127.0.0.1:5432/vulna
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/docker-compose
+      - uses: ./.github/actions/compose-down
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: git config --global user.name "ci"
+
+      - name: databáze a role
+        run: |
+          docker compose up -d --wait postgres
+          docker compose exec -T postgres psql -U postgres -d vulna -v ON_ERROR_STOP=1 -f - < db/roles/roles.sql
+          for role in vulna_migrate vulna_api vulna_worker; do
+            docker compose exec -T postgres psql -U postgres -d vulna -qc "alter role $role password 'ci-only'"
+          done
+
+      - name: sestavení
+        run: |
+          pnpm profile:build
+          pnpm build
+
+      - name: migrace
+        run: pnpm migrate
+
+      - name: úložiště klinického záznamu
+        run: bash dev/clinical-record.sh
+
+      - name: čtení za uživatele proti reálnému úložišti
+        run: |
+          set -a
+          . ./.data/clinical-record.env
+          . ./.data/clinical-record-worker.env
+          . ./.data/clinical-record-retention.env
+          set +a
+          pnpm test:clinical-record
+
+      - if: always()
+        uses: ./.github/actions/compose-down
+
+  image:
+    runs-on:
+      group: default
+      labels: [self-hosted, linux]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: obraz serveru
+        run: pnpm image:build
+      - name: B2, B3, B7, B9, B10, B11 — brány nad obrazem
+        run: pnpm gate:image
+
+      - name: B4, B5, B6, B8 — SBOM a jeho úplnost
+        run: pnpm gate:sbom
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: sbom
+          path: dist/sbom/
+
+  # ADR-024, Q-040, CAP-021, CAP-022, CAP-023, CAP-025, CAP-028-S08
+  system:
+    runs-on:
+      group: default
+      labels: [self-hosted, linux]
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/docker-compose
+      - uses: ./.github/actions/compose-down
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: git config --global user.name "ci"
+
+      - name: systémové testy nad obrazem serveru, databází a syntetickým PACS
+        run: pnpm test:system
+
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: system-evidence
+          path: |
+            dist/system-evidence/
+            .data/syslog/messages.log
+
+      - if: always()
+        uses: ./.github/actions/compose-down

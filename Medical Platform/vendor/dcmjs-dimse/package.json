@@ -1,0 +1,29 @@
+{
+  "name": "@veevoy/dcmjs-dimse",
+  "version": "0.3.4-veevoy.16",
+  "private": true,
+  "description": "Fork of dcmjs-dimse 0.3.4 for Ansora Vulna, consumed from source; see PEDIGREE.md",
+  "main": "src/index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "test": "tsc -p tsconfig.json && vitest run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PantelisGeorgiadis/dcmjs-dimse.git"
+  },
+  "author": "Pantelis Georgiadis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PantelisGeorgiadis/dcmjs-dimse/issues"
+  },
+  "homepage": "https://github.com/PantelisGeorgiadis/dcmjs-dimse",
+  "dependencies": {
+    "@veevoy/dcmjs": "workspace:*",
+    "async-event-emitter2": "^0.0.2",
+    "loglevel": "^1.9.2",
+    "loglevel-plugin-prefix": "^0.8.4",
+    "smart-buffer": "^4.2.0",
+    "ts-mixer": "^6.0.4"
+  }
+}

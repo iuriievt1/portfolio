@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NativeDicomModel>
+  <DicomAttribute tag="00080005" vr="CS" keyword="SpecificCharacterSet"><Value number="1">ISO_IR 192</Value></DicomAttribute>
+  <DicomAttribute tag="00080050" vr="SH" keyword="AccessionNumber"><Value number="1">ACC-DEV-0001</Value></DicomAttribute>
+  <DicomAttribute tag="00100010" vr="PN" keyword="PatientName"><PersonName number="1"><Alphabetic><FamilyName>Syntetická</FamilyName><GivenName>Vzorková</GivenName></Alphabetic></PersonName></DicomAttribute>
+  <DicomAttribute tag="00100020" vr="LO" keyword="PatientID"><Value number="1">SYN-0001</Value></DicomAttribute>
+  <DicomAttribute tag="00100030" vr="DA" keyword="PatientBirthDate"><Value number="1">19700101</Value></DicomAttribute>
+  <DicomAttribute tag="00100040" vr="CS" keyword="PatientSex"><Value number="1">F</Value></DicomAttribute>
+  <DicomAttribute tag="0020000D" vr="UI" keyword="StudyInstanceUID"><Value number="1">2.25.100000000000000000000000000000000001</Value></DicomAttribute>
+  <DicomAttribute tag="00400100" vr="SQ" keyword="ScheduledProcedureStepSequence">
+    <Item number="1">
+      <DicomAttribute tag="00080060" vr="CS" keyword="Modality"><Value number="1">XC</Value></DicomAttribute>
+      <DicomAttribute tag="00400001" vr="AE" keyword="ScheduledStationAETitle"><Value number="1">ANSORA_VULNA</Value></DicomAttribute>
+      <DicomAttribute tag="00400002" vr="DA" keyword="ScheduledProcedureStepStartDate"><Value number="1">20260918</Value></DicomAttribute>
+      <DicomAttribute tag="00400007" vr="LO" keyword="ScheduledProcedureStepDescription"><Value number="1">Kontrola rány</Value></DicomAttribute>
+      <DicomAttribute tag="00400009" vr="SH" keyword="ScheduledProcedureStepID"><Value number="1">SPS-0001</Value></DicomAttribute>
+    </Item>
+  </DicomAttribute>
+</NativeDicomModel>

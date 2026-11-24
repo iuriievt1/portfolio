@@ -1,0 +1,2 @@
+export const STATE_MAX_LENGTH = 256
+export const SIGNED_BODY_MAX_LENGTH = 8192

@@ -1,0 +1,36 @@
+{
+	"platforms": [
+		"apple",
+		"android"
+	],
+	"apple": {
+		"modules": [
+			"ManagedConfigurationModule",
+			"CryptoAndKeysModule",
+			"ScreenPrivacyModule",
+			"DevicePermissionsModule",
+			"NetworkPinningModule",
+			"BackgroundQueueModule",
+			"CameraModule",
+			"DocumentScannerModule",
+			"OsIntegrityModule"
+		],
+		"appDelegateSubscribers": [
+			"BackgroundSessionHandler",
+			"NetworkPinningSubscriber"
+		]
+	},
+	"android": {
+		"modules": [
+			"cz.veevoy.ansora.core.mobile.ManagedConfigurationModule",
+			"cz.veevoy.ansora.core.mobile.CryptoAndKeysModule",
+			"cz.veevoy.ansora.core.mobile.ScreenPrivacyModule",
+			"cz.veevoy.ansora.core.mobile.DevicePermissionsModule",
+			"cz.veevoy.ansora.core.mobile.NetworkPinningModule",
+			"cz.veevoy.ansora.core.mobile.BackgroundQueueModule",
+			"cz.veevoy.ansora.core.mobile.CameraModule",
+			"cz.veevoy.ansora.core.mobile.DocumentScannerModule",
+			"cz.veevoy.ansora.core.mobile.OsIntegrityModule"
+		]
+	}
+}

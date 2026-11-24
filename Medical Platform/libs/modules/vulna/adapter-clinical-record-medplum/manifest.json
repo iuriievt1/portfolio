@@ -1,0 +1,74 @@
+{
+	"$schema": "../../../../profiles/adapter-manifest.schema.json",
+	"description": "Closed adapter manifest ✓ ADR-003 ř. 26. Whatever is not here, the adapter must not do.",
+	"name": "@ansora/vulna-adapter-clinical-record-medplum",
+	"ports": [
+		"ClinicalRecordStore",
+		"ImageHistory",
+		"BinaryStore"
+	],
+	"processes": [
+		"api",
+		"worker"
+	],
+	"outboundCommunication": [
+		{
+			"target": "clinical-record-store",
+			"protocol": "http/loopback",
+			"source": "✓ ADR-042 bod 7, ADR-054 bod 3, konfigurace-a-profily.md 2.1"
+		}
+	],
+	"inboundCommunication": [],
+	"configurationSchema": {
+		"MEDPLUM_BASE_URL": {
+			"type": "string",
+			"required": true,
+			"outboundTarget": true,
+			"description": "Address of the clinical record store on the loopback of the host ✓ CAP-012-R30, konfigurace-a-profily.md 2.1."
+		},
+		"INSTANCE_BASE_URI": {
+			"type": "string",
+			"required": true,
+			"description": "Base URI of the instance for the identifiers of the customer, the canonical URLs of the instance code lists and meta.source ✓ ADR-050 bod 2, ADR-050 bod 7, konfigurace-a-profily.md 2.1."
+		},
+		"STORAGE_URL": {
+			"type": "string",
+			"required": true,
+			"description": "Address of the object store of the clinical record store published to the internal network of the customer over TLS, only for reading by short signed links ✓ ADR-053 (doplnění 2026-09-24) bod 1, CAP-011-R02, CAP-020-R22, konfigurace-a-profily.md 2.1."
+		}
+	},
+	"secrets": [
+		"CLINICAL_RECORD_CLIENT_ID",
+		"CLINICAL_RECORD_CLIENT_SECRET",
+		"CLINICAL_RECORD_WORKER_CLIENT_ID",
+		"CLINICAL_RECORD_WORKER_CLIENT_SECRET",
+		"CLINICAL_RECORD_RETENTION_CLIENT_ID",
+		"CLINICAL_RECORD_RETENTION_CLIENT_SECRET",
+		"CLINICAL_RECORD_STORAGE_SIGNING_KEY",
+		"CLINICAL_RECORD_STORAGE_SIGNING_KEY_PASSPHRASE"
+	],
+	"deployment": {
+		"CLINICAL_RECORD_CANONICAL_BASE": {
+			"default": "https://fhir.ansora.cz/vulna",
+			"description": "Canonical base of the product; a change is a new release of the profiles, not a restart ✓ ADR-050 bod 2, CAP-012-S26."
+		}
+	},
+	"installation": {
+		"description": "The installation procedure signs in with the sealed break-glass account, creates the project, the administrator credential of the API process, the worker credential that may only create and read Binary bound to a visit and read, without drafts, the closed wound assessments with their findings, sites and studies and the scanned documents, the retention credential of the worker, an administrator of the project used only to remove a Binary with its versions after the retention and to read it back ✓ CAP-026-R19, dorucovaci-jadro.md 6, the policies with the clinical reads of the clinician role in its department and the root organization, switches every other client off and seals the break-glass account to the instance network ✓ CAP-012-R30, CAP-012-S23, CAP-021-R36, ADR-050 bod 10, architektura.md 3.",
+		"secrets": [
+			"CLINICAL_RECORD_BREAK_GLASS_EMAIL",
+			"CLINICAL_RECORD_BREAK_GLASS_PASSWORD"
+		]
+	},
+	"thirdPartyComponents": [
+		{
+			"name": "@medplum/core",
+			"version": "5.2.18",
+			"license": "Apache-2.0",
+			"purpose": "Client of the clinical record store: sign-in of the administrator and the worker credential, conditional writes, reads on behalf of the signed-in user, reads of the closed record by the worker, upload and read-back of Binary, removal of a Binary with its versions after the retention",
+			"source": "✓ ADR-042 bod 6, ADR-054 bod 3"
+		}
+	],
+	"source": "✓ ADR-042 bod 1, ADR-054 bod 1",
+	"note": "The API process reads the closed records on behalf of the signed-in user ✓ ADR-053 bod 3, ADR-054 bod 2 and signs the short links to the bytes of closed records ✓ ADR-053 (doplnění 2026-09-24) bod 1. The worker loads the adapter to upload the bytes of a closed record as Binary ✓ CAP-021-R36, to read the closed record for the DICOM artifact ✓ ADR-054 bod 4 and to remove a Binary with its versions after the retention ✓ CAP-026-R19; @medplum/fhirtypes is a type-only development dependency."
+}

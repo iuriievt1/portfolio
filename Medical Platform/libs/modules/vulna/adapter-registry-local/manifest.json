@@ -1,0 +1,32 @@
+{
+	"$schema": "../../../../profiles/adapter-manifest.schema.json",
+	"description": "Closed adapter manifest ✓ ADR-003 ř. 26. Whatever is not here, the adapter must not do.",
+	"name": "@ansora/vulna-adapter-registry-local",
+	"ports": [
+		"PatientDirectory",
+		"EncounterContext"
+	],
+	"processes": [
+		"worker"
+	],
+	"outboundCommunication": [],
+	"inboundCommunication": [],
+	"configurationSchema": {
+		"REGISTRY_WINDOW_DAYS_BACK": {
+			"type": "number",
+			"required": false,
+			"default": 7,
+			"description": "Default registry window on the device ✓ Q-060."
+		},
+		"REGISTRY_WINDOW_DAYS_AHEAD": {
+			"type": "number",
+			"required": false,
+			"default": 1,
+			"description": "✓ Q-060."
+		}
+	},
+	"secrets": [],
+	"thirdPartyComponents": [],
+	"source": "✓ ADR-003 ř. 29",
+	"note": "Reads and fills the local registry cache in the solution's database ✓ NAB-312, NAB-072. An incomplete result deletes nothing ✓ ADR-005 ř. 39."
+}

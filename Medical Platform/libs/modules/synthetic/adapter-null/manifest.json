@@ -1,0 +1,14 @@
+{
+	"$schema": "../../../../profiles/adapter-manifest.schema.json",
+	"name": "@ansora/synthetic-adapter-null",
+	"ports": [],
+	"processes": [
+		"worker"
+	],
+	"outboundCommunication": [],
+	"inboundCommunication": [],
+	"configurationSchema": {},
+	"secrets": [],
+	"thirdPartyComponents": [],
+	"source": "ADR-001 ř. 25"
+}

@@ -1,0 +1,3 @@
+#!/bin/sh
+# Synthetic sample: a script that pretends to be an image. It is never run.
+exit 0

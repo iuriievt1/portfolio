@@ -1,0 +1,32 @@
+{
+	"name": "@ansora/vulna-projection-dicom",
+	"version": "0.0.0",
+	"private": true,
+	"description": "DICOM projection: P10 builder over the DICOM library ✓ ADR-035 bod 1, ADR-017. Only the worker depends on it ✓ ADR-005 ř. 38–39.",
+	"license": "UNLICENSED",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "tsc --build",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"@ansora/vulna-domain": "workspace:*",
+		"@veevoy/dcmjs": "workspace:*"
+	},
+	"devDependencies": {
+		"@ansora/contracts": "workspace:*"
+	},
+	"nx": {
+		"tags": [
+			"layer:domain",
+			"process:worker"
+		]
+	}
+}

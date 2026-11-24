@@ -1,0 +1,84 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"title": "Default code lists of a profile",
+	"description": "Výchozí naplnění číselníků instance, které instalace zavede datovým krokem, ne migrací ✓ CAP-017-R06, CAP-017-R07, ADR-023. Masterem po instalaci je administrace ✓ CAP-017-R05.",
+	"type": "object",
+	"required": [
+		"codeLists",
+		"source"
+	],
+	"additionalProperties": false,
+	"properties": {
+		"$schema": {
+			"type": "string"
+		},
+		"description": {
+			"type": "string"
+		},
+		"source": {
+			"type": "string"
+		},
+		"codeLists": {
+			"type": "array",
+			"minItems": 1,
+			"items": {
+				"type": "object",
+				"required": [
+					"code",
+					"name",
+					"items"
+				],
+				"additionalProperties": false,
+				"properties": {
+					"code": {
+						"type": "string",
+						"pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+					},
+					"name": {
+						"type": "string",
+						"pattern": "^\\S.{0,254}$"
+					},
+					"items": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"required": [
+								"code",
+								"names"
+							],
+							"additionalProperties": false,
+							"properties": {
+								"code": {
+									"type": "string",
+									"pattern": "^(?=.{1,64}$)[a-z0-9]+(-[a-z0-9]+)*$"
+								},
+								"names": {
+									"type": "array",
+									"minItems": 1,
+									"items": {
+										"type": "object",
+										"required": [
+											"language",
+											"name"
+										],
+										"additionalProperties": false,
+										"properties": {
+											"language": {
+												"type": "string",
+												"pattern": "^[A-Za-z]{2,3}(-[A-Za-z0-9]{2,8}){0,3}$"
+											},
+											"name": {
+												"type": "string",
+												"pattern": "^\\S.{0,254}$"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,34 @@
+{
+	"name": "@ansora/core-mobile",
+	"version": "0.0.0",
+	"private": true,
+	"description": "Mobile kit: React Native / Expo library and the interfaces of the Swift and Kotlin native modules ✓ ADR-007 ř. 24, NAB-035.",
+	"license": "UNLICENSED",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "tsc --build",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"@ansora/contracts": "workspace:*"
+	},
+	"peerDependencies": {
+		"expo": "*",
+		"expo-sqlite": "*",
+		"react-native": "*",
+		"react-native-nfc-manager": "*"
+	},
+	"nx": {
+		"tags": [
+			"layer:core",
+			"process:mobile"
+		]
+	}
+}

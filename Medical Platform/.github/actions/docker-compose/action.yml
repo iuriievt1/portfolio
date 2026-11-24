@@ -1,0 +1,25 @@
+# ✓ Q-051
+name: docker compose
+description: Docker Compose v5.7.1 in the temporary directory of the job
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      env:
+        COMPOSE_VERSION: v5.7.1
+        COMPOSE_SHA256: af426722a8af5de812fcee30cc1c39f0639f5f723cbadefb25e5d4db054064cf
+      run: |
+        set -euo pipefail
+        config="$RUNNER_TEMP/docker-config"
+        plugin="$config/cli-plugins/docker-compose"
+        mkdir -p "$config/cli-plugins"
+        if [ -f "$HOME/.docker/config.json" ]; then
+          cp "$HOME/.docker/config.json" "$config/config.json"
+        fi
+        curl -fsSL --retry 3 -o "$plugin" \
+          "https://github.com/docker/compose/releases/download/$COMPOSE_VERSION/docker-compose-linux-x86_64"
+        echo "$COMPOSE_SHA256  $plugin" | sha256sum -c -
+        chmod +x "$plugin"
+        echo "DOCKER_CONFIG=$config" >> "$GITHUB_ENV"
+        DOCKER_CONFIG="$config" docker compose version

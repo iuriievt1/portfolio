@@ -1,0 +1,355 @@
+# ADR-005, ADR-021, Q-040
+x-server: &server
+  build:
+    context: .
+    dockerfile: Dockerfile
+    args:
+      BASE_IMAGE: ${BASE_IMAGE}
+      SERVER_VERSION: ${SOURCE_COMMIT:-unversioned}
+  image: ansora-vulna-server:stand
+  pull_policy: never
+
+# ADR-042 bod 7, ADR-054 bod 1, provoz-a-dohled.md 7
+x-clinical-record-url: &clinical-record-url http://clinical-record:8103/
+x-break-glass-email: &break-glass-email break-glass@vulna.invalid
+
+x-db-init: &db-init
+  build:
+    context: .
+    dockerfile: deploy/coolify/db-init.Dockerfile
+  image: ansora-vulna-db-init:stand
+  pull_policy: never
+  environment:
+    POSTGRES_PASSWORD: ${SERVICE_PASSWORD_POSTGRES}
+    VULNA_MIGRATE_PASSWORD: ${SERVICE_PASSWORD_MIGRATE}
+    VULNA_API_PASSWORD: ${SERVICE_PASSWORD_API}
+    VULNA_WORKER_PASSWORD: ${SERVICE_PASSWORD_WORKER}
+    CLINICAL_RECORD_PASSWORD: ${SERVICE_PASSWORD_CLINICALRECORD}
+    CLINICAL_RECORD_URL: *clinical-record-url
+    CLINICAL_RECORD_INSTANCE_BASE_URI: ${PUBLIC_URL}/fhir
+    # ADR-053 (doplnění 2026-09-24) bod 1
+    CLINICAL_RECORD_STORAGE_URL: ${PUBLIC_URL}/storage/
+  restart: "no"
+  exclude_from_hc: true
+
+services:
+  postgres:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${SERVICE_PASSWORD_POSTGRES}
+      POSTGRES_DB: vulna
+    volumes:
+      - vulna-postgres:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d vulna"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  db-roles:
+    <<: *db-init
+    command: ["roles"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  migrate:
+    <<: *server
+    command: ["apps/vulna-server-migrate/dist/main.js"]
+    environment:
+      DATABASE_URL_MIGRATE: postgres://vulna_migrate:${SERVICE_PASSWORD_MIGRATE}@postgres:5432/vulna
+    restart: "no"
+    exclude_from_hc: true
+    depends_on:
+      db-roles:
+        condition: service_completed_successfully
+
+  db-seed:
+    <<: *db-init
+    command: ["seed"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  clinical-record-cache:
+    build:
+      context: .
+      dockerfile: deploy/images/valkey/Dockerfile
+    image: ansora-vulna-valkey:stand
+    pull_policy: never
+    restart: unless-stopped
+    # konfigurace-a-profily.md 2.1, Q-113
+    command:
+      - --save
+      - ""
+      - --appendonly
+      - "no"
+      - --user
+      - default
+      - "on"
+      - ">${SERVICE_PASSWORD_CACHE}"
+      - "~*"
+      - "&*"
+      - +@all
+      - -@admin
+      - -flushall
+      - -flushdb
+    exclude_from_hc: true
+
+  clinical-record:
+    build:
+      context: .
+      dockerfile: deploy/coolify/clinical-record.Dockerfile
+    image: ansora-vulna-clinical-record:stand
+    pull_policy: never
+    restart: unless-stopped
+    command: ["file:/etc/medplum/medplum.config.json,env"]
+    environment:
+      MEDPLUM_BASE_URL: *clinical-record-url
+      MEDPLUM_APP_BASE_URL: *clinical-record-url
+      MEDPLUM_DATABASE_HOST: postgres
+      MEDPLUM_DATABASE_PORT: "5432"
+      MEDPLUM_DATABASE_DBNAME: clinical_record
+      MEDPLUM_DATABASE_USERNAME: clinical_record
+      MEDPLUM_DATABASE_PASSWORD: ${SERVICE_PASSWORD_CLINICALRECORD}
+      MEDPLUM_REDIS_HOST: clinical-record-cache
+      MEDPLUM_REDIS_PORT: "6379"
+      MEDPLUM_REDIS_PASSWORD: ${SERVICE_PASSWORD_CACHE}
+      MEDPLUM_BINARY_STORAGE: file:/var/lib/medplum/binary
+      MEDPLUM_DEFAULT_SUPER_ADMIN_EMAIL: *break-glass-email
+      MEDPLUM_DEFAULT_SUPER_ADMIN_PASSWORD: ${SERVICE_PASSWORD_BREAKGLASS}
+      # ADR-053 (doplnění 2026-09-24) bod 1
+      MEDPLUM_SIGNING_KEY_ID: vulna-stand
+      MEDPLUM_SIGNING_KEY: ${CLINICAL_RECORD_STORAGE_SIGNING_KEY:?}
+      MEDPLUM_SIGNING_KEY_PASSPHRASE: ${CLINICAL_RECORD_STORAGE_SIGNING_KEY_PASSPHRASE:?}
+    # CAP-011-R02, CAP-020-R22, ADR-053 (doplnění 2026-09-24) bod 1
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.vulna-storage.rule=Host(`${PUBLIC_HOST:?}`) && PathPrefix(`/storage/`) && Method(`GET`)
+      - traefik.http.routers.vulna-storage.entrypoints=https
+      - traefik.http.routers.vulna-storage.tls=true
+      - traefik.http.routers.vulna-storage.tls.certresolver=letsencrypt
+      - traefik.http.routers.vulna-storage.service=vulna-storage
+      - traefik.http.services.vulna-storage.loadbalancer.server.port=8103
+    volumes:
+      - vulna-clinical-record-binary:/var/lib/medplum/binary
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:8103/healthcheck').then((r) => process.exit(r.ok ? 0 : 1), () => process.exit(1))"
+      interval: 10s
+      timeout: 5s
+      retries: 30
+    depends_on:
+      db-roles:
+        condition: service_completed_successfully
+      clinical-record-cache:
+        condition: service_started
+      clinical-record-binary-init:
+        condition: service_completed_successfully
+
+  # CAP-021-R36
+  clinical-record-binary-init:
+    image: ansora-vulna-clinical-record:stand
+    pull_policy: never
+    user: "0:0"
+    entrypoint: ["node", "-e", "require('node:fs').chownSync('/var/lib/medplum/binary', 1000, 1000)"]
+    volumes:
+      - vulna-clinical-record-binary:/var/lib/medplum/binary
+    restart: "no"
+    exclude_from_hc: true
+
+  # CAP-012-R30, CAP-012-S23
+  clinical-record-install:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: build
+      args:
+        BASE_IMAGE: ${BASE_IMAGE}
+    image: ansora-vulna-build:stand
+    pull_policy: never
+    command:
+      - pnpm
+      - --filter
+      - "@ansora/tools"
+      - clinical-record:install
+      - --operator
+      - coolify
+      - --reason
+      - deployment
+      - --credential-file
+      - /keys/clinical-record/api.env
+      - --worker-credential-file
+      - /keys/clinical-record-worker/worker.env
+      # ADR-011
+      - --credential-owner
+      - "65532:65532"
+    environment:
+      DATABASE_URL_API: postgres://vulna_api:${SERVICE_PASSWORD_API}@postgres:5432/vulna
+      CLINICAL_RECORD_URL: *clinical-record-url
+      CLINICAL_RECORD_BREAK_GLASS_EMAIL: *break-glass-email
+      CLINICAL_RECORD_BREAK_GLASS_PASSWORD: ${SERVICE_PASSWORD_BREAKGLASS}
+      CLINICAL_RECORD_ADMIN_NETWORKS: ${CLINICAL_RECORD_ADMIN_NETWORKS:-10.,172.,192.168.}
+      INSTANCE_CODE: ${INSTANCE_CODE:-vulna-stand}
+      INSTANCE_NAME: ${INSTANCE_NAME:-Stand veevoy}
+    # CAP-012-R30
+    volumes:
+      - vulna-clinical-record-keys:/keys/clinical-record
+      - vulna-clinical-record-worker-key:/keys/clinical-record-worker
+    restart: "no"
+    exclude_from_hc: true
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      clinical-record:
+        condition: service_healthy
+
+  api:
+    <<: *server
+    restart: unless-stopped
+    command: ["--env-file-if-exists=/keys/clinical-record/api.env", "apps/vulna-server-api/dist/main.js"]
+    environment:
+      PORT_API: "3000"
+      DATABASE_URL_API: postgres://vulna_api:${SERVICE_PASSWORD_API}@postgres:5432/vulna
+      ADMIN_STATIC_PATH: apps/vulna-admin/dist
+      TRUST_PROXY: "1"
+      # CAP-028-R08
+      SURVEILLANCE_TOKEN: ${SURVEILLANCE_TOKEN:-}
+      OIDC_ISSUER: ${OIDC_ISSUER}
+      OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:-ansora-vulna-server}
+      OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET}
+      OIDC_REDIRECT_URI: ${PUBLIC_URL}/api/v1/login/oidc/return
+      OIDC_ADMINISTRATION_REDIRECT_URI: ${PUBLIC_URL}/api/admin/v1/login/oidc/callback
+      OIDC_SCOPES: openid profile email offline_access personal_number groups
+      DEVICE_REGISTRATION_SECRET: ${SERVICE_PASSWORD_REGISTRATION}
+      HPKE_KEYS_PATH: /keys/hpke
+      HPKE_CURRENT_KEY_VERSION: stand-1
+      QR_SIGNING_KEYS_PATH: /keys/qr
+      QR_SIGNING_CURRENT_KEY_VERSION: "1"
+      # ADR-003 ř. 31, NAB-022
+      BINARY_STORE_PATH: /var/lib/vulna/binary
+      # ADR-053 (doplnění 2026-09-24) bod 1
+      CLINICAL_RECORD_STORAGE_SIGNING_KEY: ${CLINICAL_RECORD_STORAGE_SIGNING_KEY:?}
+      CLINICAL_RECORD_STORAGE_SIGNING_KEY_PASSPHRASE: ${CLINICAL_RECORD_STORAGE_SIGNING_KEY_PASSPHRASE:?}
+    volumes:
+      - type: bind
+        source: ./keys/hpke/stand-1.pem
+        target: /keys/hpke/stand-1.pem
+        read_only: true
+        content: ""
+      - type: bind
+        source: ./keys/qr/1.pem
+        target: /keys/qr/1.pem
+        read_only: true
+        content: ""
+      - vulna-clinical-record-keys:/keys/clinical-record:ro
+      - vulna-binary:/var/lib/vulna/binary
+    healthcheck:
+      test:
+        - CMD
+        - /nodejs/bin/node
+        - -e
+        - "fetch('http://127.0.0.1:3000/health/ready').then((r) => process.exit(r.ok ? 0 : 1), () => process.exit(1))"
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    depends_on:
+      db-seed:
+        condition: service_completed_successfully
+      clinical-record-install:
+        condition: service_completed_successfully
+      binary-store-init:
+        condition: service_completed_successfully
+
+  # ADR-011
+  binary-store-init:
+    image: ansora-vulna-build:stand
+    pull_policy: never
+    user: "0:0"
+    entrypoint: ["chown", "65532:65532", "/var/lib/vulna/binary"]
+    volumes:
+      - vulna-binary:/var/lib/vulna/binary
+    restart: "no"
+    exclude_from_hc: true
+    depends_on:
+      clinical-record-install:
+        condition: service_completed_successfully
+
+  # Q-040, Q-148
+  stand-data:
+    image: ansora-vulna-build:stand
+    pull_policy: never
+    user: "65532:65532"
+    entrypoint: ["sh", "-c"]
+    # ADR-054 bod 1
+    command:
+      - >-
+        pnpm --filter @ansora/tools registry:seed &&
+        if [ "$${DEMO_SEED}" = "1" ]; then
+        set -a && . /keys/clinical-record/api.env && set +a &&
+        pnpm --filter @ansora/server-api seed:demo;
+        fi
+    environment:
+      HOME: /tmp
+      DATABASE_URL_WORKER: postgres://vulna_worker:${SERVICE_PASSWORD_WORKER}@postgres:5432/vulna
+      DATABASE_URL_API: postgres://vulna_api:${SERVICE_PASSWORD_API}@postgres:5432/vulna
+      BINARY_STORE_PATH: /var/lib/vulna/binary
+      SERVER_VERSION: ${SOURCE_COMMIT:-unversioned}
+      DEMO_SEED: ${DEMO_SEED:-1}
+      DEMO_STAND_OPERATOR: "1"
+    volumes:
+      - vulna-clinical-record-keys:/keys/clinical-record:ro
+      - vulna-binary:/var/lib/vulna/binary
+    restart: "no"
+    exclude_from_hc: true
+    depends_on:
+      db-seed:
+        condition: service_completed_successfully
+      clinical-record-install:
+        condition: service_completed_successfully
+      binary-store-init:
+        condition: service_completed_successfully
+
+  worker:
+    <<: *server
+    command: ["--env-file-if-exists=/keys/clinical-record-worker/worker.env", "apps/vulna-server-worker/dist/main.js"]
+    restart: unless-stopped
+    environment:
+      PORT_WORKER_SURVEILLANCE: "3001"
+      # CAP-028-R08
+      SURVEILLANCE_TOKEN: ${SURVEILLANCE_TOKEN:-}
+      DATABASE_URL_WORKER: postgres://vulna_worker:${SERVICE_PASSWORD_WORKER}@postgres:5432/vulna
+      # CAP-021-R35, CAP-021-R36
+      BINARY_STORE_PATH: /var/lib/vulna/binary
+    # CAP-012-R30
+    volumes:
+      - vulna-clinical-record-worker-key:/keys/clinical-record-worker:ro
+      - vulna-binary:/var/lib/vulna/binary
+    healthcheck:
+      test:
+        - CMD
+        - /nodejs/bin/node
+        - -e
+        - "fetch('http://127.0.0.1:3001/health/ready').then((r) => process.exit(r.ok ? 0 : 1), () => process.exit(1))"
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    depends_on:
+      db-seed:
+        condition: service_completed_successfully
+      clinical-record-install:
+        condition: service_completed_successfully
+      binary-store-init:
+        condition: service_completed_successfully
+
+volumes:
+  vulna-postgres:
+  vulna-binary:
+  vulna-clinical-record-binary:
+  vulna-clinical-record-keys:
+  vulna-clinical-record-worker-key:

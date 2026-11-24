@@ -1,0 +1,32 @@
+# pnpm zůstává správcem balíčků a workspace ✓ ADR-033 bod 1, ADR-001 ř. 16.
+# Sestavení a řazení úloh dělá Nx ✓ ADR-033; cíle samy zůstávají skripty jednotlivých projektů,
+# aby byl návrat k pnpm bez orchestrátoru odebráním nástroje, ne přepisem repozitáře
+# ✓ ADR-033 „Cesta zpět“.
+# Metro needs hoisting
+nodeLinker: hoisted
+
+packages:
+  - "apps/*"
+  - "libs/contracts"
+  - "libs/core/*"
+  - "libs/modules/vulna/*"
+  - "libs/modules/synthetic/*"
+  - "profiles/*"
+  - "tools"
+  # ADR-017
+  - "vendor/dcmjs"
+  - "vendor/dcmjs-dimse"
+  # CAP-028-S08, vendor/postgres/PEDIGREE.md
+  - "vendor/postgres"
+
+# Skripty balíčků třetích stran se spouštějí jen tam, kde je nástroj potřebuje k sestavení.
+# Nástroje sestavení nejsou v obrazu ✓ ADR-011 ř. 39, 60 — v SBOM naopak jsou ✓ ADR-033 bod 2.
+allowBuilds:
+  esbuild: true
+  "@biomejs/biome": true
+  nx: true
+  '@swc/core': false
+
+# fixes HIGH CVEs
+overrides:
+  multer: 2.5.0

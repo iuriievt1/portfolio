@@ -1,0 +1,32 @@
+{
+	"name": "@ansora/vulna-adapter-registry-local",
+	"version": "0.0.0",
+	"private": true,
+	"description": "Adapter for the PatientDirectory and EncounterContext ports over the local registry cache ✓ ADR-003 ř. 29.",
+	"license": "UNLICENSED",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "tsc --build",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"@ansora/vulna-domain": "workspace:*"
+	},
+	"files": [
+		"dist",
+		"manifest.json"
+	],
+	"nx": {
+		"tags": [
+			"layer:adapter",
+			"process:worker"
+		]
+	}
+}

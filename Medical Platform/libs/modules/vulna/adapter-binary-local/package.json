@@ -1,0 +1,32 @@
+{
+	"name": "@ansora/vulna-adapter-binary-local",
+	"version": "0.0.0",
+	"private": true,
+	"description": "Adapter for the BinaryStore port over the server's own storage ✓ ADR-003 ř. 31.",
+	"license": "UNLICENSED",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "tsc --build",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"@ansora/core-server": "workspace:*"
+	},
+	"files": [
+		"dist",
+		"manifest.json"
+	],
+	"nx": {
+		"tags": [
+			"layer:adapter",
+			"process:shared"
+		]
+	}
+}

@@ -1,0 +1,1256 @@
+# Soupis softwaru třetích stran (SOUP) — opatření M3 ✓ ADR-028.
+#
+# "Komponenty třetích stran: proč jsou v produktu, co se od nich čeká, kde se sledují jejich vady;
+# zdroj pro SBOM" ✓ ADR-028 kap. „Kde soubory žijí".
+#
+# VZTAH K SBOM ✓ rozhodnutí vedení 16. 9. 2026 k balíčku předání vývoji a K1 (nález review R-075),
+# rozpis docs/spec/vydani-sbom-a-brany.md kap. 4.2:
+# - SBOM vzniká z hotových artefaktů (brána B4 ✓ ADR-001 ř. 28). Tento soubor SBOM NEVYTVÁŘÍ,
+#   jen ho doplňuje o původ a o tři pole M3. „Zdroj pro SBOM" z ADR-028 znamená zdroj těchto polí.
+# - Vedou se tu jen PŘÍMÉ závislosti projektů workspace (to, co stojí v jejich package.json)
+#   a komponenty MIMO SPRÁVCE BALÍČKŮ (fork knihovny DIMSE, Tesseract a jazykové modely, runtime
+#   Node.js, obraz PostgreSQL ✓ ADR-041 bod d), obraz úložiště klinického záznamu a obraz mezipaměti
+#   ✓ ADR-042 bod 7) a Nx s pluginy ✓ ADR-033 bod 2. Tranzitivní závislosti jsou jen v SBOM.
+# - Obraz úložiště, obraz mezipaměti a @medplum/* nese profil MOÚ od účinnosti číslovaného
+#   dodatku (CAP-012-R04 ✓ rozhodnutí vedení 19. 9. 2026, D30); dodatek je podepsaný 6. 10. 2026.
+# - Objektové úložiště klinického záznamu (D31, CAP-029-R30) je další komponenta třetí strany,
+#   jejíž produkt není vybraný ⚠ Q-141; do rozhodnutí je jen v open_items a záznam nemá.
+# - Kontrola, že každá taková komponenta ze SBOM má záznam tady, je návrh veevoy (?).
+#
+# Každá komponenta řešení je v SBOM ✓ NAB-471 a ve 24hodinovém režimu zranitelností
+# ✓ TS-110, TS-113, SML-053, SML-056, má uzamčenou verzi ✓ NAB-468 a verzi podporovanou výrobcem
+# bez konce životnosti ✓ NAB-467.
+#
+# TENHLE SOUBOR ZATÍM NENÍ ÚPLNÝ. Vede nástroje sestavení (ADR-033 bod 2, CAP-029-R25 ✓ CHG-017)
+# a běhové závislosti schválené vlastníkem hranice jádra (ADR-041 bod a). Komponenty mimo správce
+# balíčků a nástroje kontraktu se doplní ručně se třemi poli (seznam „open_items" níž); verze jsou
+# podle pnpm-lock.yaml.
+
+components:
+  - name: nx
+    version: "23.2.1"
+    role: build-tool
+    in_image: false          # v obrazu serveru Nx není ✓ ADR-033 bod 2, ADR-011 ř. 39
+    in_sbom: true             # ✓ ADR-033 bod 2, CAP-029-R25 ✓ CHG-017
+    vulnerability_regime: 24h # ✓ TS-113, SML-056
+    license: MIT
+    inclusion_rationale: >-
+      Orchestrátor sestavení monorepa ✓ ADR-033 bod 1. Rozhoduje o tom, co se do vydání dostane,
+      proto je v soupisu i v režimu zranitelností — jinak by nástroj stál mimo oba.
+    expected_function: >-
+      Sestaví a seřadí cíle projektů a vynutí, že brány nikdy neběží z mezipaměti
+      ✓ ADR-033 bod 3. Cíle samy zůstávají skripty projektů ✓ ADR-033 „Cesta zpět".
+    issue_tracker: https://github.com/nrwl/nx/security/advisories
+    plugins: []       # žádné; useInferencePlugins: false v nx.json
+
+  - name: typescript
+    version: "5.9.3"
+    role: build-tool
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: Apache-2.0
+    inclusion_rationale: Překladač; nese i bránu hranic B15, která čte graf a importy.
+    expected_function: Překlad a typová kontrola; project references drží závislosti mezi projekty.
+    issue_tracker: https://github.com/microsoft/TypeScript/security/advisories
+
+  - name: "@biomejs/biome"
+    version: "2.5.13"
+    role: build-tool
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT OR Apache-2.0
+    inclusion_rationale: Lint a formát; nahrazuje ESLint i Prettier, tedy dvě komponenty za jednu.
+    expected_function: Kontrola stylu a jednoduchých vad. Nevynucuje hranice balíčků — to dělá B15.
+    issue_tracker: https://github.com/biomejs/biome/security/advisories
+
+  - name: vitest
+    version: "3.2.7"
+    role: build-tool
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    inclusion_rationale: Běh jednotkových a kontraktních testů ✓ ADR-024.
+    expected_function: Doklad o ověření z CI — opatření M6 ✓ ADR-028.
+    issue_tracker: https://github.com/vitest-dev/vitest/security/advisories
+
+  - name: tsx
+    version: "4.23.13"
+    role: build-tool
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    inclusion_rationale: Spouští TypeScript bez překladu; běží jím brána hranic B15 (tools/package.json, gate:boundaries).
+    expected_function: Spustí kód brány tak, jak je napsaný; do obrazu ani do aplikace se nedostane.
+    issue_tracker: https://github.com/privatenumber/tsx/security/advisories
+
+
+  - name: "@nestjs/common"
+    version: "11.2.5"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/server-api", "@ansora/server-worker"]
+    inclusion_rationale: >-
+      Integrační server je aplikace v TypeScriptu na Node.js s frameworkem NestJS, hostuje i administraci (NAB-036, NAB-283, NAB-305, ADR-002); ADR-041 bod a.
+    expected_function: >-
+      Dekorátory, moduly a injekce závislostí procesů API a vykonavatele.
+    issue_tracker: https://github.com/nestjs/nest/security/advisories
+
+  - name: "@nestjs/core"
+    version: "11.2.5"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/server-api", "@ansora/server-worker"]
+    inclusion_rationale: >-
+      Jádro frameworku NestJS (ADR-002); ADR-041 bod a.
+    expected_function: >-
+      Start aplikace, sestavení grafu modulů a životní cyklus procesu.
+    issue_tracker: https://github.com/nestjs/nest/security/advisories
+
+  - name: "@nestjs/platform-express"
+    version: "11.2.5"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/server-api", "@ansora/server-worker"]
+    inclusion_rationale: >-
+      HTTP vrstva NestJS nad Express; proces API hostuje REST podle kontraktu a administraci (ADR-012, NAB-305); ADR-041 bod a.
+    expected_function: >-
+      Přijímá HTTP požadavky a servíruje statický build administrace.
+    issue_tracker: https://github.com/nestjs/nest/security/advisories
+
+  - name: reflect-metadata
+    version: "0.2.2"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: Apache-2.0
+    projects: ["@ansora/server-api", "@ansora/server-worker"]
+    inclusion_rationale: >-
+      Povinná běhová závislost NestJS pro metadata dekorátorů; ADR-041 bod a.
+    expected_function: >-
+      Ukládá typy parametrů konstruktorů pro injekci závislostí.
+    issue_tracker: https://github.com/rbuckton/reflect-metadata/security/advisories
+
+  - name: rxjs
+    version: "7.8.2"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: Apache-2.0
+    projects: ["@ansora/server-api", "@ansora/server-worker"]
+    inclusion_rationale: >-
+      Povinná běhová závislost NestJS; ADR-041 bod a.
+    expected_function: >-
+      Reaktivní proudy uvnitř frameworku (interceptory, pipes).
+    issue_tracker: https://github.com/reactivex/rxjs/security/advisories
+
+  # Fork klienta PostgreSQL — balíček workspace ve vendor/, čtený ze zdrojů; verze <upstream>-veevoy.N,
+  # úpravy proti upstreamu vede PEDIGREE.md ✓ CAP-028-S08.
+  - name: "@veevoy/postgres"
+    version: "3.4.9-veevoy.3"
+    source: https://github.com/porsager/postgres/tree/v3.4.9
+    commit: "e7dfa14519f363229ccc3ead7b1b2f2051937efb"
+    pedigree: vendor/postgres/PEDIGREE.md
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: Unlicense
+    projects: ["@ansora/core-server", "@ansora/server-api", "@ansora/server-worker", "@ansora/server-migrate", "@ansora/tools"]
+    inclusion_rationale: >-
+      Klient PostgreSQL bez ORM za běhu; migrace jsou SQL v repozitáři (ADR-021); ADR-041 bod a. Fork místo
+      balíčku npm, protože 3.4.9 při ukončení spojení databází shodí proces a pokračuje v transakci v nové
+      relaci a větev 3.x opravu nemá ✓ CAP-028-S08; úpravy vede PEDIGREE.md.
+    expected_function: >-
+      Spojení s databází pod rolí procesu a provádění SQL včetně migračního kroku; po zavření spojení odmítne
+      dotazy přerušené transakce a rezervovaného spojení a další relaci otevře bez stavu zrušené.
+    issue_tracker: https://github.com/porsager/postgres/security/advisories
+
+  - name: jpeg-js
+    version: "0.4.4"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: BSD-3-Clause
+    projects: ["@ansora/server-worker"]
+    inclusion_rationale: >-
+      Kodek JPEG pro výrobu prohlížecí kopie, jediná výjimka z pravidla, že server obraz nedekóduje;
+      jen ve vykonavateli jako knihovny DICOM a OCR ✓ CAP-021-R40, ADR-050 bod 13, ADR-005 ř. 38–39.
+      Čistý JavaScript bez nativního kódu a bez vlastních běhových závislostí.
+    expected_function: >-
+      Dekóduje originál z vyrovnávací paměti s mezí rozlišení a paměti a kopii zmenšenou na delší
+      stranu zakóduje jako JPEG s nastavenou kvalitou (CAP-021-R40).
+    issue_tracker: https://github.com/jpeg-js/jpeg-js/security/advisories
+
+  # Fork knihovny DIMSE — komponenta mimo registr npm ✓ Q-035, ADR-017: balíčky workspace ve vendor/,
+  # čtené ze zdrojů; verze <upstream>-veevoy.N, úpravy proti upstreamu vede PEDIGREE.md.
+  - name: "@veevoy/dcmjs"
+    version: "0.52.2-veevoy.2"
+    source: https://github.com/dcmjs-org/dcmjs/tree/v0.52.2
+    commit: "6da1c8153e007723e50365c710711d848d5b65a8"
+    pedigree: vendor/dcmjs/PEDIGREE.md
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    inclusion_rationale: >-
+      Datová vrstva DICOM forku knihovny DIMSE, nad kterou projekce do DICOM (@ansora/vulna-projection-dicom)
+      sestaví soubory P10 ✓ ADR-035 bod 1; jen ve vykonavateli ✓ ADR-017, ADR-005 ř. 38–39. Fork místo balíčku
+      npm kvůli opravě znakové sady vnořených sekvencí ✓ Q-035 a závislostem, které upstream nese navíc; úpravy
+      vede PEDIGREE.md.
+    expected_function: >-
+      Zapíše sestavený objekt DICOM jako soubor P10 ✓ ADR-017 a knihovně DIMSE čte a zapisuje datasety příkazů
+      a odpovědí.
+    issue_tracker: https://github.com/dcmjs-org/dcmjs/security/advisories
+
+  - name: "@veevoy/dcmjs-dimse"
+    version: "0.3.4-veevoy.16"
+    source: https://github.com/PantelisGeorgiadis/dcmjs-dimse/tree/v0.3.4
+    commit: "5ab47939b4b88b6431de13ca20ed53816569b74e"
+    pedigree: vendor/dcmjs-dimse/PEDIGREE.md
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    inclusion_rationale: >-
+      Klient DIMSE adaptéru @ansora/vulna-adapter-dicom-dimse za rozhraním DimseClient, jen ve vykonavateli
+      ✓ ADR-017, ADR-005 ř. 39. Fork místo balíčku npm, protože upstream znovu serializuje dataset, při rozdílu
+      syntaxí transkóduje a přibaluje kodeky se známými CVE ✓ ADR-017, Q-035, ADR-005 ř. 23.
+    expected_function: >-
+      Ověření spojení, průzkum navržených kontextů, odeslání uložených bajtů beze změny a dotaz do PACS; bez
+      serverové části, N-služeb, TLS, C-MOVE a C-GET ✓ ADR-017.
+    issue_tracker: https://github.com/PantelisGeorgiadis/dcmjs-dimse/security/advisories
+
+  # Přímé závislosti forku DIMSE (balíčky workspace ve vendor/) ✓ ADR-017, ADR-041 bod a.
+  - name: gl-matrix
+    version: "3.4.4"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@veevoy/dcmjs"]
+    inclusion_rationale: >-
+      Načte ji vstupní bod forku @veevoy/dcmjs kvůli adaptérům Cornerstone, které Vulna nepoužívá; jen ve
+      vykonavateli ✓ ADR-017, ADR-005 ř. 38–39, ADR-041 bod a.
+    expected_function: >-
+      Vulna od ní nic nečeká; nepoužitá cesta kódu forku se jen načte.
+    issue_tracker: https://github.com/toji/gl-matrix/security/advisories
+
+  - name: lodash.clonedeep
+    version: "4.5.0"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@veevoy/dcmjs"]
+    inclusion_rationale: >-
+      Načte ji vstupní bod forku @veevoy/dcmjs kvůli adaptérům Cornerstone, které Vulna nepoužívá; jen ve
+      vykonavateli ✓ ADR-017, ADR-005 ř. 38–39, ADR-041 bod a.
+    expected_function: >-
+      Vulna od ní nic nečeká; nepoužitá cesta kódu forku se jen načte.
+    issue_tracker: https://github.com/lodash/lodash/security/advisories
+
+  - name: ndarray
+    version: "1.0.19"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@veevoy/dcmjs"]
+    inclusion_rationale: >-
+      Načte ji vstupní bod forku @veevoy/dcmjs kvůli nástrojům orientace obrazu a adaptérům Cornerstone, které
+      Vulna nepoužívá; jen ve vykonavateli ✓ ADR-017, ADR-005 ř. 38–39, ADR-041 bod a.
+    expected_function: >-
+      Vulna od ní nic nečeká; nepoužitá cesta kódu forku se jen načte.
+    issue_tracker: https://github.com/scijs/ndarray/security/advisories
+
+  - name: pako
+    version: "2.1.0"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: "(MIT AND Zlib)"
+    projects: ["@veevoy/dcmjs"]
+    inclusion_rationale: >-
+      Komprese deflate datové vrstvy forku @veevoy/dcmjs (třída BufferStream); jen ve vykonavateli ✓ ADR-017,
+      ADR-005 ř. 38–39, ADR-041 bod a.
+    expected_function: >-
+      Rozbalí a zabalí dataset v transfer syntaxi Deflated Explicit VR Little Endian; Vulna ji nepožaduje.
+    issue_tracker: https://github.com/nodeca/pako/security/advisories
+
+  - name: loglevel
+    version: "1.9.2"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@veevoy/dcmjs", "@veevoy/dcmjs-dimse"]
+    inclusion_rationale: >-
+      Logování obou forků; jen ve vykonavateli ✓ ADR-017, ADR-005 ř. 38–39, ADR-041 bod a.
+    expected_function: >-
+      Úrovně logu forku; logy nenesou hodnoty z datasetů (PEDIGREE @veevoy/dcmjs-dimse, úprava 5).
+    issue_tracker: https://github.com/pimterry/loglevel/security/advisories
+
+  - name: loglevel-plugin-prefix
+    version: "0.8.4"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@veevoy/dcmjs-dimse"]
+    inclusion_rationale: >-
+      Předpona řádků logu forku @veevoy/dcmjs-dimse; jen ve vykonavateli ✓ ADR-017, ADR-005 ř. 38–39,
+      ADR-041 bod a.
+    expected_function: >-
+      Doplní řádku logu čas a úroveň.
+    issue_tracker: https://github.com/kutuluk/loglevel-plugin-prefix/security/advisories
+
+  - name: async-event-emitter2
+    version: "0.0.2"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@veevoy/dcmjs-dimse"]
+    inclusion_rationale: >-
+      Události klienta, sítě a požadavků forku @veevoy/dcmjs-dimse; od autora upstreamu dcmjs-dimse; jen
+      ve vykonavateli ✓ ADR-017, ADR-005 ř. 38–39, ADR-041 bod a.
+    expected_function: >-
+      Vyvolá posluchače události v pořadí registrace a synchronně; metodu first() fork nepoužívá, protože
+      bez dříve registrovaného posluchače novou obsluhu nezaregistruje.
+    issue_tracker: https://github.com/PantelisGeorgiadis/async-event-emitter2/security/advisories
+
+  - name: smart-buffer
+    version: "4.2.0"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@veevoy/dcmjs-dimse"]
+    inclusion_rationale: >-
+      Čtení a zápis PDU v kodeku forku @veevoy/dcmjs-dimse; jen ve vykonavateli ✓ ADR-017, ADR-005 ř. 38–39,
+      ADR-041 bod a.
+    expected_function: >-
+      Čte a zapisuje celá čísla a řetězce PDU v pořadí bajtů big-endian podle PS3.8 9.3.
+    issue_tracker: https://github.com/JoshGlazebrook/smart-buffer/security/advisories
+
+  - name: ts-mixer
+    version: "6.0.4"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@veevoy/dcmjs-dimse"]
+    inclusion_rationale: >-
+      Skládání tříd požadavků forku @veevoy/dcmjs-dimse (požadavek DIMSE a emitor událostí); jen ve
+      vykonavateli ✓ ADR-017, ADR-005 ř. 38–39, ADR-041 bod a.
+    expected_function: >-
+      Složí třídu požadavku z třídy příkazu a emitoru událostí.
+    issue_tracker: https://github.com/tannerntannern/ts-mixer/security/advisories
+
+  - name: zod
+    version: "4.6.7"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/server-api", "@ansora/server-worker", "@ansora/admin", "@ansora/mobile"]
+    inclusion_rationale: >-
+      Validace vstupů a konfigurace podle schématu (CAP-012-R19); ve formulářích administrace a v aplikaci; ADR-041 bod a.
+    expected_function: >-
+      Odmítne vstup, který neodpovídá schématu, dřív než se dostane do domény.
+    issue_tracker: https://github.com/colinhacks/zod/security/advisories
+
+  - name: react
+    version: "19.3.0"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/admin", "@ansora/mobile"]
+    inclusion_rationale: >-
+      Administrace je aplikace v Reactu (NAB-325, CAP-004-R03); mobilní aplikace v React Native (NAB-034); ADR-041 bod a.
+    expected_function: >-
+      Vykreslování uživatelského rozhraní administrace a mobilní aplikace.
+    issue_tracker: https://github.com/facebook/react/security/advisories
+
+  - name: react-dom
+    version: "19.3.0"   # podle apps/vulna-admin/package.json a pnpm-lock.yaml (nález review R-050)
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/admin"]
+    inclusion_rationale: >-
+      Vykreslení Reactu do DOM v administraci (NAB-325); ADR-041 bod a.
+    expected_function: >-
+      Připojí strom komponent administrace do prohlížeče.
+    issue_tracker: https://github.com/facebook/react/security/advisories
+
+  - name: react-router
+    version: "7.18.3"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/admin"]
+    inclusion_rationale: >-
+      Směrování jednostránkové administrace; ADR-041 bod a.
+    expected_function: >-
+      Mapuje cesty prohlížeče na obrazovky administrace.
+    issue_tracker: https://github.com/remix-run/react-router/security/advisories
+
+  - name: qrcode-generator
+    version: "2.0.4"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/admin"]
+    inclusion_rationale: >-
+      Zobrazení kódu vazby karty a osobního QR kódu v administraci jako QR kódu ke skenování a tisku (CAP-005-R06, CAP-005-R17); balíček bez závislostí.
+    expected_function: >-
+      Z textu kódu sestaví matici QR kódu, kterou administrace vykreslí jako obrázek; nic neodesílá.
+    issue_tracker: https://github.com/kazuhikoarase/qrcode-generator/issues
+
+  - name: react-hook-form
+    version: "7.88.0"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/admin"]
+    inclusion_rationale: >-
+      Formuláře konfigurace a správy s validací zod; ADR-041 bod a.
+    expected_function: >-
+      Stav a odeslání formulářů administrace.
+    issue_tracker: https://github.com/react-hook-form/react-hook-form/security/advisories
+
+  - name: "@hookform/resolvers"
+    version: "5.9.1"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/admin"]
+    inclusion_rationale: >-
+      Napojení schémat zod na react-hook-form; ADR-041 bod a.
+    expected_function: >-
+      Převádí chyby validace schématu na chyby polí formuláře.
+    issue_tracker: https://github.com/react-hook-form/resolvers/security/advisories
+
+  # Vizuální styl administrace podle DESIGN.md kap. 12.1 (ADR-040); schváleno 5. 10. 2026.
+  - name: "@base-ui/react"
+    version: "1.8.0"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/admin"]
+    inclusion_rationale: >-
+      Primitiva shadcn base-nova, na kterých stojí tlačítko, pole a dialog administrace (DESIGN.md kap. 8.4, 8.6).
+    expected_function: >-
+      Chování ovládacích prvků: fokus, klávesnice, přístupnost a modální dialog; vzhled nenese.
+    issue_tracker: https://github.com/mui/base-ui/security/advisories
+
+  - name: "@phosphor-icons/react"
+    version: "2.1.10"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/admin"]
+    inclusion_rationale: >-
+      Jediná sada ikon vizuálního stylu (DESIGN.md kap. 7).
+    expected_function: >-
+      Vykreslí ikony administrace jako SVG; nic nenačítá ze sítě.
+    issue_tracker: https://github.com/phosphor-icons/react/issues
+
+  - name: "@tanstack/react-table"
+    version: "8.21.3"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/admin"]
+    inclusion_rationale: >-
+      Tabulky administrace podle komponenty DataTable (DESIGN.md kap. 8.6).
+    expected_function: >-
+      Sestaví řádky a sloupce tabulky z dat; data nenačítá.
+    issue_tracker: https://github.com/TanStack/table/security/advisories
+
+  - name: class-variance-authority
+    version: "0.7.1"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: Apache-2.0
+    projects: ["@ansora/admin"]
+    inclusion_rationale: >-
+      Varianty tlačítka shadcn base-nova (DESIGN.md kap. 8.4).
+    expected_function: >-
+      Z varianty a velikosti složí třídy stylu.
+    issue_tracker: https://github.com/joe-bell/cva/issues
+
+  - name: cn
+    version: "0.4.0"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/admin"]
+    inclusion_rationale: >-
+      Skládání tříd stylu v komponentách shadcn; nahrazuje dvojici clsx a tailwind-merge.
+    expected_function: >-
+      Spojí třídy stylu a odstraní kolidující třídy Tailwind.
+    issue_tracker: https://github.com/shadcn-ui/cn/issues
+
+  - name: tw-animate-css
+    version: "1.4.0"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/admin"]
+    inclusion_rationale: >-
+      Animace dialogu shadcn base-nova (DESIGN.md kap. 6).
+    expected_function: >-
+      Třídy otevření a zavření dialogu; vypnuté při omezení pohybu.
+    issue_tracker: https://github.com/Wombosvideo/tw-animate-css/issues
+
+  # Komponenta mimo správce balíčků: github.com/rsms/inter, vydání v4.1, soubor web/InterVariable.woff2
+  # beze změny; ruční záznam v SBOM quality/vydani/sbom-files.json.
+  - name: inter
+    version: "4.1"
+    source: https://github.com/rsms/inter/releases/download/v4.1/Inter-4.1.zip
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: OFL-1.1
+    projects: ["@ansora/admin"]
+    inclusion_rationale: >-
+      Písmo vizuálního stylu samohostované v administraci (DESIGN.md kap. 4.1); žádné písmo z internetu.
+    expected_function: >-
+      Variabilní řez 100–900, který prohlížeč načte z administrace.
+    issue_tracker: https://github.com/rsms/inter/issues
+
+  - name: react-native
+    version: "0.88.1"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Mobilní aplikace v React Native (NAB-034, NAB-146); ADR-041 bod a.
+    expected_function: >-
+      Běh aplikace na iOS a Androidu a most k nativním modulům.
+    issue_tracker: https://github.com/facebook/react-native/security/advisories
+
+  - name: expo
+    version: "58.0.26"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Sada Expo, na které mobilní aplikace stojí (NAB-034); ADR-041 bod a.
+    expected_function: >-
+      Sestavení, konfigurace a běhové moduly aplikace.
+    issue_tracker: https://github.com/expo/expo/security/advisories
+
+  - name: expo-blur
+    version: "58.0.6"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Součást sady Expo; rozmazaný podklad lišt nad hledáčkem kamery (CAP-015-R10, Figma 05 Focení rány).
+    expected_function: >-
+      Vykreslí rozmazané pozadí pod lištou kamery; obraz nikam neodesílá ani neukládá.
+    issue_tracker: https://github.com/expo/expo/security/advisories
+
+  - name: expo-constants
+    version: "58.0.16"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Součást sady Expo; ADR-041 bod a.
+    expected_function: >-
+      Čte konfiguraci sestavení včetně adresy serveru.
+    issue_tracker: https://github.com/expo/expo/security/advisories
+
+  - name: expo-font
+    version: "58.0.12"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Součást sady Expo; písma podle vizuálního stylu (ADR-040); ADR-041 bod a.
+    expected_function: >-
+      Načítá písma aplikace.
+    issue_tracker: https://github.com/expo/expo/security/advisories
+
+  - name: expo-glass-effect
+    version: "58.0.5"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Součást sady Expo; nativní sklo platformy podle vizuálního stylu (ADR-040), v hlavičce s úkonem Zamknout aplikaci (CAP-002-R20).
+    expected_function: >-
+      Vykreslí ovládací prvek se sklem iOS; kde sklo platforma nemá, ukáže prostou výplň.
+    issue_tracker: https://github.com/expo/expo/security/advisories
+
+  - name: expo-linear-gradient
+    version: "58.0.4"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Součást sady Expo; barevný přechod značky podle vizuálního stylu (ADR-040).
+    expected_function: >-
+      Vykreslí pozadí hlavičky přechodem mezi dvěma barvami značky.
+    issue_tracker: https://github.com/expo/expo/security/advisories
+
+  - name: expo-linking
+    version: "58.0.17"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Návrat z přihlášení vlastním schématem (CAP-001-R23); ADR-041 bod a.
+    expected_function: >-
+      Zpracuje odkaz se schématem aplikace po přihlášení u identitního poskytovatele.
+    issue_tracker: https://github.com/expo/expo/security/advisories
+
+  - name: expo-localization
+    version: "58.0.5"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Jazyk zařízení pro volbu jazyka před přihlášením podle CAP-015-R24; čte jen nastavení platformy, nic neodesílá.
+    expected_function: >-
+      Vrací seznam preferovaných jazyků zařízení.
+    issue_tracker: https://github.com/expo/expo/security/advisories
+
+  - name: expo-router
+    version: "58.0.32"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Navigace mobilní aplikace; ADR-041 bod a.
+    expected_function: >-
+      Mapuje obrazovky na cesty a drží navigační zásobník.
+    issue_tracker: https://github.com/expo/expo/security/advisories
+
+  - name: expo-splash-screen
+    version: "58.0.14"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Součást sady Expo; ADR-041 bod a.
+    expected_function: >-
+      Úvodní obrazovka do načtení aplikace.
+    issue_tracker: https://github.com/expo/expo/security/advisories
+
+  - name: expo-status-bar
+    version: "58.0.5"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Součást sady Expo; ADR-041 bod a.
+    expected_function: >-
+      Vzhled stavového řádku platformy.
+    issue_tracker: https://github.com/expo/expo/security/advisories
+
+  - name: expo-secure-store
+    version: "58.0.3"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Úložiště tajemství platformy do výsledku spiku Q-046; klíče a tajemství podle ADR-014 drží vlastní nativní moduly, zda plugin zůstane, rozhodne spike; ADR-041 bod a.
+    expected_function: >-
+      Ukládá krátkodobá tajemství aplikace do úložiště platformy.
+    issue_tracker: https://github.com/expo/expo/security/advisories
+
+  # Nese v sobě SQLite 3.53.3 a SQLCipher 4.17.0 community (BSD-3-Clause), obojí v SBOM mobilní aplikace ✓ ADR-014 ř. 119.
+  - name: expo-sqlite
+    version: "58.0.18"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile", "@ansora/core-mobile"]
+    inclusion_rationale: >-
+      Databáze aplikace šifrovaná SQLCipher (AES-256) podle CAP-009-R01; ADR-014 předepisuje expo-sqlite s volbou useSQLCipher.
+    expected_function: >-
+      Vede záznamy o šifrovaných souborech v zařízení v databázi šifrované klíčem z úložiště klíčů platformy; bez klíče se databáze nepřečte.
+    issue_tracker: https://github.com/expo/expo/security/advisories
+
+  # Komponenta mimo správce balíčků: github.com/sqlcipher/sqlcipher, vydání v4.17.0 community, zdroj sloučený
+  # do jednoho souboru v balíčku expo-sqlite (vendor/sqlcipher); ruční záznam v SBOM
+  # quality/vydani/sbom-mobile-embedded.json ✓ ADR-014 ř. 119.
+  - name: sqlcipher
+    version: "4.17.0"
+    source: https://github.com/sqlcipher/sqlcipher/archive/refs/tags/v4.17.0.tar.gz
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: BSD-3-Clause
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Šifrování databáze aplikace (AES-256) uvnitř expo-sqlite s volbou useSQLCipher; překládá se do aplikace (CAP-009-R01, ADR-014).
+    expected_function: >-
+      Šifruje a dešifruje databázi aplikace na zařízení; nic neodesílá.
+    issue_tracker: https://github.com/sqlcipher/sqlcipher/issues
+
+  # Komponenta mimo správce balíčků: sqlite.org, vydání 3.53.3, na kterém stojí SQLCipher 4.17.0; zdroj sloučený
+  # do jednoho souboru v balíčku expo-sqlite (vendor/sqlcipher); ruční záznam v SBOM
+  # quality/vydani/sbom-mobile-embedded.json ✓ ADR-014 ř. 119.
+  - name: sqlite
+    version: "3.53.3"
+    source: https://sqlite.org/2026/sqlite-src-3530300.zip
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: blessing
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Databázový stroj uvnitř SQLCipher; zranitelnosti SQLite se vedou pod jejím vlastním jménem, proto má v SBOM vlastní záznam (ADR-014).
+    expected_function: >-
+      Ukládá databázi aplikace na zařízení; nic neodesílá.
+    issue_tracker: https://sqlite.org/forum/forum
+
+  - name: expo-symbols
+    version: "58.0.5"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Součást sady Expo a závislost expo-router; systémové prvky kreslí symboly svého nativního kitu (FIG-20, ADR-040).
+    expected_function: >-
+      Vykreslí symboly SF Symbols na tlačítkách Zpět, Zamknout a Nastavení; nic nenačítá ze sítě.
+    issue_tracker: https://github.com/expo/expo/security/advisories
+
+  - name: "@expo/ui"
+    version: "58.0.29"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Součást sady Expo a závislost expo-router; nabídka „…“ v hlavičce návštěvy a na řádku záznamu je nativní nabídka platformy (HIG-09, Vulna / Native / Pull-down menu).
+    expected_function: >-
+      Vykreslí nativní nabídku SwiftUI na iOS a Jetpack Compose na Androidu; nic nenačítá ze sítě.
+    issue_tracker: https://github.com/expo/expo/security/advisories
+
+  - name: expo-web-browser
+    version: "58.1.0"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Přihlašovací okno platformy: ASWebAuthenticationSession bez sdílených cookies na iOS, Custom Tabs na Androidu (CAP-001-R23); ADR-041 bod a.
+    expected_function: >-
+      Otevře adresu autorizace v okně platformy a vrátí odkaz se schématem aplikace po návratu z přihlášení.
+    issue_tracker: https://github.com/expo/expo/security/advisories
+
+  - name: react-native-nfc-manager
+    version: "3.17.2"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Čtení zaměstnanecké karty NFC udržovaným balíčkem místo vlastního nativního modulu (CAP-001-R11, CHG-168).
+    expected_function: >-
+      Na iPhonu otevře systémový dialog čtení NFC a vrátí identifikátor karty; na zařízení bez NFC hlásí, že čtení není podporované.
+    issue_tracker: https://github.com/revtel/react-native-nfc-manager/issues
+
+  - name: react-native-vision-camera
+    version: "5.2.3"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Živý obraz kamery pro čtení osobního QR kódu a kódu vazby karty udržovaným balíčkem místo vlastního nativního modulu (CAP-001-R12, CAP-005-R17, CAP-013-R20).
+    expected_function: >-
+      Ukáže obraz zadní kamery ve spodním panelu a předá snímky ke čtení kódu; nic neodesílá.
+    issue_tracker: https://github.com/mrousavy/react-native-vision-camera/issues
+
+  - name: react-native-vision-camera-worklets
+    version: "5.2.3"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Povinná součást react-native-vision-camera pro zpracování snímků.
+    expected_function: >-
+      Spouští čtení kódu nad snímkem mimo hlavní vlákno aplikace.
+    issue_tracker: https://github.com/mrousavy/react-native-vision-camera/issues
+
+  - name: react-native-nitro-modules
+    version: "0.37.1"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Povinná závislost react-native-vision-camera a react-native-nitro-zxing.
+    expected_function: >-
+      Spojuje JavaScript s nativním kódem kamery a čtečky kódu.
+    issue_tracker: https://github.com/mrousavy/nitro/issues
+
+  - name: react-native-nitro-image
+    version: "0.15.2"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Povinná závislost react-native-vision-camera a react-native-nitro-zxing.
+    expected_function: >-
+      Předává obrazová data mezi kamerou a čtečkou kódu v paměti.
+    issue_tracker: https://github.com/mrousavy/react-native-nitro-image/issues
+
+  - name: react-native-nitro-zxing
+    version: "0.3.1"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Čtení QR a čárových kódů na zařízení knihovnou zxing-cpp 3.1.1 (Apache-2.0) bez ML Kit a bez síťové komunikace (NAB-474, CAP-013-R20, CAP-013-R02). Verze je zapsaná přesně a mění se jen novým záznamem.
+    expected_function: >-
+      Najde ve snímku z kamery QR kód a vrátí jeho obsah; nic neodesílá.
+    issue_tracker: https://github.com/margelo/react-native-nitro-zxing/issues
+
+  # Komponenta mimo správce balíčků: github.com/zxing-cpp/zxing-cpp, vydání v3.1.1, zdrojové soubory
+  # v balíčku react-native-nitro-zxing (cpp/zxing-core) beze změny; ruční záznam v SBOM
+  # quality/vydani/sbom-mobile-embedded.json.
+  - name: zxing-cpp
+    version: "3.1.1"
+    source: https://github.com/zxing-cpp/zxing-cpp/archive/refs/tags/v3.1.1.tar.gz
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: Apache-2.0
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Dekodér QR a čárových kódů uvnitř react-native-nitro-zxing; překládá se do aplikace (CAP-013-R20).
+    expected_function: >-
+      Dekóduje kód ve snímku z kamery na zařízení.
+    issue_tracker: https://github.com/zxing-cpp/zxing-cpp/issues
+
+  - name: "@formatjs/intl-locale"
+    version: "5.3.12"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Doplní Intl.Locale tam, kde ho JavaScriptový stroj platformy nemá (Hermes na iOS); potřebuje ho doplněk Intl.PluralRules (CAP-015-R28).
+    expected_function: >-
+      Zpracuje kód jazyka podle BCP 47 na zařízení; nic neodesílá.
+    issue_tracker: https://github.com/formatjs/formatjs/security/advisories
+
+  - name: "@formatjs/intl-pluralrules"
+    version: "6.3.15"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Doplní Intl.PluralRules tam, kde ho JavaScriptový stroj platformy nemá (Hermes na iOS); množné tvary textů se řídí pravidly jazyka (CAP-015-R28).
+    expected_function: >-
+      Vybere množný tvar čísla podle dat CLDR pro jazyky vydání; nic neodesílá.
+    issue_tracker: https://github.com/formatjs/formatjs/security/advisories
+
+  - name: react-native-gesture-handler
+    version: "3.3.0"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Povinná závislost expo-router a nativní navigace (NAB-139); ADR-041 bod a.
+    expected_function: >-
+      Zpracování dotykových gest.
+    issue_tracker: https://github.com/software-mansion/react-native-gesture-handler/security/advisories
+
+  - name: react-native-reanimated
+    version: "4.7.1"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Povinná závislost expo-router a nativní navigace (NAB-139); ADR-041 bod a.
+    expected_function: >-
+      Animace přechodů na nativním vlákně.
+    issue_tracker: https://github.com/software-mansion/react-native-reanimated/security/advisories
+
+  - name: react-native-worklets
+    version: "0.13.0"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Povinná závislost react-native-reanimated; aplikace z ní přímo volá scheduleOnRN, aby čtečka
+      kódu a mřížka stránek předaly výsledek z vlákna snímků zpět do rozhraní. Verze podle seznamu
+      Expo SDK 58.
+    expected_function: >-
+      Spouští krátké funkce mimo hlavní vlákno JavaScriptu; nic neodesílá.
+    issue_tracker: https://github.com/software-mansion/react-native-reanimated/security/advisories
+
+  - name: react-native-safe-area-context
+    version: "5.11.1"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Povinná závislost expo-router a nativní navigace (NAB-139); ADR-041 bod a.
+    expected_function: >-
+      Rozměry bezpečné oblasti obrazovky.
+    issue_tracker: https://github.com/AppAndFlow/react-native-safe-area-context/security/advisories
+
+  - name: react-native-screens
+    version: "4.30.1"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Povinná závislost expo-router a nativní navigace (NAB-139); ADR-041 bod a.
+    expected_function: >-
+      Nativní kontejnery obrazovek pro navigaci.
+    issue_tracker: https://github.com/software-mansion/react-native-screens/security/advisories
+
+  - name: react-native-svg
+    version: "15.16.0"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Ikony z návrhu ve Figmě jako vektory podle vizuálního stylu (DESIGN.md kap. 7, ADR-040).
+    expected_function: >-
+      Vykreslí ikony aplikace z vektorových cest zapsaných v kódu; nic nenačítá ze sítě.
+    issue_tracker: https://github.com/software-mansion/react-native-svg/security/advisories
+
+  - name: nativewind
+    version: "4.2.7"
+    role: runtime
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    projects: ["@ansora/mobile"]
+    inclusion_rationale: >-
+      Styly podle tokenů vizuálního stylu (ADR-040); ADR-041 bod a.
+    expected_function: >-
+      Převádí třídy Tailwind na styly React Native při sestavení.
+    issue_tracker: https://github.com/nativewind/nativewind/security/advisories
+
+  # Obraz databáze — komponenta mimo správce balíčků ✓ ADR-041 bod d), docs/spec/vydani-sbom-a-brany.md
+  # kap. 4.2 (nález review R-050). Digest a úplný SBOM obrazu zapíše spike základního obrazu (?).
+  - name: postgresql-image
+    version: "18"            # hlavní verze ✓ ADR-002 ř. 22, Q-041; přesnou verzi a digest zapíše spike (?)
+    role: runtime-image
+    in_image: false          # samostatný obraz databáze, ne obraz serveru
+    in_sbom: true            # oddíl Obraz databáze ✓ docs/spec/vydani-sbom-a-brany.md kap. 4.1
+    vulnerability_regime: 24h
+    license: PostgreSQL
+    inclusion_rationale: >-
+      Databáze řešení u odběratele běží jako kontejner z oficiálního obrazu zapsaného digestem pod
+      systemd ✓ ADR-041 bod d), NAB-310, NAB-311; PostgreSQL 18 ✓ ADR-002 ř. 22, Q-041.
+    expected_function: >-
+      Drží naše schéma včetně auditní stopy, rozpracovaných záznamů a kopie registru; po aktivaci
+      úložiště klinického záznamu i jeho druhou databázi s vlastní rolí ✓ ADR-042 bod 7.
+    issue_tracker: https://www.postgresql.org/support/security/
+
+  - name: "@medplum/core"
+    version: "5.2.18"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: Apache-2.0
+    projects: ["@ansora/vulna-adapter-clinical-record-medplum"]
+    inclusion_rationale: >-
+      Klient úložiště klinického záznamu v jediném adaptéru portu ClinicalRecordStore, v procesu API
+      i ve vykonavateli ✓ ADR-042 body 1 a 6, ADR-054 body 1 a 3; bez vlastních běhových závislostí.
+      Verze shodná s obrazem úložiště.
+    expected_function: >-
+      Přihlášení administrátorským pověřením procesu API a podmíněné zápisy zdrojů FHIR (zápis aktéra
+      CAP-021-R38, zdroj snímku a stránky CAP-021-R37); nahrání a zpětné přečtení Binary pověřením
+      vykonavatele (CAP-021-R36); procedura instalace úložiště CAP-012-S23.
+    issue_tracker: https://github.com/medplum/medplum/security/advisories
+
+  # Obraz úložiště klinického záznamu — komponenta mimo správce balíčků ✓ ADR-042 bod 7, CAP-029-R30.
+  - name: medplum-server-image
+    version: "5.2.18"
+    digest: "sha256:5061141d2a0f30b3ae7486608d21d500f1b873d352fed1720004d5d6fa085954"
+    role: runtime-image
+    in_image: false          # samostatný obraz, ne obraz serveru
+    in_sbom: true            # vlastní oddíl SBOM ✓ docs/spec/vydani-sbom-a-brany.md kap. 1
+    vulnerability_regime: 24h
+    license: Apache-2.0
+    inclusion_rationale: >-
+      Jediné produkční úložiště klinického záznamu u MOÚ od účinnosti dodatku ✓ ADR-054 body 1 a 6,
+      CAP-012-R04; konfigurace v profiles/mou/clinical-record/medplum.config.json se zakázanými volbami
+      vypnutými ✓ CAP-012-R30.
+    expected_function: >-
+      FHIR R4 úložiště klinického záznamu na zpětné smyčce hostitele; audit jen do provozního logu
+      ✓ CAP-025-R25; nikoho neregistruje a nikomu nevydává token ✓ CAP-011-R02.
+    issue_tracker: https://github.com/medplum/medplum/security/advisories
+
+  # Obraz mezipaměti úložiště — vlastní sestavení z oficiálního obrazu, cesta ven z brány B11
+  # ✓ CAP-029-R30, CAP-029-S20, ADR-042 bod 7, Q-113.
+  - name: valkey-image
+    version: "9.1.3"
+    digest: "sha256:bf09d58e96d6b4524a15396b65b242bbe18beebbcc15a04d8ee75ddac62fae0b"   # zdrojový obraz valkey/valkey:9.1.3-alpine
+    role: runtime-image
+    in_image: false
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: BSD-3-Clause
+    inclusion_rationale: >-
+      Mezipaměť úložiště klinického záznamu pod licencí BSD-3 ✓ konfigurace-a-profily.md kap. 2.1, Q-113. Oficiální obraz
+      nese shell a bránou B11 neprojde; vydání proto kopíruje valkey-server a jeho knihovny (musl, libssl3, libcrypto3)
+      z obrazu připnutého digestem na základ gcr.io/distroless/static-debian13 (deploy/images/valkey/Dockerfile,
+      profiles/mou/profile.json builtImages). Vlastní sestavení se za obraz výrobce nevydává ✓ CAP-029-R30.
+    expected_function: >-
+      Mezipaměť a fronta úloh úložiště bez perzistence, s heslem a seznamem povolených příkazů, jen na zpětné smyčce
+      hostitele.
+    issue_tracker: https://github.com/valkey-io/valkey/security/advisories
+
+  # Runtime Node.js — komponenta mimo správce balíčků ✓ ADR-011 ř. 40–46, docs/spec/vydani-sbom-a-brany.md
+  # kap. 4.2. Přichází se základem obrazu serveru zapsaným digestem; v SBOM je komponenta node, kterou
+  # brána B5 hlídá s purl a CPE.
+  - name: node
+    version: "24.22.3"
+    digest: "sha256:ba59ac9916b424cdfaaa8299695530251535843623a6d8f93d40b0a2ef69e390"   # základ gcr.io/distroless/nodejs24-debian13
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: MIT
+    inclusion_rationale: >-
+      Běhové prostředí procesů API, vykonavatele a migračního kroku, Node.js 24 LTS ✓ ADR-002, Q-041; ze základu
+      obrazu, ne ze správce balíčků ✓ ADR-011 ř. 40–46.
+    expected_function: >-
+      Spustí procesy serveru. Novou verzi přinese jen nový digest základu, který projde branami ✓ ADR-011.
+    issue_tracker: https://nodejs.org/en/blog/vulnerability
+
+  # Vlastní minimální sestavení Tesseractu — komponenta mimo správce balíčků ✓ ADR-011 ř. 46 a 49,
+  # docs/spec/vydani-sbom-a-brany.md kap. 4.2; recept deploy/images/ocr/build.sh, hashe zdrojů
+  # deploy/images/ocr/sources.sha256, ruční záznam v SBOM quality/vydani/sbom-supplement.json.
+  # Volba podle spiku 30. 10. 2026, rozhodnuto 2. 11. 2026.
+  - name: tesseract
+    version: "5.5.4"
+    source: https://github.com/tesseract-ocr/tesseract/archive/refs/tags/5.5.4.tar.gz
+    sha256: "a8dbf8b8c8ee427ff6ad1d99116502feaf59440af1adb893caf60a6576826cf4"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: Apache-2.0
+    inclusion_rationale: >-
+      Rozpoznání textu skenu na integračním serveru ✓ NAB-197, CAP-022-R01, ADR-018. Vlastní sestavení bez libcurl,
+      libarchive, OpenMP, grafiky a nástrojů pro trénování místo balíku Debianu 13 tesseract-ocr 5.5.0, který nese
+      otevřené vysoké CVE a táhne libcurl, libarchive, cairo, pango a ICU ✓ ADR-011 ř. 25, 26 a 49. Leptonica je
+      slinkovaná staticky; dynamicky jen libjpeg62-turbo, libpng16-16t64 a knihovny základu.
+    expected_function: >-
+      Krátkodobý podproces vykonavatele vytvoří ze stránek dokumentu jedno PDF s neviditelnou textovou vrstvou
+      v češtině a angličtině (CAP-022-R02, CAP-022-R05); proces API ho nespouští ✓ ADR-005 ř. 38.
+    issue_tracker: https://github.com/tesseract-ocr/tesseract/security/advisories
+
+  - name: leptonica
+    version: "1.87.0"
+    source: https://github.com/DanBloomberg/leptonica/releases/download/1.87.0/leptonica-1.87.0.tar.gz
+    sha256: "c73363397f96eb1295602bf44d708a994ad42046c791bf03ea0505d829bdb6a7"
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: BSD-2-Clause
+    inclusion_rationale: >-
+      Obrazová knihovna Tesseractu, staticky v /usr/local/bin/tesseract; sestavená jen s dekodéry JPEG, PNG a zlib,
+      bez GIF, TIFF, WebP a JPEG 2000. Dekodéry slouží jen skenům, ne stavbě snímků ✓ CAP-022-R14, Q-043,
+      ADR-011 ř. 20 a 26.
+    expected_function: >-
+      Načte stránky skenu pro rozpoznání textu (CAP-022-R01).
+    issue_tracker: https://github.com/DanBloomberg/leptonica/security/advisories
+
+  # Jazykové modely — balíky Debianu 13 (tessdata_fast 4.1.0), soubor modelu ověřený hashem SHA-256
+  # z deploy/images/ocr/models.sha256 při sestavení i v obrazu, v obrazu jen pro čtení ✓ CAP-022-R03,
+  # ADR-011 ř. 46.
+  - name: tesseract-ocr-ces
+    version: "1:4.1.0-2"
+    source: https://snapshot.debian.org/archive/debian/20261103T000000Z/pool/main/t/tesseract-lang/tesseract-ocr-ces_4.1.0-2_all.deb
+    sha256: "934bcaf97ef3348413263331131c9fa7f55f30db333c711929c124fb635f7e1b"   # ces.traineddata
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: Apache-2.0
+    inclusion_rationale: >-
+      Jazykový model pro češtinu ✓ NAB-198, CAP-022-R03.
+    expected_function: >-
+      Rozpoznání českého textu; model se nikdy nebere z pořizovaných dat ani z konfigurace ✓ ADR-018.
+    issue_tracker: https://security-tracker.debian.org/tracker/source-package/tesseract-lang
+
+  - name: tesseract-ocr-eng
+    version: "1:4.1.0-2"
+    source: https://snapshot.debian.org/archive/debian/20261103T000000Z/pool/main/t/tesseract-lang/tesseract-ocr-eng_4.1.0-2_all.deb
+    sha256: "7d4322bd2a7749724879683fc3912cb542f19906c83bcc1a52132556427170b2"   # eng.traineddata
+    role: runtime
+    in_image: true
+    in_sbom: true
+    vulnerability_regime: 24h
+    license: Apache-2.0
+    inclusion_rationale: >-
+      Jazykový model pro angličtinu ✓ NAB-198, CAP-022-R03.
+    expected_function: >-
+      Rozpoznání anglického textu; model se nikdy nebere z pořizovaných dat ani z konfigurace ✓ ADR-018.
+    issue_tracker: https://security-tracker.debian.org/tracker/source-package/tesseract-lang
+
+# Nesplněné položky, které sem patří, ale zatím nejsou:
+open_items:
+  - "Nástroje sestavení administrace a mobilní aplikace (vite, @vitejs/plugin-react, tailwindcss 4.3.3, @tailwindcss/vite 4.3.3, shadcn 4.16.1) — ADR-041 bod a) je neschvaluje jako běhové závislosti; zda potřebují záznam, rozhodnuté není (?)."
+  - "Nástroje kontraktu API pro bránu B16 (@redocly/cli, openapi-typescript)."
+  - "Balíčky jen s typy (@types/*) — zda potřebují záznam, když nic nespouštějí, rozhodnuté není (?)."
+  - "Fork knihovny DIMSE @veevoy/dcmjs-dimse a @veevoy/dcmjs ✓ Q-035 — záznamy výš; od adaptéru @ansora/vulna-adapter-dicom-dimse je v obrazu serveru (vendor/, jen zdrojové soubory s licencí) a v SBOM obrazu s rodokmenem (CycloneDX pedigree) a dodavatelem veevoy ✓ ADR-017, profil MOÚ ho vede ve vendoredPackages. Distribuce forku (privátní registry, politika podpory, SECURITY.md) do předání ✓ ADR-017."
+  - "Uzamčený strom závislostí sestavení mobilní aplikace ✓ ADR-001 ř. 28 — v SBOM, tady jen přímé závislosti."
+  - "Forma odlišení nástroje sestavení v SBOM (třetí část, nebo role) — návrh veevoy (?) podle CAP-029-R25."
+  - "Kontrola souladu tohoto souboru se SBOM — návrh veevoy (?), branou jen změnou CAP-029."
+  - "Obraz úložiště a obraz Valkey: licence všech balíčků uzávěru dohledat před předáním (CAP-029-R30); průchod bránou B11 ověří hypotéza H10 spiku S-MEDPLUM; druhé místo sledování vad úložiště — poznámky k vydání každého patche (CAP-029-R29)."
+  - "Objektové úložiště klinického záznamu — komponenta s rozhraním S3, do které úložiště klinického záznamu ukládá Binary snímků, stránek dokumentů a náhledů (CAP-021-R36) ✓ rozhodnutí vedení 19. 9. 2026 (D31), ADR-042 (doplnění 19. 9. 2026, D31). Je-li dodané jako obraz instance, je to pátý obraz: oficiální, připnutý digestem, s oddílem SBOM, skenem, stropem, bránou zakázaného obsahu a 24hodinovým režimem s účinnou mitigací (CAP-029-R30, CAP-029-R31, scénář CAP-029-S23). OTEVŘENÉ ⚠ Q-141: produkt, licence (rodina AGPL u síťové služby posoudit právně ✓ CAP-029-R24), původ proti varování NÚKIB (CAP-029-R10 ⚠ Q-115), místo sledování vad, zda je obrazem instance, nebo službou odběratele, a šifrování na straně úložiště ✓ Q-112 (rozhodnuto 20. 9. 2026, D32: šifrování dat v klidu na serveru zůstává mimo rozsah verze 1.0 ✓ ADR-050 bod 16). Záznam s verzí, licencí a důvodem až po rozhodnutí vedení podle spiku S-MEDPLUM; do profilu MOÚ až po účinnosti číslovaného dodatku (CAP-012-R04). Poznámka k otevřené komponentě, ne stav (?)."

@@ -1,0 +1,53 @@
+{
+	"$schema": "../../../../profiles/adapter-manifest.schema.json",
+	"description": "Closed adapter manifest ✓ ADR-003 ř. 26. Whatever is not here, the adapter must not do.",
+	"name": "@ansora/vulna-adapter-oidc",
+	"ports": [
+		"IdentityProvider"
+	],
+	"processes": [
+		"api"
+	],
+	"outboundCommunication": [
+		{
+			"target": "identity-provider",
+			"protocol": "https",
+			"source": "✓ NAB-051"
+		}
+	],
+	"inboundCommunication": [],
+	"configurationSchema": {
+		"OIDC_ISSUER": {
+			"type": "url",
+			"required": true,
+			"outboundTarget": true,
+			"description": "OIDC issuer over Active Directory ✓ NAB-051."
+		},
+		"OIDC_CLIENT_ID": {
+			"type": "string",
+			"required": true,
+			"description": "The server is a confidential client ✓ NAB-219."
+		},
+		"OIDC_REDIRECT_URI": {
+			"type": "url",
+			"required": true,
+			"description": "The redirect points at the integration server, not at the app's URL scheme ✓ ADR-013."
+		},
+		"OIDC_ADMINISTRATION_REDIRECT_URI": {
+			"type": "url",
+			"required": true,
+			"description": "Return address of the web administration ✓ CAP-004-R07."
+		},
+		"OIDC_SCOPES": {
+			"type": "string",
+			"required": false,
+			"description": "Space-separated scopes; default openid profile email offline_access."
+		}
+	},
+	"secrets": [
+		"OIDC_CLIENT_SECRET"
+	],
+	"thirdPartyComponents": [],
+	"source": "✓ ADR-003 ř. 30",
+	"note": "Platform fetch and node:crypto only."
+}

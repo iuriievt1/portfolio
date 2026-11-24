@@ -1,0 +1,817 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"title": "Instance configuration of the MOÚ profile",
+	"description": "Core keys and their defaults; adapter keys come from the adapter manifests when the profile is built (ADR-035 bod 4). The list of configurable values, their defaults and limits is owned by docs/spec/konfigurace-a-profily.md kap. 2 and 7; key names are návrh veevoy.",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"session_policy": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"session_max_seconds": {
+					"type": "integer",
+					"default": 28800,
+					"description": "NAB-273, NAB-339, CAP-002-R04",
+					"minimum": 1
+				},
+				"idle_lock_seconds": {
+					"type": "integer",
+					"default": 300,
+					"description": "NAB-274, NAB-339",
+					"minimum": 1
+				},
+				"token_validity_seconds": {
+					"type": "integer",
+					"default": 900,
+					"description": "NAB-223, NAB-339, ADR-013",
+					"minimum": 1
+				},
+				"full_login_interval_seconds": {
+					"type": "integer",
+					"default": 2592000,
+					"description": "NAB-267, CAP-001-R05",
+					"minimum": 1
+				}
+			}
+		},
+		"pin_policy": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"min_length": {
+					"type": "integer",
+					"default": 6,
+					"description": "NAB-260, CAP-001-R15",
+					"minimum": 4,
+					"maximum": 8
+				},
+				"complexity": {
+					"type": "string",
+					"enum": [
+						"none",
+						"standard"
+					],
+					"default": "standard",
+					"description": "NAB-260, CAP-001-R15, CAP-001-R28"
+				},
+				"attempts_limit": {
+					"type": "integer",
+					"default": 5,
+					"description": "NAB-268, NAB-270, CAP-001-R14",
+					"minimum": 1
+				},
+				"delay_seconds": {
+					"type": "integer",
+					"default": 1,
+					"description": "NAB-269",
+					"minimum": 0
+				}
+			}
+		},
+		"login_methods": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"card": {
+					"type": "boolean",
+					"default": false,
+					"description": "NAB-228, NAB-229, NAB-340, CAP-012-R02, CAP-012-R32"
+				},
+				"qr": {
+					"type": "boolean",
+					"default": true,
+					"description": "NAB-228, NAB-254, NAB-340, CAP-012-R02, CAP-012-R32"
+				},
+				"barcode": {
+					"type": "boolean",
+					"default": true,
+					"description": "docs/spec/api/mobile/identity.yaml loginWithBarcode, CAP-012-R02, CAP-012-R32"
+				},
+				"pin": {
+					"type": "boolean",
+					"default": true,
+					"description": "NAB-228, NAB-256, NAB-340, CAP-012-R02, CAP-012-R32"
+				}
+			}
+		},
+		"login_policy": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"credential_attempts_limit": {
+					"type": "integer",
+					"default": 5,
+					"description": "NAB-247, NAB-255, CAP-005-R08, Q-054",
+					"minimum": 1
+				}
+			}
+		},
+		"card_identity": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"mode": {
+					"type": "string",
+					"enum": [
+						"uid_binding",
+						"card_application_identifier",
+						"customer_card_system"
+					],
+					"default": "uid_binding",
+					"description": "CAP-005-R16, ADR-051"
+				},
+				"card_identifier": {
+					"type": [
+						"string",
+						"null"
+					],
+					"pattern": "^\\S+$",
+					"default": null,
+					"description": "CAP-005-R16, CAP-001-R08"
+				},
+				"account_claim": {
+					"type": [
+						"string",
+						"null"
+					],
+					"pattern": "^\\S+$",
+					"default": null,
+					"description": "CAP-005-R16, CAP-001-R08"
+				}
+			}
+		},
+		"card_binding": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"code_lifetime_seconds": {
+					"type": "integer",
+					"default": 300,
+					"description": "CAP-005-R17, ADR-051",
+					"minimum": 1
+				}
+			}
+		},
+		"administration": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"idle_logout_seconds": {
+					"type": "integer",
+					"default": 1800,
+					"description": "NAB-327, CAP-004-R11",
+					"minimum": 1
+				},
+				"session_max_seconds": {
+					"type": "integer",
+					"default": 28800,
+					"description": "NAB-327, CAP-004-R11",
+					"minimum": 1
+				}
+			}
+		},
+		"mobile_app": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"minimum_version": {
+					"type": [
+						"string",
+						"null"
+					],
+					"pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$",
+					"default": null,
+					"description": "CAP-012-R24, CHG-030"
+				},
+				"queue_max_items": {
+					"type": "integer",
+					"default": 500,
+					"description": "CAP-019-R17",
+					"minimum": 1
+				},
+				"low_storage_warning_bytes": {
+					"type": "integer",
+					"default": 524288000,
+					"description": "CAP-015-R21, Q-077",
+					"minimum": 0
+				},
+				"max_draft_acquisitions": {
+					"type": "integer",
+					"default": 3,
+					"description": "CAP-015-R18, CAP-015-R30, CAP-012-R31, ADR-044",
+					"minimum": 1
+				},
+				"draft_acquisition_reminder_seconds": {
+					"type": "integer",
+					"default": 2592000,
+					"description": "CAP-015-R18, CAP-026-R16, CAP-012-R31",
+					"minimum": 1
+				},
+				"draft_discard_consent_absence_seconds": {
+					"type": "integer",
+					"default": 2592000,
+					"description": "CAP-015-R19, CAP-015-R20, CAP-012-R31",
+					"minimum": 1
+				},
+				"device_key_hold_seconds": {
+					"type": "integer",
+					"default": 604800,
+					"description": "CAP-025-R22, CAP-008-R06",
+					"minimum": 1
+				},
+				"scheduled_encounters_enabled": {
+					"type": "boolean",
+					"default": false,
+					"description": "CAP-014-R16"
+				},
+				"scheduled_encounters_max_items": {
+					"type": "integer",
+					"default": 10,
+					"description": "CAP-014-R16",
+					"minimum": 1
+				},
+				"recent_patients_max_items": {
+					"type": "integer",
+					"default": 10,
+					"description": "CAP-014-R16, CAP-013-R19",
+					"minimum": 1
+				},
+				"home_draft_acquisitions_max_rows": {
+					"type": "integer",
+					"default": 3,
+					"description": "CAP-015-R29",
+					"minimum": 1
+				}
+			}
+		},
+		"acquisition": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"max_images": {
+					"type": "integer",
+					"default": 5,
+					"description": "CAP-015-R13, CHG-178",
+					"minimum": 1
+				},
+				"max_files_per_request": {
+					"type": "integer",
+					"default": 1,
+					"description": "CAP-015-R13",
+					"minimum": 1,
+					"readOnly": true
+				},
+				"max_bytes": {
+					"type": "integer",
+					"default": 67108864,
+					"description": "CAP-015-R13, ADR-012",
+					"minimum": 1,
+					"readOnly": true
+				},
+				"wound_type_enabled": {
+					"type": "boolean",
+					"default": false,
+					"description": "CAP-017-R16, CHG-181"
+				},
+				"healing_phase_enabled": {
+					"type": "boolean",
+					"default": false,
+					"description": "CAP-017-R16, CHG-181"
+				},
+				"upload_permission_lifetime_seconds": {
+					"type": "integer",
+					"default": 86400,
+					"description": "ADR-014, CAP-002-R09",
+					"minimum": 60,
+					"maximum": 604800
+				}
+			}
+		},
+		"document": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"max_pages": {
+					"type": "integer",
+					"default": 20,
+					"description": "CAP-018-R12, CHG-179",
+					"minimum": 1
+				}
+			}
+		},
+		"viewing_copy": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"max_long_edge_px": {
+					"type": "integer",
+					"default": 2048,
+					"description": "CAP-021-R40, ADR-050 bod 13",
+					"minimum": 1
+				},
+				"format": {
+					"type": "string",
+					"enum": [
+						"jpeg"
+					],
+					"default": "jpeg",
+					"description": "CAP-021-R40, ADR-050 bod 13",
+					"readOnly": true
+				},
+				"quality": {
+					"type": "integer",
+					"default": 70,
+					"description": "CAP-021-R40, ADR-050 bod 13, ADR-026, mobilni-aplikace.md 4.1",
+					"minimum": 1,
+					"maximum": 100
+				},
+				"retention_days": {
+					"type": [
+						"integer",
+						"null"
+					],
+					"default": null,
+					"description": "CAP-026-R20, CAP-012-R30, konfigurace-a-profily.md 2.4",
+					"minimum": 1
+				}
+			}
+		},
+		"localization": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"default_language": {
+					"type": "string",
+					"pattern": "^[A-Za-z]{2,3}(-[A-Za-z0-9]{2,8}){0,3}$",
+					"default": "cs",
+					"description": "CAP-012-R28, CAP-015-R24"
+				},
+				"supported_languages": {
+					"type": "array",
+					"minItems": 1,
+					"uniqueItems": true,
+					"items": {
+						"type": "string",
+						"pattern": "^[A-Za-z]{2,3}(-[A-Za-z0-9]{2,8}){0,3}$"
+					},
+					"default": [
+						"cs",
+						"en"
+					],
+					"description": "CAP-012-R28, CAP-015-R22"
+				}
+			}
+		},
+		"patient_search": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"max_queries_per_minute_per_user": {
+					"type": "integer",
+					"default": 30,
+					"description": "CAP-013-R17",
+					"minimum": 1
+				},
+				"max_queries_per_minute_per_device": {
+					"type": "integer",
+					"default": 30,
+					"description": "CAP-013-R17",
+					"minimum": 1
+				}
+			}
+		},
+		"patient_identification": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"code_system": {
+					"type": [
+						"string",
+						"null"
+					],
+					"pattern": "^\\S{1,255}$",
+					"default": null,
+					"description": "CAP-013-R03, NAB-161, Q-148"
+				},
+				"code_pattern": {
+					"type": [
+						"string",
+						"null"
+					],
+					"pattern": "^.{1,255}$",
+					"default": null,
+					"description": "CAP-013-R03, NAB-161, Q-148"
+				},
+				"nfc_source": {
+					"type": [
+						"string",
+						"null"
+					],
+					"enum": [
+						"ndef_text",
+						"uid",
+						null
+					],
+					"default": null,
+					"description": "CAP-013-R05, NAB-164, Q-148"
+				},
+				"nfc_system": {
+					"type": [
+						"string",
+						"null"
+					],
+					"pattern": "^\\S{1,255}$",
+					"default": null,
+					"description": "CAP-013-R05, NAB-164, Q-148"
+				}
+			}
+		},
+		"device_token": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"lifetime_seconds": {
+					"type": "integer",
+					"default": 900,
+					"description": "CAP-002-R09, ADR-013",
+					"minimum": 1,
+					"readOnly": true
+				}
+			}
+		},
+		"identity_provider": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"personal_number_claim": {
+					"type": [
+						"string",
+						"null"
+					],
+					"pattern": "^\\S+$",
+					"default": null,
+					"description": "CAP-001-R27"
+				},
+				"login_name_claim": {
+					"type": [
+						"string",
+						"null"
+					],
+					"pattern": "^\\S+$",
+					"default": null,
+					"description": "docs/spec/api/administration.yaml User.login_name"
+				},
+				"email_claim": {
+					"type": [
+						"string",
+						"null"
+					],
+					"pattern": "^\\S+$",
+					"default": null,
+					"description": "docs/spec/api/administration.yaml User.email"
+				},
+				"group_claim": {
+					"type": [
+						"string",
+						"null"
+					],
+					"pattern": "^\\S+$",
+					"default": null,
+					"description": "ADR-053, CAP-003-R03, Q-144"
+				},
+				"authorized_group": {
+					"type": [
+						"string",
+						"null"
+					],
+					"pattern": "^\\S+$",
+					"default": null,
+					"description": "CAP-001-R02, CAP-003-R04"
+				},
+				"department_claim": {
+					"type": [
+						"string",
+						"null"
+					],
+					"pattern": "^\\S+$",
+					"default": null,
+					"description": "CAP-003-R07, Q-048"
+				}
+			}
+		},
+		"role_mapping": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"group_to_role": {
+					"type": "array",
+					"default": [],
+					"uniqueItems": true,
+					"description": "ADR-053, CAP-012-R33, CAP-003-R03, Q-144",
+					"items": {
+						"type": "object",
+						"additionalProperties": false,
+						"required": [
+							"group",
+							"role"
+						],
+						"properties": {
+							"group": {
+								"type": "string",
+								"pattern": "^\\S+$"
+							},
+							"role": {
+								"type": "string",
+								"enum": [
+									"clinician",
+									"administrator"
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"retention": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"full_images_days": {
+					"type": "integer",
+					"default": 30,
+					"description": "NAB-316, NAB-344, CAP-026-R01",
+					"minimum": 1
+				},
+				"thumbnails_days": {
+					"type": [
+						"integer",
+						"null"
+					],
+					"default": null,
+					"description": "CAP-026-R02, CAP-012-R30, konfigurace-a-profily.md 2.4, Q-034",
+					"minimum": 1
+				},
+				"device_local_copy_seconds": {
+					"type": "integer",
+					"default": 86400,
+					"description": "NAB-414, CAP-026-R08",
+					"minimum": 1
+				},
+				"audit_days": {
+					"type": "integer",
+					"default": 1825,
+					"description": "NAB-445, CAP-025-R02, ADR-019 ř. 89–91, Q-019",
+					"minimum": 548
+				}
+			}
+		},
+		"registry_sync": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"window_days_back": {
+					"type": "integer",
+					"default": 7,
+					"description": "NAB-301, Q-060",
+					"minimum": 0
+				},
+				"window_days_ahead": {
+					"type": "integer",
+					"default": 1,
+					"description": "NAB-301, Q-060",
+					"minimum": 0
+				},
+				"period_seconds": {
+					"type": [
+						"integer",
+						"null"
+					],
+					"minimum": 1,
+					"default": null,
+					"description": "NAB-301, CAP-024"
+				}
+			}
+		},
+		"delivery": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"verification_rejections_before_alert": {
+					"type": "integer",
+					"default": 3,
+					"description": "CAP-023-R26",
+					"minimum": 1
+				},
+				"target_unavailable_alert_seconds": {
+					"type": "integer",
+					"default": 3600,
+					"description": "CAP-023-R27, Q-061",
+					"minimum": 1
+				},
+				"max_attempts": {
+					"type": "integer",
+					"default": 5,
+					"description": "CAP-023, docs/spec/dorucovaci-jadro.md kap. 5",
+					"minimum": 1,
+					"readOnly": true
+				},
+				"retry_backoff_min_seconds": {
+					"type": "integer",
+					"default": 60,
+					"description": "docs/spec/dorucovaci-jadro.md kap. 5",
+					"minimum": 1,
+					"readOnly": true
+				},
+				"retry_backoff_max_seconds": {
+					"type": "integer",
+					"default": 3600,
+					"description": "docs/spec/dorucovaci-jadro.md kap. 5",
+					"minimum": 1,
+					"readOnly": true
+				},
+				"verification_delay_seconds": {
+					"type": "integer",
+					"default": 60,
+					"description": "CAP-023-R13, CAP-023-R26, docs/spec/dorucovaci-jadro.md kap. 5.1, Q-015, Q-031",
+					"minimum": 1,
+					"readOnly": true
+				}
+			}
+		},
+		"dicom": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"image_transfer_syntaxes": {
+					"type": "array",
+					"minItems": 1,
+					"uniqueItems": true,
+					"items": {
+						"type": "string",
+						"enum": [
+							"1.2.840.10008.1.2.4.50"
+						]
+					},
+					"default": [
+						"1.2.840.10008.1.2.4.50"
+					],
+					"description": "CAP-021-R17, Q-043, integrace-dicom.md 3"
+				},
+				"document_transfer_syntaxes": {
+					"type": "array",
+					"minItems": 1,
+					"uniqueItems": true,
+					"items": {
+						"type": "string",
+						"enum": [
+							"1.2.840.10008.1.2.1",
+							"1.2.840.10008.1.2"
+						]
+					},
+					"default": [
+						"1.2.840.10008.1.2.1",
+						"1.2.840.10008.1.2"
+					],
+					"description": "CAP-021-R17, NAB-386, integrace-dicom.md 3"
+				},
+				"implementation_class_uid": {
+					"type": [
+						"string",
+						"null"
+					],
+					"pattern": "^(?=.{1,64}$)[0-2](\\.(0|[1-9][0-9]*))+$",
+					"default": null,
+					"description": "CAP-012-R17, CAP-021-R12, Q-045, integrace-dicom.md 4, 5.0"
+				},
+				"connect_timeout_seconds": {
+					"type": "integer",
+					"default": 10,
+					"description": "ADR-005 ř. 39, ADR-017, integrace-dicom.md 6.3, konfigurace-a-profily.md 2.7",
+					"minimum": 1,
+					"readOnly": true
+				},
+				"acse_timeout_seconds": {
+					"type": "integer",
+					"default": 30,
+					"description": "ADR-005 ř. 39, ADR-017, integrace-dicom.md 6.3, konfigurace-a-profily.md 2.7",
+					"minimum": 1,
+					"readOnly": true
+				},
+				"dimse_timeout_seconds": {
+					"type": "integer",
+					"default": 120,
+					"description": "ADR-005 ř. 39, ADR-017, integrace-dicom.md 6.3, konfigurace-a-profily.md 2.7",
+					"minimum": 1,
+					"readOnly": true
+				},
+				"idle_timeout_seconds": {
+					"type": "integer",
+					"default": 300,
+					"description": "ADR-005 ř. 39, ADR-017, integrace-dicom.md 6.3, konfigurace-a-profily.md 2.7",
+					"minimum": 1,
+					"readOnly": true
+				},
+				"max_pdu_length": {
+					"type": "integer",
+					"default": 16384,
+					"description": "TS-059, integrace-dicom.md 6.3, 10, konfigurace-a-profily.md 2.7",
+					"minimum": 1,
+					"readOnly": true
+				}
+			}
+		},
+		"binary_store": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"orphan_set_aside_after_seconds": {
+					"type": "integer",
+					"default": 86400,
+					"description": "CAP-026-R14, CAP-026-S06, Q-081",
+					"minimum": 3600
+				}
+			}
+		},
+		"queue": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"assembly_concurrency": {
+					"type": "integer",
+					"default": 2,
+					"description": "ADR-016 ř. 56–59",
+					"minimum": 1,
+					"readOnly": true
+				},
+				"delivery_concurrency": {
+					"type": "integer",
+					"default": 2,
+					"description": "ADR-016 ř. 56–59",
+					"minimum": 1,
+					"readOnly": true
+				}
+			}
+		},
+		"ocr": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"timeout_seconds": {
+					"type": "integer",
+					"default": 120,
+					"description": "ADR-018, CAP-022",
+					"minimum": 1,
+					"readOnly": true
+				},
+				"memory_limit_bytes": {
+					"type": "integer",
+					"default": 1073741824,
+					"description": "ADR-018, CAP-022",
+					"minimum": 1,
+					"readOnly": true
+				}
+			}
+		},
+		"api": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"page_size_default": {
+					"type": "integer",
+					"default": 100,
+					"description": "ADR-012",
+					"minimum": 1,
+					"readOnly": true
+				},
+				"page_size_max": {
+					"type": "integer",
+					"default": 500,
+					"description": "ADR-012",
+					"minimum": 1,
+					"readOnly": true
+				},
+				"max_requests_per_minute_per_device": {
+					"type": "integer",
+					"default": 600,
+					"description": "docs/spec/api/README.md kap. 7",
+					"minimum": 1,
+					"readOnly": true
+				}
+			}
+		},
+		"audit_export": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"buffer_max_records": {
+					"type": "integer",
+					"default": 100000,
+					"description": "NAB-451, docs/spec/backend.md kap. 6",
+					"minimum": 1,
+					"readOnly": true
+				}
+			}
+		}
+	}
+}

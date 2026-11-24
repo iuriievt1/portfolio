@@ -1,0 +1,48 @@
+{
+	"cli": {
+		"version": ">= 24.0.0",
+		"appVersionSource": "remote"
+	},
+	"build": {
+		"preview": {
+			"distribution": "store",
+			"autoIncrement": true,
+			"ios": {
+				"simulator": false
+			},
+			"android": {
+				"buildType": "apk"
+			},
+			"node": "24.14.1",
+			"pnpm": "11.12.0",
+			"env": {
+				"ANSORA_RELEASE_SIGNER_SHA256": "a80c265beb29666efaf29432a7ee4a734b1d96a2ed24f794869fa8d889edbbc6"
+			}
+		},
+		"stand": {
+			"extends": "preview",
+			"ios": {
+				"simulator": false,
+				"image": "macos-tahoe-26.6-xcode-27.0"
+			},
+			"env": {
+				"EXPO_PUBLIC_SERVER_URL": "https://vulna.euc1.vvy.dev",
+				"EXPO_PUBLIC_OIDC_DISCOVERY_URL": "https://authentikserver-ffd00vukdwrs0zblgcyblxcj.euc1.vvy.dev/application/o/vulna/.well-known/openid-configuration",
+				"EXPO_PUBLIC_PINNING_FINGERPRINTS": "sha256/R8/dRaZ2m7m3eu3vNF5VHW+abQHHuBExApQIhPj7p/E=,sha256/pSEfkYBB/YnPeZZsrbGthG5JxGOnXGjNnNE3odTIllU="
+			}
+		},
+		"production": {
+			"distribution": "store",
+			"autoIncrement": true,
+			"node": "24.14.1",
+			"pnpm": "11.12.0"
+		}
+	},
+	"submit": {
+		"production": {
+			"ios": {
+				"ascAppId": "6815304375"
+			}
+		}
+	}
+}

@@ -1,0 +1,16 @@
+.git
+.nx
+.env
+.env.*
+.data
+node_modules
+**/node_modules
+**/dist
+docs
+quality
+!quality/data/synteticka-sada
+tools/kontroly
+dev
+apps/vulna-mobile/*
+!apps/vulna-mobile/package.json
+*.md

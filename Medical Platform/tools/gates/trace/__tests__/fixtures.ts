@@ -1,0 +1,2 @@
+export const MALFORMED_SCENARIO_ID = "CAP-01-S3"
+export const UNKNOWN_SCENARIO_ID = "CAP-001-S99"

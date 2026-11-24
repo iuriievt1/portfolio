@@ -1,0 +1,86 @@
+{
+	"$schema": "./node_modules/nx/schemas/nx-schema.json",
+	"namedInputs": {
+		"default": [
+			"{projectRoot}/**/*",
+			"sharedGlobals"
+		],
+		"production": [
+			"default",
+			"!{projectRoot}/**/*.test.ts",
+			"!{projectRoot}/**/__tests__/**/*"
+		],
+		"sharedGlobals": [
+			"{workspaceRoot}/tsconfig.base.json",
+			"{workspaceRoot}/biome.json",
+			"{workspaceRoot}/pnpm-lock.yaml"
+		]
+	},
+	"targetDefaults": {
+		"build": {
+			"dependsOn": [
+				"^build"
+			],
+			"inputs": [
+				"production",
+				"^production"
+			],
+			"outputs": [
+				"{projectRoot}/dist"
+			],
+			"cache": true
+		},
+		"test": {
+			"inputs": [
+				"default",
+				"^production",
+				"{workspaceRoot}/quality/data/synteticka-sada/**/*"
+			],
+			"cache": true
+		},
+		"typecheck": {
+			"inputs": [
+				"default",
+				"^production"
+			],
+			"cache": true
+		},
+		"gate": {
+			"cache": false
+		},
+		"gate:audit": {
+			"cache": false
+		},
+		"gate:boundaries": {
+			"cache": false
+		},
+		"gate:image": {
+			"cache": false
+		},
+		"gate:sbom": {
+			"cache": false
+		},
+		"gate:trace": {
+			"cache": false
+		},
+		"gate:trace:release": {
+			"cache": false
+		},
+		"trace:write": {
+			"cache": false
+		},
+		"profile:build": {
+			"cache": false
+		},
+		"scan:mobile": {
+			"cache": false
+		},
+		"release:record": {
+			"cache": false
+		}
+	},
+	"neverConnectToCloud": true,
+	"analytics": false,
+	"useInferencePlugins": false,
+	"defaultBase": "main"
+}

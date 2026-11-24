@@ -1,0 +1,1630 @@
+{
+	"app": {
+		"name": "Ansora Vulna Admin"
+	},
+	"navigation": {
+		"label": "Hlavní navigace",
+		"breadcrumbs": "Drobečková navigace",
+		"skipToContent": "Přeskočit na obsah",
+		"toggle": "Přepnout postranní panel",
+		"groups": {
+			"operations": "Provoz",
+			"peopleAndDevices": "Lidé a zařízení",
+			"setup": "Systém"
+		}
+	},
+	"common": {
+		"loading": "Načítáme…",
+		"more": "Načíst další",
+		"close": "Zavřít",
+		"notStated": "neuvedeno",
+		"save": "Uložit",
+		"saving": "Ukládáme…",
+		"revoking": "Zneplatňujeme…",
+		"revoke": "Zneplatnit",
+		"cancel": "Zrušit",
+		"savedAt": "Uloženo v {time}.",
+		"invalid": "Opravte vyznačená pole.",
+		"unsaved": {
+			"heading": "Neuložené změny",
+			"body": "Změny, které jste neuložili, se ztratí.",
+			"stay": "Zůstat",
+			"leave": "Odejít bez uložení"
+		},
+		"never": "zatím ne",
+		"liveRefresh": "Obnovuje se průběžně.",
+		"moveUp": "Posunout výš · {item}",
+		"moveDown": "Posunout níž · {item}"
+	},
+	"session": {
+		"loading": "Načítáme administraci…",
+		"signOut": "Odhlásit",
+		"idleWarning": "Pro nečinnost vás administrace odhlásí v {time}. Rozdělanou neuloženou práci uložte, po odhlášení se neuloží.",
+		"signedOut": {
+			"heading": "Přihlášení do administrace",
+			"body": "Přihlaste se účtem nemocnice s rolí správce.",
+			"action": "Přihlásit účtem nemocnice"
+		},
+		"loadFailed": "Administraci se nepodařilo načíst."
+	},
+	"errors": {
+		"generic": "Něco se nepovedlo. Zkuste to znovu.",
+		"retry": "Zkusit znovu",
+		"notFound": "Záznam nebyl nalezen.",
+		"permissionDenied": "K této akci nemáte oprávnění.",
+		"userInactive": "Uživatel nemá aktivní účet, nosič mu nelze vydat.",
+		"departmentFromDirectory": "Oddělení se teď přebírá z Active Directory, ručně ho změnit nejde.",
+		"cardBindingNotApplicable": "V této instalaci se karty uživatelům nepřiřazují.",
+		"deviceNotPending": "Zařízení už na schválení nečeká.",
+		"deviceNotBlocked": "Zařízení není zablokované ani zneplatněné, odblokovat ho nejde.",
+		"versionConflict": "Mezitím nastavení uložil někdo jiný. Načtěte aktuální verzi a změnu proveďte znovu nad ní.",
+		"valueOutOfRange": "Server změnu nepřijal, některá hodnota je mimo povolený rozsah.",
+		"defaultLanguageNotSupported": "Výchozí jazyk musí být mezi podporovanými jazyky.",
+		"defaultLanguageNamesMissing": "Výchozí jazyk zatím nejde nastavit, některé názvy v něm chybí.",
+		"defaultLanguageItemsMissing": "Výchozí jazyk {language} zatím nejde nastavit, chybí v něm název u: {names}. Doplňte názvy v Číselnících nebo je nahrajte importem překladů.",
+		"defaultLanguageRegionsMissing": "Názvy oblastí schématu postavy v jazyce {language} přijdou s vydáním serveru: {names}.",
+		"missingItem": "{codeList}/{code}",
+		"codeListItemNameMissing": "Každá položka musí mít název ve výchozím jazyce.",
+		"codeListItemUnknown": "Import se neuložil, některé řádky server odmítl.",
+		"tooLong": "Zadejte nejvýš {max} znaků.",
+		"draftDiscardNotAllowed": "Pořizovatel se mezitím přihlásil, souhlas se zahozením teď dát nelze.",
+		"deliveryNotClosable": "Doručení už uzavřít nejde; jeho stav se mezitím změnil.",
+		"textRecognitionNotFailed": "Rozpoznání textu u tohoto dokumentu neselhalo; spustit ho znovu nejde.",
+		"orphanedObjectNotSetAside": "Objekt už odložený není; na objekt mezitím začal odkazovat záznam.",
+		"targetNotPaused": "Cíl už pozastavený není.",
+		"verificationNotOnHold": "Ověřování už na zásah nečeká."
+	},
+	"alerts": {
+		"heading": "Přehled",
+		"listHeading": "Upozornění",
+		"tableLabel": "Seznam upozornění",
+		"view": {
+			"label": "Zobrazit",
+			"active": "Aktivní",
+			"all": "Všechna"
+		},
+		"kind": {
+			"permanent_delivery_failure": "Doručení do PACS trvale selhalo",
+			"held_for_review": "Doručení čeká na posouzení",
+			"stored_with_warning": "PACS uložil snímek s varováním",
+			"verification_rejected": "PACS opakovaně odmítl ověření",
+			"target_paused": "Cíl doručení je pozastavený",
+			"target_unavailability": "PACS je dlouho nedostupný",
+			"assembly_failed": "Sestavení pro PACS selhalo",
+			"assembly_paused": "Sestavení pro PACS stojí",
+			"orphaned_objects_set_aside": "Úklid odložil osiřelé objekty",
+			"audit_chain_broken": "Kontrola auditní stopy selhala",
+			"stale_acquisition_drafts": "Rozpracované záznamy bez doplnění",
+			"clinical_record_store_unavailable": "Úložiště klinického záznamu je nedostupné",
+			"clinical_record_write_failed": "Zápis do klinického záznamu selhal",
+			"clinical_record_binary_upload_failed": "Nahrání obrazových dat do klinického záznamu selhalo",
+			"viewing_copy_generation_failed": "Prohlížecí kopii se nepodařilo vyrobit"
+		},
+		"state": {
+			"active": "Aktivní",
+			"requeued": "Čeká na zopakování",
+			"resolved": "Vyřešené",
+			"acknowledged": "Vzato na vědomí"
+		},
+		"requeue": "Zopakovat zápis",
+		"requeuing": "Zařazujeme…",
+		"requeued": "Zápis je znovu zařazený. Upozornění zmizí, až ho úložiště přijme.",
+		"openUser": "Otevřít uživatele",
+		"rendition": {
+			"label": "Část souboru: {rendition}",
+			"value": {
+				"original": "originál",
+				"thumbnail": "náhled",
+				"viewing_copy": "prohlížecí kopie",
+				"output_pdf": "PDF dokumentu"
+			}
+		},
+		"empty": {
+			"active": "Žádná aktivní upozornění",
+			"all": "Zatím žádná upozornění"
+		},
+		"emptyHint": "Co bude čekat na vaše rozhodnutí, objeví se tady.",
+		"openDrafts": "Zobrazit rozpracované záznamy",
+		"openOrphanedObjects": "Zobrazit odložené objekty",
+		"brokenRecord": "První nesouhlasící záznam:",
+		"openAudit": "Otevřít auditní stopu",
+		"metrics": {
+			"label": "Provozní stav",
+			"loadFailed": "Provozní stav se teď nepodařilo načíst. Zkoušíme to znovu.",
+			"refreshFailed": "Stav se nepodařilo obnovit, ukazujeme poslední načtený.",
+			"notReported": "Neuvedeno",
+			"details": "Podrobné provozní údaje",
+			"attention": {
+				"label": "Co čeká na řešení",
+				"pendingApproval": "Zařízení čekají na schválení",
+				"waiting": "Čeká na odeslání do PACS",
+				"assemblyFailed": "Sestavení pro PACS selhalo",
+				"permanentlyFailed": "Odeslání do PACS selhalo",
+				"heldForReview": "Odeslání čeká na posouzení"
+			},
+			"dependencies": {
+				"heading": "Napojené systémy",
+				"item": "{name}:",
+				"unknownHint": "Ověří se při první práci v aplikaci.",
+				"database": "Databáze",
+				"identity_provider": "Účet nemocnice",
+				"clinical_record_store": "Úložiště klinického záznamu"
+			},
+			"dependencyState": {
+				"available": "Dostupné",
+				"unavailable": "Nedostupné",
+				"unknown": "Neověřeno"
+			},
+			"clinicalRecordStore": {
+				"heading": "Úložiště klinického záznamu",
+				"rejectedRequests": "Odmítnuté požadavky na dokumentaci",
+				"outage": "Výpadek trvá",
+				"noOutage": "Bez výpadku",
+				"waiting": "Čekající zápisy",
+				"failed": "Selhané zápisy"
+			},
+			"imageData": {
+				"heading": "Obrazová data na serveru",
+				"uploadWaiting": "Čekající nahrání do úložiště",
+				"uploadFailed": "Selhaná nahrání",
+				"uploadLag": "Zpoždění nahrání",
+				"noUploadWaiting": "Nic nečeká",
+				"bufferSize": "Vyrovnávací paměť",
+				"filesWaiting": "Soubory čekající na podmínky smazání"
+			},
+			"devices": {
+				"heading": "Zařízení",
+				"pendingApproval": "Čekají na schválení",
+				"revoked": "Zneplatněná"
+			}
+		},
+		"acknowledge": "Vzít na vědomí",
+		"acknowledging": "Ukládáme…",
+		"acknowledgedAt": "Vzato na vědomí {time}",
+		"openDelivery": "Otevřít doručení",
+		"openDeliveries": "Otevřít odesílání do PACS"
+	},
+	"drafts": {
+		"tableLabel": "Seznam rozpracovaných záznamů",
+		"filters": {
+			"age": "Stáří",
+			"ageAll": "Všechny",
+			"ageStale": "Bez doplnění déle než {duration}",
+			"ageStaleUnknown": "Bez doplnění déle než doba připomenutí",
+			"operator": "Pořizovatel",
+			"clearOperator": "Zobrazit všechny pořizovatele"
+		},
+		"columns": {
+			"select": "Výběr",
+			"operator": "Pořizovatel",
+			"patient": "Pacient",
+			"kind": "Druh",
+			"files": "Snímky a strany",
+			"startedAt": "Vznik",
+			"updatedAt": "Poslední změna"
+		},
+		"kind": {
+			"photo": "Rána",
+			"scan": "Dokument"
+		},
+		"revoked": "Zneplatněný",
+		"showOperator": "Zobrazit jen záznamy pořizovatele {name}",
+		"stale": "déle než {duration}",
+		"selectRow": "Vybrat záznam pacienta {patient}",
+		"selectAll": "Vybrat všechny načtené záznamy",
+		"chooseOperator": "Pro zahození vyberte pořizovatele kliknutím na jeho jméno.",
+		"notAllowed": "Pořizovatel se přihlásil {when}. Zahodit jde až po {duration} bez přihlášení nebo u zneplatněného pořizovatele.",
+		"discard": "Zahodit vybrané ({count})",
+		"empty": "Žádné rozpracované záznamy",
+		"emptyStale": "Žádný záznam bez doplnění déle než doba připomenutí",
+		"emptyHint": "Tady budou záznamy, které zdravotníci ještě neuzavřeli.",
+		"consent": {
+			"heading": "Zahodit rozpracované záznamy {name}?",
+			"body": "Vybráno {count}, nejstarší z {time}. Záznamy se hned smažou i se snímky, do PACS nic neodešlo a vrátit to nejde. Záznam, který pořizovatel mezitím změnil, zůstane.",
+			"reason": "Důvod",
+			"reasonPlaceholder": "Vyberte důvod",
+			"reasonMissing": "Vyberte důvod.",
+			"reasonValue": {
+				"operator_revoked": "Pořizovatel je zneplatněný",
+				"operator_departed": "Odchod z pracoviště",
+				"long_absence": "Dlouhodobá nepřítomnost",
+				"device_reassigned": "Zařízení předané jinému pracovišti"
+			},
+			"submit": "Dát souhlas",
+			"submitting": "Zahazujeme…"
+		},
+		"result": {
+			"discarded": "Zahozeno záznamů: {count}.",
+			"changed": "Nezahozeno, pořizovatel je mezitím změnil: {count}.",
+			"closed": "Nezahozeno, pořizovatel je mezitím uzavřel: {count}.",
+			"not_found": "Nezahozeno, už neexistují: {count}."
+		}
+	},
+	"acquisitions": {
+		"heading": "Záznamy",
+		"tabs": {
+			"label": "Části záznamů",
+			"all": "Všechny",
+			"drafts": "Rozpracované"
+		},
+		"tableLabel": "Seznam záznamů",
+		"filters": {
+			"label": "Hledání záznamů",
+			"patient": "Identifikátor pacienta",
+			"state": "Stav",
+			"from": "Založeno od",
+			"to": "Založeno do",
+			"any": "Vše",
+			"apply": "Vyhledat",
+			"clear": "Zrušit filtry",
+			"errors": {
+				"date": "Zadejte platné datum.",
+				"dateOrder": "Datum do nesmí být před datem od."
+			}
+		},
+		"columns": {
+			"patient": "Pacient",
+			"kind": "Druh",
+			"state": "Stav",
+			"files": "Snímky a strany",
+			"startedAt": "Založeno",
+			"closedAt": "Uzavřeno"
+		},
+		"kind": {
+			"photo": "Rána",
+			"video": "Video",
+			"scan": "Dokument"
+		},
+		"state": {
+			"draft": "Rozpracované",
+			"waiting_for_files": "Čeká na soubory",
+			"received": "Přijato serverem",
+			"assembling": "Sestavuje se",
+			"delivered": "Doručeno do PACS",
+			"failed": "Nedoručeno",
+			"closed_by_administrator": "Uzavřeno správcem"
+		},
+		"pacsStatus": {
+			"waiting": "Čeká",
+			"sending": "Odesílá se",
+			"pending_verification": "Ověřuje se v PACS",
+			"confirmed": "Uloženo v PACS",
+			"temporarily_failed": "Opakuje se",
+			"permanently_failed": "Trvale selhalo",
+			"held_for_review": "Čeká na posouzení",
+			"closed_by_administrator": "Uzavřeno správcem"
+		},
+		"notClosed": "zatím neuzavřeno",
+		"empty": "Žádné záznamy",
+		"emptyFiltered": "Filtrům neodpovídá žádný záznam",
+		"emptyHint": "Záznamy, které zdravotníci pořídili, se objeví tady.",
+		"detail": {
+			"title": "{kind} z {time}",
+			"identifiers": "Identifikátory pro PACS",
+			"identifiersHint": "Podle nich se snímek dohledá v PACS.",
+			"studyInstanceUid": "Study Instance UID",
+			"seriesInstanceUid": "Series Instance UID",
+			"patientIdentifiers": "Identifikátor pacienta",
+			"issuer": "vydal {issuer}",
+			"notAssigned": "zatím nepřidělen",
+			"instances": "Instance DICOM",
+			"instancesTable": "Instance DICOM záznamu",
+			"instancesEmpty": "DICOM zatím nevznikl",
+			"instancesEmptyHint": "SOP Instance UID se objeví, až server záznam sestaví.",
+			"sopInstanceUid": "SOP Instance UID",
+			"sopClass": "SOP Class UID",
+			"pacsStatus": "Stav v PACS",
+			"acquisition": "Záznam",
+			"operator": "Pořizovatel",
+			"openOperator": "Otevřít uživatele",
+			"device": "Zařízení",
+			"openDevice": "Otevřít zařízení",
+			"configuration": "Verze konfigurace",
+			"configurationValue": "{version} ze dne {time}: {reason}"
+		}
+	},
+	"deliveries": {
+		"heading": "Odesílání do PACS",
+		"record": "{kind} · {closedAt}",
+		"tableLabel": "Doručení do PACS",
+		"empty": "Zatím se nic nedoručovalo",
+		"emptyHint": "Tady budou uzavřené záznamy na cestě do PACS.",
+		"emptyFiltered": "Filtru neodpovídá žádné doručení",
+		"columns": {
+			"acquisition": "Záznam",
+			"target": "Cíl",
+			"state": "Sestavení",
+			"instances": "Stav v PACS"
+		},
+		"filters": {
+			"label": "Filtry doručení",
+			"state": "Sestavení",
+			"instanceState": "Stav doručení instance",
+			"any": "Vše",
+			"clear": "Zrušit filtry"
+		},
+		"state": {
+			"waiting_for_assembly": "Čeká na sestavení",
+			"assembled": "Sestaveno",
+			"assembly_failed": "Sestavení selhalo"
+		},
+		"noInstances": "Zatím žádné",
+		"instanceCount": "{count}× {state}",
+		"target": {
+			"heading": "Spojení s PACS",
+			"settings": "Nastavení PACS",
+			"label": "Stav cílů doručení",
+			"empty": "Žádný cíl doručení není nastavený.",
+			"since": "Od {time}",
+			"state": {
+				"active": "V provozu",
+				"unavailable": "Nedostupný",
+				"paused": "Pozastaveno"
+			},
+			"activeBody": "Doručování běží.",
+			"unavailableTitle": "PACS nedostupný",
+			"unavailableBody": "PACS neodpovídá. Doručování se obnoví samo.",
+			"pausedTitle": "Doručování do PACS je pozastavené",
+			"pausedBody": "PACS odmítl zápis kvůli nastavení ({reason}). Doručení čekají, nic se neztratilo. Po opravě v PACS cíl obnovte.",
+			"resume": "Obnovit cíl",
+			"resuming": "Obnovujeme…",
+			"loadFailed": "Stav cílů se teď nepodařilo načíst. Zkoušíme to znovu.",
+			"refreshFailed": "Stav cílů se nepodařilo obnovit, ukazujeme poslední načtený."
+		},
+		"detail": {
+			"heading": "Doručení záznamu",
+			"delivery": "Doručení",
+			"acquisition": "Záznam",
+			"target": "Cíl",
+			"state": "Sestavení",
+			"reason": "Důvod",
+			"instances": "Instance DICOM",
+			"instancesHint": "Každý snímek nebo dokument je jedna instance.",
+			"instancesTable": "Instance doručení",
+			"instancesEmpty": "Instance zatím nevznikly",
+			"instancesEmptyHint": "Vzniknou, jakmile se záznam sestaví.",
+			"instance": "Instance {number}",
+			"artifact": "Artefakt",
+			"attempts": "Započítané pokusy",
+			"lastStatus": "Poslední stav PACS",
+			"transferSyntax": "Přijatá transfer syntaxe",
+			"retentionAnchor": "Potvrzeno v PACS",
+			"verificationRejections": "Odmítnutí ověření za sebou",
+			"explanation": {
+				"storedWithWarning": "PACS instanci uložil se stavem {status}. Ověřte s administrátorem PACS, co varování znamená.",
+				"dimseStatus": "PACS instanci odmítl stavem {status}. Znovu se neodešle.",
+				"artifactSha256Mismatch": "Otisk souboru nesouhlasí se sestavením. Do PACS se nic neodeslalo.",
+				"studyIdentityConflict": "Studie v PACS patří jinému pacientovi. Instance se znovu neodešle.",
+				"permanentlyFailed": "Trvale selhalo, poslední stav PACS {status}. Znovu se neodešle.",
+				"verificationOnHoldTitle": "Ověřování doručení čeká na zásah",
+				"verificationOnHold": "PACS odmítl ověření {count}× za sebou. Nic se nesmaže. Po opravě v PACS ověřování obnovte.",
+				"storedWithWarningTitle": "Uloženo v PACS s varováním"
+			},
+			"resumeVerification": "Obnovit ověřování",
+			"resumingVerification": "Obnovujeme…",
+			"close": "Uzavřít",
+			"closure": {
+				"heading": "Uzavřeno správcem",
+				"reason": "Důvod",
+				"from": "Stav před uzavřením",
+				"at": "Uzavřeno",
+				"by": "Uzavřel",
+				"setAside": "Obrazová data a artefakt zůstávají na serveru odložené stranou a retence je nesmaže.",
+				"openUser": "Otevřít uživatele"
+			},
+			"instancesEmptyFailed": "Instance nevznikly",
+			"instancesEmptyFailedHint": "Sestavení selhalo, do PACS se z tohoto záznamu nic neodešle.",
+			"refreshFailed": "Doručení se nepodařilo obnovit, ukazujeme poslední načtené.",
+			"instanceAction": "instance {number}"
+		},
+		"closeDialog": {
+			"heading": "Uzavřít doručení instance {number}?",
+			"body": "Doručení se uzavře a do PACS se nic neodešle. Data zůstanou na serveru a smazat je půjde jen dalším souhlasem. Pořizovatel se o tom nedozví, vyrozumějte ho podle postupu nemocnice.",
+			"reason": "Důvod",
+			"reasonPlaceholder": "Vyberte důvod",
+			"reasonMissing": "Vyberte důvod.",
+			"reasonValue": {
+				"documentation_reacquired": "Dokumentace pořízena znovu",
+				"archived_by_other_means": "Dokumentace je v archivu jinou cestou",
+				"wrong_patient_or_encounter": "Chybný pacient nebo návštěva — nesmí se doručit",
+				"not_required": "Dokumentace není potřeba"
+			},
+			"note": "Poznámka",
+			"noteHint": "Nepovinné. Zapíše se do auditní stopy spolu s důvodem.",
+			"submit": "Uzavřít",
+			"submitting": "Uzavíráme…"
+		},
+		"restartDialog": {
+			"noticeBody": "Do PACS se z dokumentu nic neodeslalo. Po odstranění příčiny rozpoznání znovu spusťte.",
+			"trigger": "Znovu spustit rozpoznání",
+			"heading": "Znovu spustit rozpoznání textu?",
+			"body": "Text se rozpozná a PDF sestaví znovu z uložených stránek. Když to znovu selže, dostanete nové upozornění.",
+			"reason": "Důvod",
+			"reasonHint": "Zapíše se do auditní stopy s vaším jménem.",
+			"reasonMissing": "Uveďte důvod.",
+			"submit": "Spustit",
+			"submitting": "Spouštíme…"
+		},
+		"assemblyReason": {
+			"ocr_failed": "Rozpoznání textu selhalo — rozpoznání můžete znovu spustit"
+		},
+		"noInstancesAfterFailure": "Nevzniknou",
+		"warnedStatus": "Uloženo v PACS s varováním",
+		"onHoldStatus": "Ověřování čeká na zásah správce"
+	},
+	"users": {
+		"heading": "Uživatelé",
+		"search": {
+			"label": "Hledat podle jména nebo osobního čísla"
+		},
+		"columns": {
+			"name": "Jméno",
+			"personalNumber": "Osobní číslo",
+			"roles": "Role",
+			"department": "Oddělení",
+			"state": "Stav"
+		},
+		"empty": "Hledání nic nenašlo.",
+		"role": {
+			"clinician": "Zdravotník",
+			"administrator": "Správce"
+		},
+		"state": {
+			"active": "Aktivní",
+			"revoked": "Zneplatněný"
+		},
+		"noRole": "bez role",
+		"manualOnlyRole": "{role} (jen ručně)",
+		"tableLabel": "Seznam uživatelů",
+		"emptyHint": "Zkontrolujte jméno nebo osobní číslo.",
+		"emptyAll": "Zatím tu není žádný uživatel.",
+		"emptyAllHint": "Uživatel se tu objeví po prvním přihlášení účtem nemocnice.",
+		"clearSearch": "Zrušit hledání",
+		"picker": {
+			"change": "Změnit",
+			"noMatch": "Nikdo neodpovídá.",
+			"matches": "Nalezení uživatelé"
+		}
+	},
+	"user": {
+		"heading": "Uživatel",
+		"personalNumber": "Osobní číslo",
+		"loginName": "Přihlašovací jméno",
+		"email": "E-mail",
+		"roles": {
+			"heading": "Role",
+			"description": "Role ze skupin se mění v adresáři nemocnice.",
+			"fromDirectory": "Ze skupin Active Directory",
+			"manual": "Přiřazené ručně",
+			"manualHint": "Ručně přiřazená role platí, dokud ji neodeberete.",
+			"manualOnly": "jen ručně"
+		},
+		"department": {
+			"heading": "Oddělení",
+			"description": "Určuje, čí dokumentaci zdravotník vidí.",
+			"label": "Kód oddělení",
+			"hint": "Kód, jak ho vede nemocnice.",
+			"missing": "Zadejte kód oddělení.",
+			"fromDirectory": "Přebírá se z účtu nemocnice při každém přihlášení."
+		},
+		"state": "Stav",
+		"cards": {
+			"heading": "Karty",
+			"empty": "Uživatel zatím nemá přiřazenou kartu.",
+			"columns": {
+				"uid": "Karta",
+				"since": "Přiřazena",
+				"state": "Stav",
+				"actions": "Akce"
+			},
+			"state": {
+				"valid": "Platná",
+				"revoked": "Zneplatněná"
+			},
+			"issue": "Vydat kód pro přiřazení karty",
+			"issuing": "Vydáváme kód…",
+			"codeHeading": "Kód pro přiřazení karty",
+			"codeHint": "Na registrovaném zařízení podržte na obrazovce PINu dlaždici Karta, naskenujte tento kód a přiložte kartu uživatele. Kód platí jednou.",
+			"codeExpires": "Platí do {time}.",
+			"codeLabel": "Kód",
+			"done": "Hotovo, obnovit seznam karet",
+			"tableLabel": "Karty uživatele",
+			"all": "Vše ({count})",
+			"revokeHeading": "Zneplatnit kartu {uid}?",
+			"revokeLabel": "Zneplatnit kartu {uid}",
+			"revokeBody": "Kartou se už nepůjde přihlásit ani odemknout. Znovu bude platit až po novém přiřazení."
+		},
+		"qrCode": {
+			"heading": "Osobní QR kód",
+			"body": "Nový kód nahradí dosavadní. Kód lze kdykoli zneplatnit.",
+			"issue": "Vygenerovat osobní QR kód",
+			"issuing": "Generujeme…",
+			"print": "Vytisknout",
+			"issuedAt": "Vydán {time}.",
+			"imageLabel": "Osobní QR kód uživatele {name}",
+			"valid": "Uživatel má platný osobní QR kód.",
+			"validSince": "Platný kód vydán {time}.",
+			"none": "Uživatel nemá platný osobní QR kód.",
+			"revoke": "Zneplatnit kód",
+			"revokeHeading": "Zneplatnit osobní QR kód?",
+			"revokeBody": "Kódem se už nepůjde přihlásit ani odemknout. Uživateli pak můžete vygenerovat nový."
+		},
+		"revocation": {
+			"heading": "Zneplatnění uživatele",
+			"description": "Uživatel se hned odhlásí a už se nepřihlásí. Karty i QR kód přestanou platit. Nejde to vrátit.",
+			"revoked": "Uživatel je zneplatněný a nepřihlásí se.",
+			"action": "Zneplatnit uživatele",
+			"confirmHeading": "Zneplatnit uživatele {name}?",
+			"confirmBody": "Uživatel se hned odhlásí a jeho karty i QR kód přestanou platit. Neodeslané snímky se odešlou, rozpracované záznamy zůstanou. Nejde to vrátit."
+		},
+		"codeImageLabel": "Kód pro přiřazení karty jako QR kód",
+		"details": "Údaje"
+	},
+	"devices": {
+		"heading": "Zařízení",
+		"tabs": {
+			"label": "Části zařízení",
+			"devices": "Zařízení",
+			"groups": "Skupiny"
+		},
+		"filters": {
+			"label": "Hledání zařízení",
+			"state": "Stav",
+			"any": "Vše",
+			"clear": "Zrušit filtr"
+		},
+		"empty": "Zatím není registrované žádné zařízení.",
+		"emptyFiltered": "Žádné zařízení v tomto stavu",
+		"columns": {
+			"model": "Zařízení",
+			"system": "Systém",
+			"state": "Stav",
+			"lastContact": "Poslední spojení"
+		},
+		"state": {
+			"pending_approval": "Čeká na schválení",
+			"approved": "Schválené",
+			"revoked": "Zneplatněné",
+			"blocked": "Blokované"
+		},
+		"signal": {
+			"jailbreak": "jailbreak",
+			"root": "root",
+			"magisk": "nástroj typu Magisk",
+			"frida": "nástroj typu Frida",
+			"debugger": "připojený ladicí nástroj",
+			"emulator": "běh v emulátoru",
+			"app_integrity": "narušená integrita aplikace"
+		},
+		"tableLabel": "Seznam zařízení",
+		"emptyHint": "Zařízení se tu objeví po registraci v mobilní aplikaci.",
+		"system": {
+			"ios": "iOS",
+			"ipados": "iPadOS",
+			"android": "Android"
+		},
+		"unknownModel": "Neznámé zařízení",
+		"detail": {
+			"heading": "Údaje",
+			"management": "Správa",
+			"managed": "Spravované přes MDM",
+			"unmanaged": "Bez MDM",
+			"hwId": "HW ID"
+		},
+		"queue": {
+			"heading": "Fronta v zařízení",
+			"description": "Soubory, které zařízení ještě nenahrálo, podle posledního hlášení.",
+			"waiting": "Čeká na odeslání",
+			"failed": "Selhalo",
+			"oldest": "Nejstarší neodeslaný soubor",
+			"noneUnsent": "žádný",
+			"reported": "Nahlášeno",
+			"unknown": "Zařízení stav fronty zatím neohlásilo, počet neodeslaných souborů není známý."
+		},
+		"approval": {
+			"heading": "Schválení",
+			"description": "Do schválení nemá zařízení přístup k datům.",
+			"predecessor": "Zařízení se registruje znovu po blokaci kvůli zásahu do systému (zjištěno {time}, signály: {signals}). Před schválením projděte důvod blokace.",
+			"predecessorUnreported": "Zařízení se registruje znovu po blokaci kvůli zásahu do systému. Předchozí zařízení blokaci neohlásilo, důvod chybí.",
+			"predecessorUnknown": "Zařízení se registruje znovu po blokaci kvůli zásahu do systému. Předchozí zařízení server nenašel, důvod blokace chybí.",
+			"predecessorTitle": "Registrace po zablokování",
+			"predecessorReview": "Podklad předchozí blokace",
+			"predecessorPage": "Předchozí zařízení",
+			"action": "Schválit zařízení",
+			"dialogHeading": "Schválit zařízení",
+			"codeLabel": "Kód zařízení",
+			"codeHint": "Opište kód z obrazovky zařízení „Zařízení čeká na schválení“.",
+			"codeInvalid": "Kód má tvar XXXXX-XXXXX.",
+			"codeMismatch": "Kód nesouhlasí s tímto zařízením. Zkontrolujte ho na obrazovce zařízení.",
+			"requesterLabel": "Kdo o schválení požádal",
+			"requesterHint": "Vyhledejte uživatele podle jména nebo osobního čísla.",
+			"requesterMissing": "Vyberte uživatele, který o schválení požádal.",
+			"submit": "Schválit",
+			"submitting": "Schvalujeme…"
+		},
+		"group": {
+			"heading": "Skupina",
+			"label": "Skupina zařízení",
+			"choose": "Vyberte skupinu",
+			"noGroups": "Zatím není vytvořená žádná skupina zařízení.",
+			"createGroup": "Vytvořit skupinu"
+		},
+		"revocation": {
+			"heading": "Zneplatnění zařízení",
+			"description": "Zařízení hned ztratí přístup a aplikace v něm smaže svá data. Nejde to vrátit.",
+			"pendingDescription": "Registraci odmítnete a zařízení už schválit nepůjde.",
+			"revoked": "Zařízení je zneplatněné. Při dalším spojení aplikace smaže svá data.",
+			"action": "Zneplatnit zařízení",
+			"confirmHeading": "Zneplatnit zařízení {name}?",
+			"confirmBody": "Zařízení hned ztratí přístup a aplikace v něm smaže svá data, i neodeslané soubory. Rozpracované záznamy zůstanou na serveru. Nejde to vrátit.",
+			"rejectHeading": "Odmítnout zařízení?",
+			"rejectBody": "Registrace se odmítne a zařízení už schválit nepůjde. Data pacientů na čekajícím zařízení nejsou."
+		},
+		"blocking": {
+			"heading": "Blokace",
+			"notice": "Zařízení je zablokované po zjištění zásahu do operačního systému.",
+			"detectedAt": "Zjištěno",
+			"signals": "Signály",
+			"appVersion": "Verze aplikace",
+			"reportScope": "Hlášení nese jen tyto údaje; nic o majiteli ani o jiných aplikacích.",
+			"unreportedHeading": "Odblokování",
+			"unreportedHint": "Po přezkoumání můžete zařízení odblokovat.",
+			"action": "Odblokovat",
+			"dialogHeading": "Odblokovat zařízení {name}?",
+			"afterBlocking": "Po blokaci se aplikace zaregistruje znovu a registraci musíte schválit.",
+			"afterUnreported": "Zařízení se musí zaregistrovat znovu.",
+			"audited": "Úkon se zapíše do auditní stopy.",
+			"reasonLabel": "Výsledek přezkoumání",
+			"reasonHint": "Zapište, co jste ověřili a proč zařízení odblokováváte.",
+			"reasonMissing": "Zapište výsledek přezkoumání.",
+			"submitting": "Odblokováváme…",
+			"unblockedAt": "Odblokováno",
+			"unblockedBy": "Správce",
+			"openUser": "Otevřít uživatele"
+		},
+		"loginMethods": {}
+	},
+	"loginMethods": {
+		"heading": "Metody přihlášení",
+		"method": {
+			"oidc": "Účet nemocnice",
+			"card": "Karta",
+			"qr": "Osobní QR kód",
+			"barcode": "Čárový kód z karty",
+			"pin": "Osobní číslo a PIN"
+		},
+		"alwaysOn": "Vždy zapnuto",
+		"choice": {
+			"enabled": "Zapnuto",
+			"disabled": "Vypnuto"
+		},
+		"effective": {
+			"label": "Platí:",
+			"enabled": "zapnuto",
+			"disabled": "vypnuto"
+		},
+		"source": {
+			"installation": "z Nastavení",
+			"group": "ze skupiny",
+			"device": "jen toto zařízení"
+		},
+		"onlyAccount": "Zbude jen přihlášení účtem nemocnice. Karta, QR kód, čárový kód ani PIN fungovat nebudou.",
+		"nextContact": "Projeví se při dalším spojení zařízení se serverem.",
+		"inherit": {
+			"installation": "Jako v Nastavení",
+			"group": "Jako ve skupině"
+		}
+	},
+	"deviceGroups": {
+		"heading": "Skupiny zařízení",
+		"empty": "Zatím není vytvořená žádná skupina.",
+		"emptyHint": "Vytvořte skupinu a zařaďte do ní zařízení.",
+		"tableLabel": "Seznam skupin zařízení",
+		"onlyAccount": "jen účet nemocnice",
+		"columns": {
+			"name": "Název",
+			"code": "Kód",
+			"devices": "Zařízení",
+			"methods": "Rychlé přihlášení"
+		},
+		"create": {
+			"action": "Nová skupina",
+			"heading": "Nová skupina zařízení",
+			"codeHint": "Kód skupiny v MDM. Později ho nejde změnit.",
+			"codeTaken": "Skupina s tímto kódem už existuje.",
+			"submit": "Vytvořit",
+			"submitting": "Vytváříme…"
+		},
+		"form": {
+			"nameMissing": "Vyplňte název.",
+			"codeMissing": "Vyplňte kód.",
+			"nameLabel": "Název",
+			"codeLabel": "Kód"
+		},
+		"details": {
+			"heading": "Údaje",
+			"devices": "Zařízení",
+			"codeHint": "Kód skupiny v MDM se nemění."
+		},
+		"loginMethods": {
+			"description": "Vlastní nastavení zařízení má přednost.",
+			"clearLabel": "Zrušit vlastní nastavení zařízení ve skupině",
+			"clearHint": "Všude ve skupině pak platí nastavení skupiny.",
+			"confirmHeading": "Zrušit vlastní nastavení zařízení?",
+			"confirmBody": "Zařízení ve skupině ztratí vlastní nastavení přihlášení a převezmou nastavení skupiny.",
+			"confirmAction": "Uložit a zrušit nastavení zařízení",
+			"cleared": "Vlastní nastavení zrušeno u zařízení: {count}."
+		}
+	},
+	"orphanedObjects": {
+		"heading": "Odložené osiřelé objekty",
+		"intro": "Na objekty neodkazuje žádné pořízení ani artefakt a jsou starší než nastavená mez. Nic se nesmazalo. Rozhodněte, zda je smazat.",
+		"tableLabel": "Seznam odložených objektů",
+		"columns": {
+			"object": "Objekt",
+			"size": "Velikost",
+			"createdAt": "Vznikl",
+			"setAsideAt": "Odložen",
+			"actions": "Akce"
+		},
+		"empty": "Žádné odložené objekty",
+		"emptyHint": "Objekt, na který nic neodkazuje, úklid jen odloží a objeví se tady. Sám se nesmaže.",
+		"deleted": "Objekt {id} je smazaný. Smazání je zapsané v auditní stopě.",
+		"deleteDialog": {
+			"trigger": "Smazat",
+			"triggerLabel": "Smazat objekt {id}",
+			"heading": "Smazat odložený objekt?",
+			"body": "Objekt {id} se z úložiště smaže. Vrátit to nejde. Smazání se zapíše do auditní stopy s vaším jménem.",
+			"reason": "Důvod",
+			"reasonMissing": "Uveďte důvod.",
+			"submit": "Smazat",
+			"submitting": "Mažeme…"
+		}
+	},
+	"configuration": {
+		"heading": "Nastavení",
+		"version": "Verze {version} · {time}",
+		"unsavedCount": "Neuložené změny: {count}",
+		"discard": "Zahodit změny",
+		"save": "Uložit…",
+		"reload": "Načíst aktuální nastavení",
+		"reason": {
+			"heading": "Uložit nastavení",
+			"description": "Uložením vznikne nová verze nastavení.",
+			"label": "Důvod změny",
+			"missing": "Uveďte důvod změny.",
+			"changes": "Měněné položky: {count}"
+		},
+		"errors": {
+			"required": "Vyplňte hodnotu.",
+			"wholeNumber": "Zadejte celé číslo.",
+			"number": "Zadejte číslo.",
+			"below": "Nejméně {min}.",
+			"above": "Nejvýš {max}.",
+			"whitespace": "Bez mezer.",
+			"appVersion": "Verze má tvar 1.2.3.",
+			"language": "Neplatný kód jazyka.",
+			"duplicate": "Některá hodnota je tu dvakrát.",
+			"roleGroup": "Vyplňte skupinu, bez mezer.",
+			"role": "Vyberte roli.",
+			"host": "Název serveru nebo IP adresa, bez mezer.",
+			"capturingPattern": "Regulární výraz s jednou skupinou v závorkách, např. ^PID:(\\d+)$.",
+			"url": "Adresa ve tvaru http://… nebo https://…",
+			"secureUrl": "Adresa ve tvaru https://…",
+			"dicomUid": "UID DICOM: aspoň dvě čísla oddělená tečkami, první 0, 1 nebo 2, bez úvodních nul, nejvýš 64 znaků.",
+			"aeTitle": "1 až 16 znaků bez diakritiky a zpětného lomítka, bez mezery na začátku a na konci.",
+			"pacsConnection": "Spojení s PACS potřebuje adresu, port a oba AE Title.",
+			"transferSyntaxRequired": "Zaškrtněte aspoň jednu transfer syntaxi."
+		},
+		"roleMapping": {
+			"group": "Skupina v Active Directory",
+			"role": "Role ve Vulně",
+			"choose": "Vyberte roli",
+			"add": "Přidat",
+			"remove": "Odebrat",
+			"empty": "Zatím žádná."
+		},
+		"sections": {
+			"loginMethods": {
+				"heading": "Metody přihlášení",
+				"description": "Účet nemocnice zůstává vždy zapnutý. Skupina nebo zařízení může mít vlastní nastavení."
+			},
+			"pin": {
+				"heading": "PIN"
+			},
+			"cardAndQr": {
+				"heading": "Karta a QR kód"
+			},
+			"mobileSession": {
+				"heading": "Relace v aplikaci"
+			},
+			"administrationSession": {
+				"heading": "Relace v administraci"
+			},
+			"access": {
+				"heading": "Skupiny a role"
+			},
+			"accountAttributes": {
+				"heading": "Údaje z účtu nemocnice",
+				"description": "Názvy údajů, které posílá účet nemocnice."
+			},
+			"woundRecord": {
+				"heading": "Záznam rány"
+			},
+			"documents": {
+				"heading": "Dokumenty"
+			},
+			"drafts": {
+				"heading": "Rozpracované záznamy"
+			},
+			"upload": {
+				"heading": "Odesílání"
+			},
+			"viewingCopy": {
+				"heading": "Prohlížecí kopie snímku",
+				"description": "Platí pro nově uzavřené záznamy."
+			},
+			"phone": {
+				"heading": "Telefon"
+			},
+			"homeScreen": {
+				"heading": "Úvodní obrazovka"
+			},
+			"languages": {
+				"heading": "Jazyky"
+			},
+			"wristbandCode": {
+				"heading": "Čárový kód náramku"
+			},
+			"wristbandNfc": {
+				"heading": "NFC štítek náramku"
+			},
+			"identificationLimits": {
+				"heading": "Limity identifikace a vyhledání"
+			},
+			"registry": {
+				"heading": "Registr pacientů"
+			},
+			"retention": {
+				"heading": "Doba uchování",
+				"description": "Nic se nesmaže, dokud příjem nepotvrdí PACS."
+			},
+			"orphans": {
+				"heading": "Nepřiřazené soubory"
+			},
+			"pacs": {
+				"heading": "PACS"
+			},
+			"syslog": {
+				"heading": "Syslog"
+			},
+			"clinicalRecord": {
+				"heading": "Úložiště klinického záznamu"
+			}
+		},
+		"fields": {
+			"login_methods.card": {
+				"label": "Kartou"
+			},
+			"login_methods.qr": {
+				"label": "Osobním QR kódem"
+			},
+			"login_methods.barcode": {
+				"label": "Čárovým kódem z karty"
+			},
+			"login_methods.pin": {
+				"label": "Osobním číslem a PINem"
+			},
+			"pin_policy.min_length": {
+				"label": "Nejkratší PIN (číslic)"
+			},
+			"pin_policy.complexity": {
+				"label": "Složitost"
+			},
+			"pin_policy.attempts_limit": {
+				"label": "Pokusů"
+			},
+			"pin_policy.delay_seconds": {
+				"label": "Čekání po chybě",
+				"hint": "Po každé další chybě se zdvojnásobí."
+			},
+			"session_policy.full_login_interval_seconds": {
+				"label": "Znovu přihlásit účtem nemocnice po"
+			},
+			"login_policy.credential_attempts_limit": {
+				"label": "Pokusů"
+			},
+			"card_identity.mode": {
+				"label": "Karta uživatele"
+			},
+			"card_identity.card_identifier": {
+				"label": "Identifikátor na kartě"
+			},
+			"card_identity.account_claim": {
+				"label": "Údaj účtu pro identifikátor"
+			},
+			"card_binding.code_lifetime_seconds": {
+				"label": "Platnost kódu pro přiřazení karty"
+			},
+			"session_policy.session_max_seconds": {
+				"label": "Délka přihlášení"
+			},
+			"session_policy.idle_lock_seconds": {
+				"label": "Zamknout po nečinnosti"
+			},
+			"session_policy.token_validity_seconds": {
+				"label": "Obnovit přístup po"
+			},
+			"administration.idle_logout_seconds": {
+				"label": "Odhlásit po nečinnosti"
+			},
+			"administration.session_max_seconds": {
+				"label": "Délka přihlášení"
+			},
+			"identity_provider.authorized_group": {
+				"label": "Přístup má skupina"
+			},
+			"role_mapping.group_to_role": {
+				"label": "Role podle skupiny"
+			},
+			"identity_provider.personal_number_claim": {
+				"label": "Osobní číslo"
+			},
+			"identity_provider.login_name_claim": {
+				"label": "Přihlašovací jméno",
+				"hint": "Prázdné: přihlašovací jméno se nevede."
+			},
+			"identity_provider.email_claim": {
+				"label": "E-mail",
+				"hint": "Prázdné: e-mail se nevede."
+			},
+			"identity_provider.group_claim": {
+				"label": "Skupiny"
+			},
+			"identity_provider.department_claim": {
+				"label": "Oddělení",
+				"hint": "Prázdné: oddělení nastavíte ručně."
+			},
+			"mobile_app.minimum_version": {
+				"label": "Nejstarší povolená verze",
+				"hint": "Prázdné: bez omezení."
+			},
+			"mobile_app.low_storage_warning_bytes": {
+				"label": "Upozornit při volném místě pod"
+			},
+			"mobile_app.queue_max_items": {
+				"label": "Souborů ve frontě nejvýš",
+				"hint": "Soubory, které server odmítl, se nepočítají."
+			},
+			"mobile_app.max_draft_acquisitions": {
+				"label": "Nejvýš najednou"
+			},
+			"acquisition.max_images": {
+				"label": "Snímků nejvýš"
+			},
+			"document.max_pages": {
+				"label": "Stránek nejvýš"
+			},
+			"acquisition.wound_type_enabled": {
+				"label": "Typ rány"
+			},
+			"acquisition.healing_phase_enabled": {
+				"label": "Fáze hojení"
+			},
+			"acquisition.upload_permission_lifetime_seconds": {
+				"label": "Platnost oprávnění k nahrání souboru"
+			},
+			"viewing_copy.max_long_edge_px": {
+				"label": "Delší strana v pixelech"
+			},
+			"viewing_copy.quality": {
+				"label": "Kvalita JPEG"
+			},
+			"mobile_app.draft_acquisition_reminder_seconds": {
+				"label": "Připomenout po"
+			},
+			"mobile_app.draft_discard_consent_absence_seconds": {
+				"label": "Zahodit záznamy nepřihlášeného po"
+			},
+			"mobile_app.device_key_hold_seconds": {
+				"label": "Smazat klíč zařízení po"
+			},
+			"mobile_app.home_draft_acquisitions_max_rows": {
+				"label": "Rozpracovaných záznamů"
+			},
+			"mobile_app.scheduled_encounters_enabled": {
+				"label": "Dnešní plánované návštěvy"
+			},
+			"mobile_app.scheduled_encounters_max_items": {
+				"label": "Plánovaných návštěv nejvýš"
+			},
+			"mobile_app.recent_patients_max_items": {
+				"label": "Naposledy dokumentovaných pacientů nejvýš"
+			},
+			"localization.supported_languages": {
+				"label": "Podporované jazyky"
+			},
+			"localization.default_language": {
+				"label": "Výchozí jazyk"
+			},
+			"patient_search.max_queries_per_minute_per_user": {
+				"label": "Za minutu na uživatele"
+			},
+			"patient_search.max_queries_per_minute_per_device": {
+				"label": "Za minutu na zařízení"
+			},
+			"patient_identification.code_system": {
+				"label": "Systém identifikátoru",
+				"hint": "Prázdné: kódem se pacient nehledá."
+			},
+			"patient_identification.code_pattern": {
+				"label": "Vzor obsahu",
+				"hint": "Prázdné: identifikátorem je celý obsah kódu."
+			},
+			"patient_identification.nfc_source": {
+				"label": "Zdroj identifikátoru"
+			},
+			"patient_identification.nfc_system": {
+				"label": "Systém identifikátoru"
+			},
+			"registry_sync.window_days_back": {
+				"label": "Do minulosti"
+			},
+			"registry_sync.window_days_ahead": {
+				"label": "Do budoucnosti"
+			},
+			"registry_sync.period_seconds": {
+				"label": "Synchronizovat každých",
+				"hint": "Prázdné: synchronizace neběží."
+			},
+			"retention.full_images_days": {
+				"label": "Snímky a dokumenty"
+			},
+			"retention.thumbnails_days": {
+				"label": "Náhledy",
+				"hint": "Prázdné: bez omezení."
+			},
+			"viewing_copy.retention_days": {
+				"label": "Prohlížecí kopie",
+				"hint": "Prázdné: bez omezení."
+			},
+			"retention.device_local_copy_seconds": {
+				"label": "Kopie v telefonu po odeslání"
+			},
+			"retention.audit_days": {
+				"label": "Audit"
+			},
+			"dicom_dimse.PACS_HOST": {
+				"label": "Adresa PACS",
+				"hint": "Název serveru nebo IP adresa. Prázdné: odesílání do PACS čeká."
+			},
+			"dicom_dimse.PACS_PORT": {
+				"label": "Port PACS"
+			},
+			"dicom_dimse.PACS_AE_TITLE": {
+				"label": "AE Title PACS"
+			},
+			"dicom_dimse.PACS_CALLING_AE_TITLE": {
+				"label": "AE Title serveru",
+				"hint": "PACS ho musí mít zaregistrovaný spolu s IP adresou serveru."
+			},
+			"dicom.implementation_class_uid": {
+				"label": "Implementation Class UID",
+				"hint": "Identifikace serveru v DICOM. Bez ní sestavení pro PACS čeká."
+			},
+			"dicom.image_transfer_syntaxes": {
+				"label": "Transfer syntaxe snímků",
+				"hint": "PACS použije první zaškrtnutou, kterou zná. Platí pro nově sestavené záznamy."
+			},
+			"dicom.document_transfer_syntaxes": {
+				"label": "Transfer syntaxe dokumentů",
+				"hint": "PACS použije první zaškrtnutou, kterou zná. Platí pro nově sestavené záznamy."
+			},
+			"delivery.verification_rejections_before_alert": {
+				"label": "Upozornit po odmítnutích ověření"
+			},
+			"delivery.target_unavailable_alert_seconds": {
+				"label": "Upozornit při nedostupnosti po"
+			},
+			"binary_store.orphan_set_aside_after_seconds": {
+				"label": "Odložit po"
+			},
+			"clinical_record_medplum.MEDPLUM_BASE_URL": {
+				"label": "Adresa úložiště"
+			},
+			"clinical_record_medplum.INSTANCE_BASE_URI": {
+				"label": "Báze identifikátorů"
+			},
+			"clinical_record_medplum.STORAGE_URL": {
+				"label": "Adresa objektového úložiště",
+				"hint": "Jen https. Z ní si aplikace stahuje snímky uzavřených záznamů."
+			},
+			"syslog.SYSLOG_HOST": {
+				"label": "Adresa serveru",
+				"hint": "Prázdné: záznamy čekají na serveru."
+			},
+			"syslog.SYSLOG_PORT": {
+				"label": "Port"
+			},
+			"syslog.SYSLOG_TRANSPORT": {
+				"label": "Přenos"
+			},
+			"syslog.SYSLOG_FRAMING": {
+				"label": "Oddělení zpráv"
+			},
+			"syslog.SYSLOG_FORMAT": {
+				"label": "Formát"
+			},
+			"syslog.SYSLOG_ENTERPRISE_NUMBER": {
+				"label": "Číslo organizace u IANA"
+			}
+		},
+		"choices": {
+			"pin_policy.complexity": {
+				"standard": "Zakázat snadné PINy",
+				"none": "Bez omezení"
+			},
+			"card_identity.mode": {
+				"uid_binding": "Přiřazuje se kódem z administrace",
+				"card_application_identifier": "Nese identifikátor zaměstnance",
+				"customer_card_system": "Kartový systém nemocnice"
+			},
+			"syslog.SYSLOG_TRANSPORT": {
+				"tls": "TCP se šifrováním TLS",
+				"tcp": "TCP bez šifrování",
+				"udp": "UDP"
+			},
+			"syslog.SYSLOG_FRAMING": {
+				"octet_counting": "Délkou zprávy",
+				"non_transparent": "Koncem řádku"
+			},
+			"syslog.SYSLOG_FORMAT": {
+				"rfc5424": "RFC 5424",
+				"rfc3164": "RFC 3164"
+			},
+			"patient_identification.nfc_source": {
+				"ndef_text": "Text záznamu NDEF",
+				"uid": "UID tagu"
+			}
+		},
+		"transferSyntaxNames": {
+			"1.2.840.10008.1.2.4.50": "JPEG Baseline",
+			"1.2.840.10008.1.2.1": "Explicit VR Little Endian",
+			"1.2.840.10008.1.2": "Implicit VR Little Endian"
+		},
+		"unitLabel": "Jednotka: {field}",
+		"notChosen": "Nenastaveno",
+		"tabs": {
+			"login": "Přihlášení a přístup",
+			"records": "Záznamy",
+			"app": "Aplikace",
+			"patients": "Pacienti",
+			"data": "Data",
+			"integrations": "Integrace"
+		},
+		"tabChanged": "neuložené změny",
+		"tabInvalid": "chyba"
+	},
+	"registry": {
+		"sync": {
+			"heading": "Synchronizace registru",
+			"state": "Stav",
+			"stateValue": {
+				"running": "Probíhá",
+				"waiting": "Čeká na další běh",
+				"failed": "Selhala",
+				"incomplete_outcome": "Poslední běh byl neúplný"
+			},
+			"lastRun": "Poslední běh",
+			"cachedPatients": "Pacientů v kopii registru",
+			"incomplete": "PACS nevrátil úplný výsledek, nic se nesmazalo. Další běh to zkusí znovu.",
+			"failed": "Poslední běh selhal, z kopie registru se nic nesmazalo. Příčina je v provozním logu."
+		}
+	},
+	"codeLists": {
+		"heading": "Číselníky",
+		"tableLabel": "Seznam číselníků",
+		"columns": {
+			"name": "Číselník",
+			"code": "Kód",
+			"items": "Položky"
+		},
+		"empty": "Instalace zatím nemá žádný číselník.",
+		"emptyHint": "Číselníky zakládá instalace serveru.",
+		"items": {
+			"heading": "Položky",
+			"description": "Pořadí v tabulce je pořadí v aplikaci.",
+			"tableLabel": "Položky číselníku",
+			"codeLabel": "Kód · {item}",
+			"codeHint": "Stabilní kód se po uložení už nemění, např. leg-ulcer.",
+			"defaultName": "{language} · výchozí jazyk",
+			"languageName": "Název · {language}",
+			"nameLabel": "Název · {language} · {item}",
+			"offered": "Nabízet",
+			"offeredLabel": "Nabízet · {item}",
+			"order": "Pořadí",
+			"otherLanguages": "Další jazyky: {languages}",
+			"add": "Přidat položku",
+			"remove": "Odebrat · {item}",
+			"newItem": "nová položka na řádku {row}",
+			"empty": "Číselník je prázdný. Zdravotník pak píše vlastní text.",
+			"withdrawn": "Nenabízí se",
+			"errors": {
+				"codeRequired": "Vyplňte kód.",
+				"codeFormat": "Malá písmena bez diakritiky, číslice a pomlčky.",
+				"codeTaken": "Tento kód už v číselníku je.",
+				"nameRequired": "Vyplňte název ve výchozím jazyce."
+			}
+		},
+		"import": {
+			"action": "Importovat překlady…",
+			"heading": "Import překladů",
+			"description": "CSV se sloupci kód číselníku, kód položky a název. Přepíše názvy v jednom jazyce.",
+			"language": "Jazyk",
+			"languageHint": "Kód jazyka podle BCP 47, např. de.",
+			"file": "Soubor CSV",
+			"reason": "Důvod importu",
+			"rows": "Řádků k importu: {count}",
+			"rowsWithHeader": "Řádků k importu: {count}. Řádek {row} je záhlaví, neimportuje se.",
+			"submit": "Importovat",
+			"submitting": "Importuji…",
+			"done": "Uloženo: změněno {updated}, beze změny {unchanged}. Telefony názvy dostanou při další synchronizaci.",
+			"rejectedRow": "Řádek {row}: {reason}",
+			"rejection": {
+				"code-list-item-unknown": "neznámý číselník nebo položka",
+				"name-missing": "chybí název",
+				"duplicate-item": "položka uvedená podruhé"
+			},
+			"errors": {
+				"languageFormat": "Zadejte kód jazyka, např. de.",
+				"fileRequired": "Vyberte soubor CSV.",
+				"encoding": "Uložte soubor jako CSV UTF-8.",
+				"fileEmpty": "Soubor neobsahuje žádný řádek s názvem.",
+				"fileColumns": "Řádek {row} nemá tři sloupce.",
+				"nameTooLong": "Řádek {row}: název má víc než {max} znaků.",
+				"tooManyRows": "Soubor má víc než {max} řádků s názvy, první řádek navíc je {row}."
+			}
+		}
+	},
+	"audit": {
+		"heading": "Audit",
+		"syslog": {
+			"heading": "Export do Syslogu",
+			"state": {
+				"notConfigured": "Nenastaveno",
+				"running": "Běží",
+				"failing": "Selhává"
+			},
+			"summary": "Čeká {pending} · poslední odeslání {exportedAt}",
+			"configure": "Nastavit adresu",
+			"settings": "Nastavení",
+			"failing": "Odesílání selhává od {time}: {reason}. Záznamy počkají na serveru.",
+			"overLimit": "Na odeslání čeká víc záznamů, než je mez {limit}. Žádný se nezahodí."
+		},
+		"chain": {
+			"heading": "Řetěz záznamů",
+			"description": "Odhalí záznam změněný nebo smazaný mimo aplikaci.",
+			"check": "Zkontrolovat",
+			"checking": "Kontrolujeme…",
+			"intact": "V pořádku, zkontrolováno po záznam z {time}.",
+			"broken": "Řetěz je porušený.",
+			"breakFound": "Kontrola {time} zjistila zásah do auditní stopy mimo aplikaci.",
+			"firstBroken": "První nesouhlasící záznam:"
+		},
+		"filters": {
+			"label": "Filtry auditní stopy",
+			"from": "Od",
+			"to": "Do",
+			"user": "Uživatel",
+			"device": "HW ID zařízení",
+			"systemJob": "Systémová úloha",
+			"patient": "Identifikátor pacienta",
+			"any": "Vše",
+			"apply": "Vyhledat",
+			"clear": "Zrušit filtry",
+			"more": "Další filtry",
+			"fewer": "Méně filtrů",
+			"errors": {
+				"date": "Zadejte platné datum.",
+				"dateOrder": "Datum do nesmí být před datem od."
+			}
+		},
+		"fields": {
+			"time": "Čas",
+			"event": "Událost",
+			"actor": "Kdo",
+			"outcome": "Výsledek",
+			"address": "IP adresa"
+		},
+		"tableLabel": "Auditní záznamy",
+		"empty": "Filtru neodpovídá žádný záznam.",
+		"emptyHint": "Upravte nebo zrušte filtry.",
+		"emptyAll": "Auditní stopa je zatím prázdná.",
+		"actor": {
+			"device": "Zařízení"
+		},
+		"record": {
+			"device": "Zařízení",
+			"openDevice": "Otevřít zařízení",
+			"patient": "Pacient",
+			"session": "Relace",
+			"operator": "Pořizovatel",
+			"hash": "Otisk",
+			"previousHash": "Otisk předchozího záznamu",
+			"first": "první záznam stopy",
+			"id": "Identifikátor záznamu",
+			"approvalCode": "Kód zařízení",
+			"approvalRequester": "Kdo o schválení požádal",
+			"approvalPredecessor": "HW ID blokovaného předchůdce",
+			"openUser": "Otevřít uživatele",
+			"targetUser": "Dotčený uživatel",
+			"targetDevice": "Dotčené zařízení",
+			"scope": "Přístup",
+			"scopeValue": {
+				"mobile": "Mobilní aplikace",
+				"administration": "Webová administrace"
+			},
+			"loginMethod": "Způsob přihlášení",
+			"reason": "Důvod",
+			"reviewResult": "Výsledek přezkoumání",
+			"configurationVersion": "Verze nastavení",
+			"level": "Úroveň",
+			"levelValue": {
+				"group": "Skupina zařízení",
+				"device": "Jedno zařízení"
+			},
+			"groupCode": "Skupina",
+			"methodsBefore": "Metody předtím",
+			"methodsAfter": "Metody nově",
+			"noOverride": "bez vlastního nastavení",
+			"methodOn": "{method} zapnuto",
+			"methodOff": "{method} vypnuto",
+			"groupBefore": "Skupina předtím",
+			"groupAfter": "Skupina nově",
+			"noGroup": "bez skupiny",
+			"previousState": "Stav před zneplatněním",
+			"stateBeforeBlocking": "Stav před blokací",
+			"stateAtUnblocking": "Stav při odblokování",
+			"origin": "Původ",
+			"originValue": {
+				"group": "Skupina v Active Directory",
+				"directory": "Active Directory",
+				"manual": "Ručně"
+			},
+			"rolesBefore": "Role předtím",
+			"rolesAfter": "Role nově",
+			"departmentBefore": "Oddělení předtím",
+			"departmentAfter": "Oddělení nově",
+			"noDepartment": "bez oddělení",
+			"codeExpiresAt": "Kód platí do",
+			"card": "Karta",
+			"qrCode": "QR kód",
+			"exportStage": "Krok",
+			"exportStageValue": {
+				"requested": "Vyžádání souboru",
+				"downloaded": "Stažení souboru"
+			},
+			"exportFrom": "Od",
+			"exportTo": "Do",
+			"untilSequence": "Po záznam č.",
+			"firstBroken": "První nesouhlasící záznam",
+			"checkedUntil": "Zkontrolováno po záznam z",
+			"finding": "Nález",
+			"woundTypeBefore": "Typ rány předtím",
+			"woundTypeAfter": "Typ rány nově",
+			"woundTypeRequested": "Požadovaný typ rány",
+			"noWoundType": "bez typu",
+			"codeListVersion": "Verze číselníků",
+			"patients": "Pacienti",
+			"searchMethod": "Způsob vyhledání",
+			"searchMethodValue": {
+				"fulltext": "Jméno, datum narození nebo identifikátor",
+				"code": "Čárový nebo 2D kód",
+				"nfc_tag": "NFC tag",
+				"identifier_search": "Vyhledání podle začátku identifikátoru",
+				"scheduled_list": "Dnešní plánované návštěvy",
+				"patient_encounters": "Návštěvy pacienta",
+				"recent_patients": "Naposledy dokumentovaní pacienti",
+				"unfinished_encounters": "Nedokončené návštěvy"
+			},
+			"syncStartedAt": "Začátek běhu",
+			"syncFinishedAt": "Konec běhu",
+			"syncOutcome": "Výsledek běhu",
+			"syncOutcomeValue": {
+				"complete": "Úplný",
+				"incomplete": "Neúplný"
+			},
+			"patientsAdded": "Přidaní pacienti",
+			"patientsChanged": "Změnění pacienti",
+			"encountersAdded": "Přidané návštěvy",
+			"encountersChanged": "Změněné návštěvy",
+			"releasedCount": "Vydaných položek",
+			"releaseKind": "Druh výdeje",
+			"releaseKindValue": {
+				"encounter_content": "Obsah návštěvy",
+				"patient_documents": "Dokumenty pacienta",
+				"acquisition_detail": "Detail záznamu",
+				"image": "Snímek",
+				"document_page": "Stránka dokumentu"
+			},
+			"encounter": "Návštěva",
+			"acquisition": "Záznam",
+			"encounterAction": "Úkon",
+			"encounterActionValue": {
+				"complete": "Dokončení návštěvy",
+				"create_draft": "Založení záznamu",
+				"assign": "Změna přiřazení",
+				"cancel": "Zrušení návštěvy"
+			},
+			"previousStatus": "Stav před dokončením",
+			"closedRecordCount": "Uzavřených záznamů",
+			"statusBefore": "Stav předtím",
+			"statusAfter": "Stav nově",
+			"encounterStatusValue": {
+				"in_progress": "Rozpracovaná",
+				"planned": "Plánovaná",
+				"cancelled": "Zrušená"
+			},
+			"emptiedBy": "Úkon",
+			"emptiedByValue": {
+				"discard": "Zahození záznamu",
+				"cancellation": "Zrušení prázdného záznamu",
+				"administrator_consent": "Rozhodnutí správce",
+				"assignment_change": "Změna pacienta nebo návštěvy",
+				"encounter_cancellation": "Zrušení návštěvy"
+			},
+			"previousPatient": "Pacient předtím",
+			"newPatient": "Pacient nově",
+			"previousEncounter": "Návštěva předtím",
+			"newEncounter": "Návštěva nově",
+			"consent": "Souhlas se zahozením",
+			"discardSituation": "Situace",
+			"discardSituationValue": {
+				"explicit_discard": "Samostatné zahození záznamu",
+				"logout": "Odhlášení",
+				"next_login": "Další přihlášení pořizovatele",
+				"draft_limit_reached": "Dosažený nejvyšší počet rozpracovaných záznamů",
+				"reminder": "Upozornění po uplynutí doby",
+				"administrator_consent": "Souhlas správce"
+			},
+			"discardedFileCount": "Zahozených snímků a stránek",
+			"discardedByOperator": "Výslovné zahození pořizovatelem",
+			"originatedOnDevice": "Vzniklo v zařízení",
+			"deletionReason": "Důvod smazání",
+			"deletionReasonValue": {
+				"device_revocation": "Zneplatnění zařízení",
+				"os_modification": "Změna operačního systému",
+				"local_copy_expired": "Uplynula lhůta lokální kopie"
+			},
+			"deletedCount": "Počet smazaných položek",
+			"oldestDeleted": "Nejstarší smazaná položka pořízena",
+			"blockingSignals": "Zjištěné signály",
+			"blockingDetectedAt": "Zjištěno v zařízení",
+			"blockingAppVersion": "Verze aplikace",
+			"noneDeleted": "žádná",
+			"serverAuthorizationEndpoint": "Adresa přihlášení od serveru",
+			"providerAuthorizationEndpoint": "Adresa přihlášení podle poskytovatele",
+			"issuerMismatch": "neshodoval se vydavatel",
+			"discoveryUrl": "Adresa discovery",
+			"delivery": "Doručení",
+			"openDelivery": "Otevřít doručení",
+			"openAcquisition": "Otevřít záznam",
+			"deliveryInstance": "Instance doručení",
+			"binaryObject": "Objekt",
+			"note": "Poznámka"
+		},
+		"export": {
+			"open": "Exportovat",
+			"heading": "Export auditní stopy",
+			"description": "Soubor CSV. Export se zapíše do auditní stopy.",
+			"submit": "Stáhnout",
+			"submitting": "Připravujeme…"
+		},
+		"patientSearchEvent": {
+			"fulltext": "Vyhledání pacienta · Fulltext",
+			"code": "Vyhledání pacienta · Kód",
+			"nfc_tag": "Vyhledání pacienta · NFC",
+			"identifier_search": "Vyhledání pacienta · Identifikátor",
+			"scheduled_list": "Přehled · V plánu",
+			"patient_encounters": "Karta pacienta · Návštěvy",
+			"recent_patients": "Přehled · Naposledy",
+			"unfinished_encounters": "Přehled · Nedokončené"
+		},
+		"listReleaseOutcome": "Vydáno {count}",
+		"eventType": {
+			"configuration-changed": "Změna nastavení",
+			"login-methods-changed": "Změna metod přihlášení",
+			"device-registration": "Registrace zařízení",
+			"device-approval": "Schválení zařízení",
+			"device-approval-rejected": "Odmítnuté schválení zařízení",
+			"device-revocation": "Zneplatnění zařízení",
+			"device-blocking": "Blokace zařízení",
+			"device-unblocking": "Odblokování zařízení",
+			"device-assigned-to-group": "Zařazení zařízení do skupiny",
+			"login": "Přihlášení",
+			"session-refresh": "Obnovení relace",
+			"session-termination": "Ukončení relace",
+			"user-roles-changed": "Změna rolí uživatele",
+			"user-department-changed": "Změna oddělení uživatele",
+			"card-binding-code-issued": "Vydání kódu pro kartu",
+			"card-binding-created": "Přiřazení karty",
+			"qr-code-issued": "Vydání QR kódu",
+			"qr-code-revocation": "Zneplatnění QR kódu",
+			"card-revocation": "Zneplatnění karty",
+			"user-revocation": "Zneplatnění uživatele",
+			"audit-export": "Export auditní stopy",
+			"audit-chain-broken": "Porušený řetěz auditu",
+			"patient-search": "Vyhledání pacienta a výdej seznamů",
+			"registry-sync-run": "Běh synchronizace registru",
+			"clinical-record-break-glass-use": "Použití nouzového přístupu k úložišti klinického záznamu",
+			"draft-acquisition-created": "Založení rozpracovaného záznamu",
+			"draft-acquisition-updated": "Doplnění rozpracovaného záznamu",
+			"draft-acquisition-assignment-changed": "Změna pacienta nebo návštěvy záznamu",
+			"draft-acquisition-discard": "Zahození rozpracovaného záznamu",
+			"draft-acquisition-closed": "Uzavření záznamu",
+			"draft-acquisition-file-replaced": "Nahrazení souboru záznamu",
+			"draft-acquisition-file-order-changed": "Změna pořadí souborů záznamu",
+			"draft-acquisition-cancelled": "Zrušení rozpracovaného záznamu",
+			"patient-record-release": "Výdej údajů pacienta",
+			"encounter-completed": "Dokončení návštěvy",
+			"encounter-emptied": "Návštěva bez záznamu",
+			"encounter-action-rejected": "Odmítnutý úkon nad návštěvou",
+			"finding-wound-type-changed": "Změna typu rány",
+			"clinical-record-write-requeued": "Zopakování zápisu do klinického záznamu",
+			"draft-discard-consent-granted": "Souhlas se zahozením rozpracovaných záznamů",
+			"acquisition-drafts-viewed": "Zobrazení rozpracovaných záznamů",
+			"acquisitions-viewed": "Zobrazení záznamů",
+			"delivery-attempt": "Pokus o doručení do PACS",
+			"verification-query": "Ověřovací dotaz do PACS",
+			"verification-on-hold": "Ověřování doručení čeká na správce",
+			"verification-resumed": "Obnovení ověřování doručení",
+			"target-paused": "Pozastavení cíle doručení",
+			"target-unavailable": "Nedostupnost cíle doručení",
+			"target-released": "Uvolnění cíle doručení",
+			"target-resumed": "Obnovení cíle doručení",
+			"target-unavailability-alert": "Dlouhá nedostupnost cíle doručení",
+			"delivery-closed": "Uzavření doručení správcem",
+			"text-recognition-restarted": "Znovuspuštění rozpoznání textu",
+			"buffer-copy-deletion": "Smazání kopie na serveru",
+			"retention-deletion": "Smazání po době uchování",
+			"orphaned-object-set-aside": "Odložení osiřelého objektu",
+			"orphaned-object-deletion": "Smazání osiřelého objektu",
+			"administrator-alert-raised": "Upozornění správce",
+			"administrator-alert-acknowledged": "Vzetí upozornění na vědomí",
+			"local-data-deletion": "Smazání dat v zařízení",
+			"authorization-endpoint-mismatch": "Neshoda adresy přihlášení"
+		},
+		"outcome": {
+			"success": "Úspěch",
+			"failure": "Neúspěch",
+			"match": "Nalezeno",
+			"no_match": "Nenalezeno",
+			"query_too_short": "Krátký dotaz",
+			"too_many_matches": "Příliš mnoho shod",
+			"rate_limited": "Překročená četnost",
+			"released": "Vydáno",
+			"completed": "Dokončeno",
+			"rejected": "Odmítnuto",
+			"created": "Založeno"
+		},
+		"systemJob": {
+			"registry_sync": "Synchronizace registru",
+			"retention": "Úklid po době uchování",
+			"orphan_cleanup": "Úklid osiřelých souborů",
+			"audit_export": "Export auditu",
+			"clinical_record_installation": "Instalace úložiště klinického záznamu",
+			"clinical_record_write": "Zápis do úložiště klinického záznamu",
+			"draft_reminder": "Připomenutí rozpracovaných záznamů",
+			"dependency_monitoring": "Sledování závislostí",
+			"assembly": "Sestavení pro PACS",
+			"delivery": "Doručení do PACS"
+		},
+		"exportFailure": {
+			"unreachable": "systém správy logů nepřijímá spojení",
+			"timed_out": "systém správy logů neodpověděl včas",
+			"tls_rejected": "spojení TLS neprošlo ověřením",
+			"message_too_large": "zpráva se nevejde do datagramu UDP",
+			"failed": "neznámá chyba"
+		}
+	}
+}

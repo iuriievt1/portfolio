@@ -1,0 +1,59 @@
+{
+	"files": [],
+	"references": [
+		{
+			"path": "libs/contracts"
+		},
+		{
+			"path": "libs/modules/vulna/domain"
+		},
+		{
+			"path": "libs/core/server"
+		},
+		{
+			"path": "libs/core/admin-shell"
+		},
+		{
+			"path": "libs/core/mobile"
+		},
+		{
+			"path": "libs/modules/vulna/adapter-binary-local"
+		},
+		{
+			"path": "libs/modules/vulna/adapter-oidc"
+		},
+		{
+			"path": "libs/modules/vulna/adapter-syslog"
+		},
+		{
+			"path": "libs/modules/vulna/adapter-clinical-record-medplum"
+		},
+		{
+			"path": "libs/modules/vulna/adapter-registry-local"
+		},
+		{
+			"path": "libs/modules/vulna/adapter-dicom-dimse"
+		},
+		{
+			"path": "libs/modules/vulna/projection-dicom"
+		},
+		{
+			"path": "libs/modules/synthetic/domain"
+		},
+		{
+			"path": "libs/modules/synthetic/adapter-null"
+		},
+		{
+			"path": "apps/vulna-server-api"
+		},
+		{
+			"path": "apps/vulna-server-worker"
+		},
+		{
+			"path": "apps/vulna-server-migrate"
+		},
+		{
+			"path": "tools"
+		}
+	]
+}

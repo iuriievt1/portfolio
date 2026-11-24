@@ -1,0 +1,11 @@
+{
+	"name": "@ansora/profile-mou",
+	"version": "0.0.0",
+	"private": true,
+	"description": "MOÚ profile — the transitive closure of the instance ✓ ADR-001 ř. 21.",
+	"license": "UNLICENSED",
+	"files": [
+		"profile.json",
+		"configuration.schema.json"
+	]
+}

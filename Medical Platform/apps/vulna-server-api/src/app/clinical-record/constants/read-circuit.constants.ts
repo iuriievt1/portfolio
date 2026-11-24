@@ -1,0 +1,3 @@
+// backend.md 3.1, ADR-050 bod 11, CAP-020-S10
+export const READ_CIRCUIT_FAILURE_THRESHOLD = 5
+export const READ_CIRCUIT_OPEN_MILLISECONDS = 30_000

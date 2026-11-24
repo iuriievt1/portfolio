@@ -1,0 +1,41 @@
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+def packageJson = new groovy.json.JsonSlurper().parseText(file('../package.json').text)
+def releaseSignerSha256 = System.getenv('ANSORA_RELEASE_SIGNER_SHA256') ?: ''
+
+group = 'cz.veevoy.ansora'
+version = packageJson.version
+
+android {
+  namespace 'cz.veevoy.ansora.core.mobile'
+  defaultConfig {
+    versionCode 1
+    versionName packageJson.version
+  }
+  // CAP-008-R02, CAP-008-S06
+  buildTypes {
+    debug {
+      buildConfigField "String", "RELEASE_SIGNER_SHA256", '""'
+    }
+    release {
+      buildConfigField "String", "RELEASE_SIGNER_SHA256", "\"${releaseSignerSha256}\""
+    }
+  }
+  buildFeatures {
+    buildConfig true
+  }
+}
+
+def camerax_version = "1.7.0-alpha03"
+
+dependencies {
+  implementation 'com.facebook.react:react-android'
+  implementation "androidx.camera:camera-core:${camerax_version}"
+  implementation "androidx.camera:camera-camera2:${camerax_version}"
+  implementation "androidx.camera:camera-lifecycle:${camerax_version}"
+  implementation "androidx.camera:camera-view:${camerax_version}"
+  testImplementation 'junit:junit:4.13.2'
+}
